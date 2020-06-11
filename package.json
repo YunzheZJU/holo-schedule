@@ -6,12 +6,20 @@
   "author": "Yunzhe <yunzhe@zju.edu.cn>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn web-ext run",
-    "start:chromium": "yarn run start -t chromium",
+    "web-ext": "web-ext run -s dist",
+    "start": "yarn run web-ext --start-url about:debugging#/runtime/this-firefox",
+    "start:chromium": "yarn run web-ext -t chromium --start-url chrome://extensions/",
+    "dev": "webpack --config config/webpack.config.js --mode development --watch",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "yarn web-ext lint"
   },
   "devDependencies": {
+    "copy-webpack-plugin": "^6.0.2",
     "web-ext": "^4.2.0"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.6.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   }
 }

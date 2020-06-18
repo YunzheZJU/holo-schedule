@@ -15,5 +15,7 @@
 </script>
 
 <style scoped>
-
+  .app {
+    width: 360px;
+  }
 </style>

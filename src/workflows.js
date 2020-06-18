@@ -1,19 +1,26 @@
 import browser from 'webextension-polyfill'
 import { getCurrentLives } from './requests'
 
-const syncCurrentLives = async () => {
+const syncLives = async () => {
   // TODO: Filter bilibili lives
-  const { lives: currentLives } = await getCurrentLives()
+  // TODO: Fetch all lives if lives.length < total
+  const { lives, total } = await getCurrentLives()
 
-  await browser.browserAction.setBadgeText({ text: currentLives.length.toString() })
+  await browser.browserAction.setBadgeText({ text: total.toString() })
 
-  console.log(`[syncCurrentLives]Badge text has been set to ${currentLives.length}`)
+  console.log(`[syncLives]Badge text has been set to ${total}`)
 
-  await browser.storage.local.set({ currentLives })
+  await browser.storage.local.set({ lives })
 
-  console.log(`[syncCurrentLives]Storage currentLives has been set successfully.`)
+  console.log(`[syncLives]Storage Lives has been set successfully.`)
+}
+
+const getCachedLives = async () => {
+  const { lives } = await browser.storage.local.get('lives')
+  return lives
 }
 
 export {
-  syncCurrentLives,
+  syncLives,
+  getCachedLives,
 }

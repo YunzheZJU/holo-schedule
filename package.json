@@ -10,14 +10,19 @@
     "start": "yarn run web-ext --start-url about:debugging#/runtime/this-firefox",
     "start:chromium": "yarn run web-ext -t chromium --start-url chrome://extensions/",
     "dev": "webpack --config config/webpack.config.js --mode development --watch",
+    "build": "webpack --config config/webpack.config.js --mode production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "yarn web-ext lint"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^6.0.2",
+    "html-webpack-plugin": "^4.3.0",
+    "vue-loader": "^15.9.2",
+    "vue-template-compiler": "^2.6.11",
     "web-ext": "^4.2.0"
   },
   "dependencies": {
+    "vue": "^2.6.11",
     "webextension-polyfill": "^0.6.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"

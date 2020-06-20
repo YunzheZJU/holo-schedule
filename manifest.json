@@ -29,5 +29,8 @@
       "32": "icons/icon@32.png"
     },
     "default_popup": "src/popup.html"
-  }
+  },
+  "web_accessible_resources": [
+    "assets/*"
+  ]
 }

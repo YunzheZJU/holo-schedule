@@ -46,6 +46,7 @@ module.exports = (env, argv) => {
         patterns: [
           'manifest.json',
           'icons/*',
+          'assets/*',
         ],
       }),
       new HtmlWebpackPlugin({

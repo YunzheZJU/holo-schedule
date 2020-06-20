@@ -41,6 +41,9 @@ module.exports = (env, argv) => {
         },
       ],
     },
+    resolve: {
+      extensions: ['.js', '.json', '.vue'],
+    },
     plugins: [
       new CopyPlugin({
         patterns: [

@@ -28,9 +28,17 @@ module.exports = (env, argv) => {
           test: /\.css$/,
           use: [
             'vue-style-loader',
-            'css-loader'
-          ]
-        }
+            'css-loader',
+          ],
+        },
+        {
+          test: /\.less$/,
+          use: [
+            'vue-style-loader',
+            'css-loader',
+            'less-loader',
+          ],
+        },
       ],
     },
     plugins: [

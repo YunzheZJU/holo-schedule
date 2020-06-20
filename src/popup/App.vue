@@ -38,7 +38,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .app {
     width: 360px;
   }

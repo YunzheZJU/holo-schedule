@@ -1,5 +1,8 @@
 import browser from 'webextension-polyfill'
-import { getCurrentLives, getMembers, getChannels } from './requests'
+import { getChannels, getCurrentLives, getMembers } from './requests'
+import store from './store'
+
+const getCachedLives = () => store.get('lives')['lives']
 
 const syncLives = async () => {
   // TODO: Filter bilibili lives
@@ -10,47 +13,36 @@ const syncLives = async () => {
 
   console.log(`[syncLives]Badge text has been set to ${total}`)
 
-  await browser.storage.local.set({ lives })
+  await store.set({ lives })
 
-  console.log(`[syncLives]Storage lives has been set successfully.`)
+  return getCachedLives()
 }
 
-const getCachedLives = async () => {
-  const { lives } = await browser.storage.local.get('lives')
-  return lives
-}
+const getCachedChannels = () => store.get('channels')['channels']
 
 const syncChannels = async () => {
   const { channels } = await getChannels()
 
-  await browser.storage.local.set({ channels })
+  await store.set({ channels })
 
-  console.log(`[syncChannels]Storage channels has been set successfully.`)
+  return getCachedChannels()
 }
 
-const getCachedChannels = async () => {
-  const { channels } = await browser.storage.local.get('channels')
-  return channels
-}
+const getCachedMembers = () => store.get('members')['members']
 
 const syncMembers = async () => {
   const members = await getMembers()
 
-  await browser.storage.local.set({ members })
+  await store.set({ members })
 
-  console.log(`[syncMembers]Storage members has been set successfully.`)
+  return getCachedMembers()
 }
 
-const getCachedMembers = async () => {
-  const { members } = await browser.storage.local.get('members')
-  return members
-}
-
-export {
-  syncLives,
+export default {
   getCachedLives,
-  syncChannels,
+  syncLives,
   getCachedChannels,
-  syncMembers,
+  syncChannels,
   getCachedMembers,
+  syncMembers,
 }

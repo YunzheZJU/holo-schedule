@@ -34,15 +34,13 @@
 
 <script>
   import browser from 'webextension-polyfill'
-  import {
-    syncLives,
-    getCachedLives,
-    syncMembers,
-    getCachedMembers,
-    getCachedChannels,
-    syncChannels,
-  } from '../workflows'
   import RelativeTime from './components/relative-time'
+
+  const {
+    workflows: {
+      syncLives, getCachedLives, getCachedChannels, getCachedMembers,
+    },
+  } = browser.extension.getBackgroundPage()
 
   export default {
     name: 'App',
@@ -57,14 +55,13 @@
       }
     },
     created: async function () {
-      this.interval = setInterval(this.reloadLives, 10 * 1000)
-      this.lives = await getCachedLives() || []
-      this.channels = await getCachedChannels() || []
-      this.members = await getCachedMembers() || []
+      this.lives = getCachedLives() || []
+      this.channels = getCachedChannels() || []
+      this.members = getCachedMembers() || []
 
       await this.reloadLives()
-      await this.reloadChannels()
-      await this.reloadMembers()
+
+      this.interval = setInterval(this.reloadLives, 10 * 1000)
     },
     beforeDestroy() {
       clearInterval(this.interval)
@@ -81,41 +78,13 @@
       reloadLives: async function () {
         try {
           this.loading = true
-          await syncLives()
+          this.lives = await syncLives()
           this.error = null
         } catch (err) {
           this.error = err
         } finally {
           this.loading = false
         }
-
-        this.lives = await getCachedLives() || []
-      },
-      reloadChannels: async function () {
-        try {
-          this.loading = true
-          await syncChannels()
-          this.error = null
-        } catch (err) {
-          this.error = err
-        } finally {
-          this.loading = false
-        }
-
-        this.channels = await getCachedChannels() || []
-      },
-      reloadMembers: async function () {
-        try {
-          this.loading = true
-          await syncMembers()
-          this.error = null
-        } catch (err) {
-          this.error = err
-        } finally {
-          this.loading = false
-        }
-
-        this.members = await getCachedMembers() || []
       },
       getMember(live) {
         const channel = this.channels.find(({ id }) => id === live['channel_id']) || {}

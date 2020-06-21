@@ -3,14 +3,14 @@ import browser from 'webextension-polyfill'
 
 const store = {
   data: {},
-  init: async function () {
+  async init() {
     const { store = {} } = await browser.storage.local.get('store')
     this.data = store
   },
-  get: function (key) {
+  get(key) {
     return { [key]: cloneDeep(this.data)[key] }
   },
-  set: async function (obj) {
+  async set(obj) {
     Object.entries(obj).map(([key, value]) => {
       console.log(`[store]${key} has been stored/updated successfully.`)
       this.data[key] = value

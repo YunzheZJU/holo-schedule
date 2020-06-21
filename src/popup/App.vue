@@ -54,7 +54,7 @@
         members: [],
       }
     },
-    created: async function () {
+    async created() {
       this.lives = getCachedLives() || []
       this.channels = getCachedChannels() || []
       this.members = getCachedMembers() || []
@@ -75,7 +75,7 @@
       },
     },
     methods: {
-      reloadLives: async function () {
+      async reloadLives() {
         try {
           this.loading = true
           this.lives = await syncLives()

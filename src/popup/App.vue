@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <div class="head">
+      <img :src="popupLogo" alt="logo" />
+    </div>
     <div class="error" v-if="error">{{ error }}</div>
     <ul>
       <li v-for="live in lives" :key="live['id']">
@@ -73,6 +76,9 @@
       defaultColor() {
         return '#4de4ff'
       },
+      popupLogo() {
+        return browser.runtime.getURL('assets/popup_logo.svg')
+      },
     },
     methods: {
       async reloadLives() {
@@ -98,6 +104,15 @@
   .app {
     width: 375px;
     background: rgba(0, 0, 0, 0.02);
+  }
+
+  .head {
+    padding: 12px 16px;
+    background: linear-gradient(45deg, #268C89, #65E5B4);
+
+    img {
+      height: 32px;
+    }
   }
 
   ul {

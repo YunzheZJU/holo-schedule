@@ -5,12 +5,12 @@ import workflows from './workflows'
 window.store = store
 window.workflows = workflows
 
-const { syncChannels, syncLives, syncMembers } = workflows
+const { syncChannels, syncCurrentLives, syncMembers } = workflows
 
 const handleAlarm = async (alarmInfo) => {
   console.log(`[handleAlarm]On alarm ${alarmInfo.name}`)
 
-  await syncLives().catch(err => console.error(err))
+  await syncCurrentLives().catch(err => console.error(err))
 }
 
 browser.alarms.onAlarm.addListener(handleAlarm)
@@ -20,7 +20,7 @@ browser.alarms.create('fetch-data-alarm', {
 })
 
 const init = async () => {
-  return Promise.all([syncLives(), syncChannels(), syncMembers()])
+  return Promise.all([syncCurrentLives(), syncChannels(), syncMembers()])
 }
 
 init()

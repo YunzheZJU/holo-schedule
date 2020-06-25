@@ -1,27 +1,42 @@
 import browser from 'webextension-polyfill'
-import { getChannels, getCurrentLives, getMembers } from './requests'
+import {
+  getChannels,
+  getCurrentLives,
+  getMembers,
+  getScheduledLives,
+} from './requests'
 import store from './store'
 
-const getCachedLives = () => store.get('lives')['lives']
+const getCachedCurrentLives = () => store.get('currentLives')['currentLives']
 
-const syncLives = async () => {
+const syncCurrentLives = async () => {
   // TODO: Filter bilibili lives
-  // TODO: Fetch all lives if lives.length < total
-  const { lives, total } = await getCurrentLives()
+  const lives = await getCurrentLives()
 
-  await browser.browserAction.setBadgeText({ text: total.toString() })
+  await browser.browserAction.setBadgeText({ text: lives.length.toString() })
 
-  console.log(`[syncLives]Badge text has been set to ${total}`)
+  console.log(`[syncLives]Badge text has been set to ${lives.length}`)
 
-  await store.set({ lives })
+  await store.set({ currentLives: lives })
 
-  return getCachedLives()
+  return getCachedCurrentLives()
+}
+
+const getCachedScheduledLives = () => store.get('scheduledLives')['scheduledLives']
+
+const syncScheduledLives = async () => {
+  // TODO: Filter bilibili lives and free chat
+  const lives = await getScheduledLives()
+
+  await store.set({ scheduledLives: lives })
+
+  return getCachedScheduledLives()
 }
 
 const getCachedChannels = () => store.get('channels')['channels']
 
 const syncChannels = async () => {
-  const { channels } = await getChannels()
+  const channels = await getChannels()
 
   await store.set({ channels })
 
@@ -39,8 +54,10 @@ const syncMembers = async () => {
 }
 
 export default {
-  getCachedLives,
-  syncLives,
+  getCachedCurrentLives,
+  syncCurrentLives,
+  getCachedScheduledLives,
+  syncScheduledLives,
   getCachedChannels,
   syncChannels,
   getCachedMembers,

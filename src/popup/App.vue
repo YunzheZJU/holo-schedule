@@ -3,8 +3,8 @@
     <div class="head">
       <img :src="popupLogo" alt="logo" />
     </div>
-    <div class="error" v-if="error">{{ error }}</div>
     <div class="body">
+      <!-- TODO: Move to components -->
       <div class="anchor">Living ({{currentLives.length}})</div>
       <ul class="list">
         <li v-for="live in currentLives" :key="live['id']">
@@ -62,14 +62,17 @@
           </a>
         </li>
       </ul>
+      <VToast style="top: 64px;z-index: 1;" />
+      <VHint style="z-index: 1" />
     </div>
-    <div class="hint" v-if="loading">Loading</div>
   </div>
 </template>
 
 <script>
   import browser from 'webextension-polyfill'
   import RelativeTime from './components/relative-time'
+  import VHint from './components/v-hint'
+  import VToast from './components/v-toast'
 
   const {
     workflows: {
@@ -84,11 +87,9 @@
 
   export default {
     name: 'App',
-    components: { RelativeTime },
+    components: { VToast, VHint, RelativeTime },
     data() {
       return {
-        loading: true,
-        error: null,
         currentLives: [],
         scheduledLives: [],
         channels: [],
@@ -123,26 +124,27 @@
       },
     },
     methods: {
+      // TODO: Share code with reloadScheduledLives
       async reloadCurrentLives() {
+        let hintId
         try {
-          this.loading = true
+          hintId = this.$hints.add({ text: 'Loading current lives...' })
           this.currentLives = await syncCurrentLives()
-          this.error = null
         } catch (err) {
-          this.error = err
+          this.$toasts.add({ type: 'error', text: err.message })
         } finally {
-          this.loading = false
+          this.$hints.remove(hintId)
         }
       },
       async reloadScheduledLives() {
+        let hintId
         try {
-          this.loading = true
+          hintId = this.$hints.add({ text: 'Loading scheduled lives...' })
           this.scheduledLives = await syncScheduledLives()
-          this.error = null
         } catch (err) {
-          this.error = err
+          this.$toasts.add({ type: 'error', text: err.message })
         } finally {
-          this.loading = false
+          this.$hints.remove(hintId)
         }
       },
       // TODO: Move to computed
@@ -167,7 +169,9 @@
 <style lang="less" scoped>
   .app {
     width: 375px;
-    background: rgb(254, 254, 254);
+    /* TODO: Use color variables */
+    background-color: rgb(255, 255, 255);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02));
   }
 
   .head {
@@ -199,7 +203,8 @@
     grid-template-columns: 1fr auto 1fr;
     gap: 8px;
     padding: 4px 12px;
-    background: rgb(254, 254, 254);
+    background-color: rgb(255, 255, 255);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02));
     color: rgba(0, 0, 0, 0.4);
     font-weight: 600;
     font-size: 12px;
@@ -217,9 +222,7 @@
     }
 
     &:hover {
-      /* TODO: Mix color*/
-      /*background: rgba(0, 0, 0, 0.05);*/
-      background: rgb(245, 245, 245);
+      background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
     }
 
     &:before, &:after {

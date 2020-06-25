@@ -206,6 +206,7 @@
     overflow: hidden;
     font-size: 14px;
     text-overflow: ellipsis;
+    word-break: break-all;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
@@ -222,6 +223,7 @@
       padding: 0 4px;
       border: 1px solid;
       border-radius: 2px;
+      color: #34c1bd;
     }
 
     .start-at {

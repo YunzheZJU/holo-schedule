@@ -53,6 +53,24 @@ const syncMembers = async () => {
   return getCachedMembers()
 }
 
+const getCachedLives = (type) => {
+  if (type === 'current') {
+    return getCachedCurrentLives()
+  }
+  if (type === 'scheduled') {
+    return getCachedScheduledLives()
+  }
+}
+
+const syncLives = (type) => {
+  if (type === 'current') {
+    return syncCurrentLives()
+  }
+  if (type === 'scheduled') {
+    return syncScheduledLives()
+  }
+}
+
 export default {
   getCachedCurrentLives,
   syncCurrentLives,
@@ -62,4 +80,6 @@ export default {
   syncChannels,
   getCachedMembers,
   syncMembers,
+  getCachedLives,
+  syncLives,
 }

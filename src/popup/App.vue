@@ -36,9 +36,8 @@
 <style lang="less" scoped>
   .app {
     width: 375px;
-    /* TODO: Use color variables */
-    background-color: rgb(255, 255, 255);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02));
+    background-color: var(--color-bg-base);
+    background-image: linear-gradient(var(--color-bg-light), var(--color-bg-light));
   }
 
   .head {

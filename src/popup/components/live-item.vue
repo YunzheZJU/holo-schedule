@@ -82,7 +82,7 @@
     padding: 4px 12px;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.05);
+      background: var(--color-bg-normal);
     }
   }
 
@@ -107,7 +107,7 @@
       padding: 0 4px;
       border-radius: 2px;
       background: rgba(0, 0, 0, 0.8);
-      color: white;
+      color: var(--color-white);
       font-size: 12px;
     }
   }
@@ -117,7 +117,7 @@
     grid-template-columns: 24px minmax(0, max-content) minmax(0, max-content) 1fr;
     gap: 8px;
     align-items: center;
-    color: rgba(0, 0, 0, 0.6);
+    color: var(--color-text-normal);
     font-size: 14px;
 
     .avatar {
@@ -136,7 +136,7 @@
     }
 
     .separator {
-      color: rgba(0, 0, 0, 0.2);
+      color: var(--color-bd);
     }
 
     .platform {
@@ -148,6 +148,7 @@
     display: -webkit-box;
     align-self: start;
     overflow: hidden;
+    color: var(--color-text-dark);
     font-size: 14px;
     text-overflow: ellipsis;
     word-break: break-all;
@@ -160,14 +161,14 @@
     grid-template-columns: auto 1fr;
     gap: 8px;
     align-items: center;
-    color: rgba(0, 0, 0, 0.4);
+    color: var(--color-text-light);
     font-size: 12px;
 
     .badge {
       padding: 0 4px;
       border: 1px solid;
       border-radius: 2px;
-      color: #34c1bd;
+      color: var(--color-theme);
     }
 
     .start-at {

@@ -79,22 +79,23 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 8px;
+    height: 26px;
     padding: 4px 12px;
-    background-color: rgb(255, 255, 255);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02));
-    color: rgba(0, 0, 0, 0.4);
-    font-weight: 600;
+    background-color: var(--color-bg-base);
+    background-image: linear-gradient(var(--color-bg-light), var(--color-bg-light));
+    color: var(--color-text-light);
+    font-weight: 700;
     font-size: 12px;
 
     &:hover {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+      background-image: linear-gradient(var(--color-bg-normal), var(--color-bg-normal));
     }
 
     &:before, &:after {
       content: '';
       position: relative;
       top: -50%;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid var(--color-bd);
     }
   }
 

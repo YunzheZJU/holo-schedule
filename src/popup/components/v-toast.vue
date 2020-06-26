@@ -42,15 +42,15 @@
     width: 240px;
     padding: 4px 8px;
     border-radius: 2px;
-    color: white;
+    color: var(--color-white);
     box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
 
     &.error {
-      background: #d70022;
+      background: var(--color-error);
     }
 
     &.info {
-      background: #34c1bd;
+      background: var(--color-theme);
     }
   }
 
@@ -65,7 +65,7 @@
     padding: 0 4px;
     border: none;
     background: none;
-    color: white;
+    color: var(--color-white);
     font-size: 12px;
     line-height: 1.5;
     cursor: pointer;

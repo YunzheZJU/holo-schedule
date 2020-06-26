@@ -1,4 +1,4 @@
-import { createEnhancedArray } from '../lib/enhancedArray'
+import { createEnhancedArray } from 'lib/enhancedArray'
 
 const toasts = createEnhancedArray([
   // { id: 999, type: 'error', text: 'Default error toast' },

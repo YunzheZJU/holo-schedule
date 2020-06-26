@@ -1,4 +1,4 @@
-import { createEnhancedArray } from '../lib/enhancedArray'
+import { createEnhancedArray } from 'lib/enhancedArray'
 
 const hints = createEnhancedArray([
   // { id: 999, text: 'Default hint' },

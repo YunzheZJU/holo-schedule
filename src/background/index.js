@@ -1,8 +1,6 @@
 import browser from 'webextension-polyfill'
-import store from './store'
-import workflows from './workflows'
+import workflows from 'workflows'
 
-window.store = store
 window.workflows = workflows
 
 const { syncChannels, syncCurrentLives, syncMembers } = workflows

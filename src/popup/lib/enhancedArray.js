@@ -1,4 +1,4 @@
-import { getUniqueId } from '../utils'
+import { getUniqueId } from 'utils'
 
 const createEnhancedArray = (defaultValue = []) => {
   const enhancedArray = defaultValue

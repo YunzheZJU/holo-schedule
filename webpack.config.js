@@ -2,8 +2,9 @@ const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin')
 
-const ROOT_PATH = path.join(__dirname, '..')
+const ROOT_PATH = __dirname
 
 module.exports = (env, argv) => {
   const isDevelopment = argv.mode === 'development'
@@ -11,7 +12,7 @@ module.exports = (env, argv) => {
   return {
     context: ROOT_PATH,
     entry: {
-      background: path.join(ROOT_PATH, 'src', 'background.js'),
+      background: path.join(ROOT_PATH, 'src', 'background', 'index.js'),
       popup: path.join(ROOT_PATH, 'src', 'popup', 'index.js'),
     },
     output: {
@@ -58,6 +59,7 @@ module.exports = (env, argv) => {
         chunks: ['popup'],
       }),
       new VueLoaderPlugin(),
+      new ResolveEntryModulesPlugin(),
     ],
     devtool: isDevelopment ? 'inline-source-map' : undefined,
   }

@@ -10,8 +10,8 @@
 <script>
   import { Fragment } from 'vue-fragment'
   import browser from 'webextension-polyfill'
-  import { liveTypeValidator } from '../validators'
-  import LiveItem from './live-item'
+  import { liveTypeValidator } from 'validators'
+  import LiveItem from 'components/live-item'
 
   const { workflows: { getCachedLives, syncLives } } = browser.extension.getBackgroundPage()
 

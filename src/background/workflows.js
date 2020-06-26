@@ -4,8 +4,8 @@ import {
   getCurrentLives,
   getMembers,
   getScheduledLives,
-} from './requests'
-import store from './store'
+} from 'requests'
+import store from 'store'
 
 const getCachedCurrentLives = () => store.get('currentLives')['currentLives']
 

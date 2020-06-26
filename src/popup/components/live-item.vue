@@ -32,8 +32,8 @@
 <script>
   import { Fragment } from 'vue-fragment'
   import browser from 'webextension-polyfill'
-  import { liveTypeValidator } from '../validators'
-  import RelativeTime from './relative-time'
+  import { liveTypeValidator } from 'validators'
+  import RelativeTime from 'components/relative-time'
 
   const { workflows: { getCachedChannels, getCachedMembers } } = browser.extension.getBackgroundPage()
 

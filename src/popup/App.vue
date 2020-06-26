@@ -14,10 +14,10 @@
 
 <script>
   import browser from 'webextension-polyfill'
-  import LiveList from './components/live-list'
-  import RelativeTime from './components/relative-time'
-  import VHint from './components/v-hint'
-  import VToast from './components/v-toast'
+  import LiveList from 'components/live-list'
+  import RelativeTime from 'components/relative-time'
+  import VHint from 'components/v-hint'
+  import VToast from 'components/v-toast'
 
   export default {
     name: 'app',

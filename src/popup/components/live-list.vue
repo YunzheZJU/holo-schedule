@@ -66,6 +66,14 @@
 
 <style lang="less" scoped>
   .anchor {
+    each(range(2), {
+      // This positions .anchor when it is stuck
+      &:nth-of-type(@{value}) {
+        top: (@value - 1) * 26px;
+        bottom: (2 - @value) * 26px;
+      }
+    });
+
     position: sticky;
     z-index: 1;
     display: grid;
@@ -77,18 +85,6 @@
     color: rgba(0, 0, 0, 0.4);
     font-weight: 600;
     font-size: 12px;
-
-    /* TODO: Generate dynamically */
-
-    &:nth-of-type(1) {
-      top: 0;
-      bottom: 26px;
-    }
-
-    &:nth-of-type(2) {
-      top: 26px;
-      bottom: 0;
-    }
 
     &:hover {
       background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));

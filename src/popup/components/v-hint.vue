@@ -3,8 +3,6 @@
 </template>
 
 <script>
-  import { last } from 'lodash'
-
   export default {
     name: 'v-hint',
     data() {
@@ -16,9 +14,9 @@
     },
     computed: {
       hint() {
-        return last(this.hints) || {}
-      }
-    }
+        return this.hints.last || {}
+      },
+    },
   }
 </script>
 

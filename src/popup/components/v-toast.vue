@@ -59,14 +59,9 @@
   }
 
   .close {
-    display: block;
     align-self: start;
     padding: 0 4px;
-    border: none;
-    background: none;
     color: var(--color-white);
     font-size: 12px;
-    line-height: 1.5;
-    cursor: pointer;
   }
 </style>

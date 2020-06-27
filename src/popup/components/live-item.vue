@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li ref="item">
     <a class="item" :href="roomURL">
       <div class="thumbnail">
         <!-- TODO: Default image -->
@@ -36,10 +36,10 @@
 </template>
 
 <script>
+  import RelativeTime from 'components/relative-time'
+  import { liveTypeValidator } from 'validators'
   import { Fragment } from 'vue-fragment'
   import browser from 'webextension-polyfill'
-  import { liveTypeValidator } from 'validators'
-  import RelativeTime from 'components/relative-time'
 
   const {
     workflows: { getCachedChannels, getCachedMembers },
@@ -80,6 +80,11 @@
           return `https://live.bilibili.com/${room}`
         }
         return '#'
+      },
+    },
+    methods: {
+      scrollIntoView(...args) {
+        this.$refs.item.scrollIntoView(...args)
       },
     },
   }

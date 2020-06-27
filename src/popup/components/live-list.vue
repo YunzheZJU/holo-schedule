@@ -1,17 +1,24 @@
 <template>
   <Fragment>
-    <div class="anchor">{{ anchorName }} ({{ lives.length }})</div>
+    <button type="button" class="anchor" @click="handleClickAnchor">
+      {{ anchorName }} ({{ lives.length }})
+    </button>
     <ul class="list">
-      <LiveItem v-for="live in lives" :key="live['id']" :type="type" :live="live" />
+      <LiveItem v-for="live in lives"
+                ref="items"
+                :key="live['id']"
+                :type="type"
+                :live="live"
+      />
     </ul>
   </Fragment>
 </template>
 
 <script>
+  import LiveItem from 'components/live-item'
+  import { liveTypeValidator } from 'validators'
   import { Fragment } from 'vue-fragment'
   import browser from 'webextension-polyfill'
-  import { liveTypeValidator } from 'validators'
-  import LiveItem from 'components/live-item'
 
   const { workflows: { getCachedLives, syncLives } } = browser.extension.getBackgroundPage()
 
@@ -61,6 +68,9 @@
           this.$hints.remove(hintId)
         }
       },
+      handleClickAnchor() {
+        return this.$refs.items[0]?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      },
     },
   }
 </script>
@@ -68,7 +78,7 @@
 <style lang="less" scoped>
   .anchor {
     each(range(2), {
-      // This positions .anchor when it is stuck
+      /* This positions .anchor when it is stuck */
       &:nth-of-type(@{value}) {
         top: (@value - 1) * 26px;
         bottom: (2 - @value) * 26px;

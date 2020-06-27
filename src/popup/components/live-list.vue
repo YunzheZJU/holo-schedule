@@ -33,7 +33,7 @@
     },
     data() {
       return {
-        lives: getCachedLives(this.type) || [],
+        lives: getCachedLives(this.type) ?? [],
       }
     },
     computed: {

@@ -40,6 +40,16 @@ module.exports = (env, argv) => {
             'less-loader',
           ],
         },
+        {
+          test: /\.js$/,
+          use: [{
+            loader: '@sucrase/webpack-loader',
+            options: {
+              // Necessary
+              transforms: [],
+            },
+          }],
+        },
       ],
     },
     resolve: {

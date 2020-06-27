@@ -68,8 +68,8 @@
       member() {
         const channels = getCachedChannels() || []
         const members = getCachedMembers() || []
-        const channel = channels.find(({ id }) => id === this.live['channel_id']) || {}
-        return members.find(({ id }) => id === channel['member_id']) || {}
+        const channel = channels.find(({ id }) => id === this.live['channel_id']) ?? {}
+        return members.find(({ id }) => id === channel['member_id']) ?? {}
       },
       roomURL() {
         const { platform, room } = this.live

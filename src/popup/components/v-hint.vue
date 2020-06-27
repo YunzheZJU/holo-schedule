@@ -14,7 +14,7 @@
     },
     computed: {
       hint() {
-        return this.hints.last || {}
+        return this.hints.last ?? {}
       },
     },
   }

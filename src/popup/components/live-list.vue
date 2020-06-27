@@ -69,7 +69,7 @@
         }
       },
       handleClickAnchor() {
-        return this.$refs.items[0]?.scrollIntoView({ behavior: 'smooth', block: 'end' })
+        return this.$refs.items[0]?.scrollIntoView({ behavior: 'smooth' })
       },
     },
   }
@@ -77,11 +77,14 @@
 
 <style lang="less" scoped>
   .anchor {
+    /* Calculated from padding and line-height */
+    @anchor-height: 26px;
+
     each(range(2), {
       /* This positions .anchor when it is stuck */
       &:nth-of-type(@{value}) {
-        top: (@value - 1) * 26px;
-        bottom: (2 - @value) * 26px;
+        top: (@value - 1) * @anchor-height;
+        bottom: (2 - @value) * @anchor-height;
       }
     });
 
@@ -90,7 +93,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 8px;
-    height: 26px;
+    height: @anchor-height;
     padding: 4px 12px;
     background-color: var(--color-bg-base);
     background-image: linear-gradient(var(--color-bg-light), var(--color-bg-light));

@@ -52,6 +52,8 @@
     overflow-y: auto;
     max-height: 540px;
     scrollbar-width: none;
+    /* 26px refers to anchor-height */
+    scroll-padding: 2 * 26px;
 
     &::-webkit-scrollbar {
       display: none;

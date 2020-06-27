@@ -1,4 +1,4 @@
-import { getUniqueId } from 'utils'
+import { uniqueId } from 'lodash'
 
 const createEnhancedArray = (defaultValue = []) => {
   const enhancedArray = defaultValue
@@ -18,7 +18,7 @@ const createEnhancedArray = (defaultValue = []) => {
   enhancedArray.add = (item = {
     text: '',
   }) => {
-    const id = getUniqueId()
+    const id = uniqueId()
     enhancedArray.push({ id, ...item })
     return id
   }

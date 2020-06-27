@@ -6,6 +6,7 @@ const hints = createEnhancedArray([
 
 const HintPlugin = {
   install(Vue) {
+    // eslint-disable-next-line no-param-reassign
     Vue.prototype.$hints = hints
   },
 }

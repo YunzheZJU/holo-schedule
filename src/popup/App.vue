@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div class="head">
-      <img class="logo" :src="popupLogo" alt="logo" />
+      <img class="logo" :src="popupLogo" alt="logo">
     </div>
     <div class="body">
       <LiveList type="current" />
@@ -15,13 +15,12 @@
 <script>
   import browser from 'webextension-polyfill'
   import LiveList from 'components/live-list'
-  import RelativeTime from 'components/relative-time'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
 
   export default {
-    name: 'app',
-    components: { LiveList, VToast, VHint, RelativeTime },
+    name: 'App',
+    components: { LiveList, VToast, VHint },
     data() {
       return {}
     },

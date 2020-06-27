@@ -3,27 +3,33 @@
     <a class="item" :href="roomURL">
       <div class="thumbnail">
         <!-- TODO: Default image -->
-        <img class="cover" :src="live['cover']" :alt="live['title']" />
+        <img class="cover" :src="live['cover']" :alt="live['title']">
       </div>
       <div class="header">
-        <img class="avatar" :src="member['avatar'] || defaultAvatar" alt="" :style="{color: member['color_main']}" />
+        <img class="avatar"
+             alt=""
+             :src="member['avatar'] || defaultAvatar"
+             :style="{color: member['color_main']}"
+        >
         <div class="member" :title="member['name']">
-          {{member['name']}}
+          {{ member['name'] }}
         </div>
         <div class="separator">
           |
         </div>
         <div class="platform">
-          {{live['platform']}}
+          {{ live['platform'] }}
         </div>
       </div>
-      <div class="content" :title="live['title']">{{live['title']}}</div>
+      <div class="content" :title="live['title']">{{ live['title'] }}</div>
       <div class="accessory">
         <Fragment v-if="type === 'current'">
           <div class="badge">LIVE NOW</div>
           <RelativeTime class="start-at" :time="live['start_at']" />
         </Fragment>
-        <div class="start-at" v-if="type === 'scheduled'">{{new Date(live['start_at']).toLocaleString()}}</div>
+        <div v-if="type === 'scheduled'" class="start-at">
+          {{ new Date(live['start_at']).toLocaleString() }}
+        </div>
       </div>
     </a>
   </li>
@@ -35,18 +41,24 @@
   import { liveTypeValidator } from 'validators'
   import RelativeTime from 'components/relative-time'
 
-  const { workflows: { getCachedChannels, getCachedMembers } } = browser.extension.getBackgroundPage()
+  const {
+    workflows: { getCachedChannels, getCachedMembers },
+  } = browser.extension.getBackgroundPage()
 
   export default {
-    name: 'live-item',
+    name: 'LiveItem',
     components: { RelativeTime, Fragment },
     props: {
       type: {
         type: String,
         validator: liveTypeValidator,
+        default: 'current',
       },
       live: {
         type: Object,
+        default() {
+          return {}
+        },
       },
     },
     computed: {

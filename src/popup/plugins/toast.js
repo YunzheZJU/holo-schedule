@@ -8,6 +8,7 @@ const toasts = createEnhancedArray([
 
 const toastPlugin = {
   install(Vue) {
+    // eslint-disable-next-line no-param-reassign
     Vue.prototype.$toasts = toasts
   },
 }

@@ -24,7 +24,7 @@ const createEnhancedArray = (defaultValue = []) => {
   }
 
   // Changes made by lodash#remove would not traced by Vue
-  enhancedArray.remove = (itemId) => {
+  enhancedArray.remove = itemId => {
     const index = enhancedArray.findIndex(({ id }) => id === itemId)
 
     if (index === -1) return
@@ -35,6 +35,5 @@ const createEnhancedArray = (defaultValue = []) => {
   return enhancedArray
 }
 
-export {
-  createEnhancedArray,
-}
+// eslint-disable-next-line import/prefer-default-export
+export { createEnhancedArray }

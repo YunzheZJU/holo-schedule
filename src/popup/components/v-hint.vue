@@ -1,10 +1,10 @@
 <template>
-  <div class="hint" v-if="hints.any">{{hint.text}}</div>
+  <div v-if="hints.any" class="hint">{{ hint.text }}</div>
 </template>
 
 <script>
   export default {
-    name: 'v-hint',
+    name: 'VHint',
     data() {
       const hints = this.$hints
 

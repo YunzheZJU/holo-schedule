@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const getCurrentLives = async () => {
   const limit = 20
 
@@ -62,7 +63,7 @@ const getMembers = async () => {
   if (!response.ok) {
     throw new Error(`Network error: ${response.status}`)
   }
-  return await response.json()
+  return response.json()
 }
 
 export {

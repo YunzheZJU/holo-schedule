@@ -1,6 +1,6 @@
 <template>
   <Fragment>
-    <div class="anchor">{{anchorName}} ({{lives.length}})</div>
+    <div class="anchor">{{ anchorName }} ({{ lives.length }})</div>
     <ul class="list">
       <LiveItem v-for="live in lives" :key="live['id']" :type="type" :live="live" />
     </ul>
@@ -22,18 +22,19 @@
   ])
 
   export default {
-    name: 'live-list',
+    name: 'LiveList',
     components: { Fragment, LiveItem },
-    data() {
-      return {
-        lives: getCachedLives(this.type) || [],
-      }
-    },
     props: {
       type: {
         type: String,
         validator: liveTypeValidator,
+        default: 'current',
       },
+    },
+    data() {
+      return {
+        lives: getCachedLives(this.type) || [],
+      }
     },
     computed: {
       anchorName() {

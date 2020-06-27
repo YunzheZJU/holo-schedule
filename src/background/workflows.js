@@ -7,7 +7,7 @@ import {
 } from 'requests'
 import store from 'store'
 
-const getCachedCurrentLives = () => store.get('currentLives')['currentLives']
+const getCachedCurrentLives = () => store.get('currentLives')
 
 const syncCurrentLives = async () => {
   // TODO: Filter bilibili lives
@@ -22,7 +22,7 @@ const syncCurrentLives = async () => {
   return getCachedCurrentLives()
 }
 
-const getCachedScheduledLives = () => store.get('scheduledLives')['scheduledLives']
+const getCachedScheduledLives = () => store.get('scheduledLives')
 
 const syncScheduledLives = async () => {
   // TODO: Filter bilibili lives and free chat
@@ -33,7 +33,7 @@ const syncScheduledLives = async () => {
   return getCachedScheduledLives()
 }
 
-const getCachedChannels = () => store.get('channels')['channels']
+const getCachedChannels = () => store.get('channels')
 
 const syncChannels = async () => {
   const channels = await getChannels()
@@ -43,7 +43,7 @@ const syncChannels = async () => {
   return getCachedChannels()
 }
 
-const getCachedMembers = () => store.get('members')['members']
+const getCachedMembers = () => store.get('members')
 
 const syncMembers = async () => {
   const members = await getMembers()
@@ -53,22 +53,18 @@ const syncMembers = async () => {
   return getCachedMembers()
 }
 
-const getCachedLives = (type) => {
+const getCachedLives = type => {
   if (type === 'current') {
     return getCachedCurrentLives()
   }
-  if (type === 'scheduled') {
-    return getCachedScheduledLives()
-  }
+  return getCachedScheduledLives()
 }
 
-const syncLives = (type) => {
+const syncLives = type => {
   if (type === 'current') {
     return syncCurrentLives()
   }
-  if (type === 'scheduled') {
-    return syncScheduledLives()
-  }
+  return syncScheduledLives()
 }
 
 export default {

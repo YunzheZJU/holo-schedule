@@ -1,7 +1,4 @@
-const liveTypeValidator = (value) => {
-  return ['ended', 'current', 'scheduled'].indexOf(value) !== -1
-}
+const liveTypeValidator = value => ['ended', 'current', 'scheduled'].indexOf(value) !== -1
 
-export {
-  liveTypeValidator,
-}
+// eslint-disable-next-line import/prefer-default-export
+export { liveTypeValidator }

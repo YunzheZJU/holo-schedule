@@ -1,12 +1,10 @@
 <template>
-  <div :title="new Date(this.time)">
-    {{calculate()}}
-  </div>
+  <div :title="new Date(time)">{{ calculate() }}</div>
 </template>
 
 <script>
   export default {
-    name: 'relative-time',
+    name: 'RelativeTime',
     props: {
       time: {
         type: String,
@@ -31,27 +29,26 @@
           const number = Math.floor(elapsed / msPerSecond)
           setTimeout(() => this.$forceUpdate(), (number + 1) * msPerSecond - elapsed + 1)
           return `${number} second${number > 1 ? 's' : ''} ago`
-        } else if (elapsed < msPerHour) {
+        } if (elapsed < msPerHour) {
           const number = Math.floor(elapsed / msPerMinute)
           setTimeout(() => this.$forceUpdate(), (number + 1) * msPerMinute - elapsed + 1)
           return `${number} minute${number > 1 ? 's' : ''} ago`
-        } else if (elapsed < msPerDay) {
+        } if (elapsed < msPerDay) {
           const number = Math.floor(elapsed / msPerHour)
           setTimeout(() => this.$forceUpdate(), (number + 1) * msPerHour - elapsed + 1)
           return `${number} hour${number > 1 ? 's' : ''} ago`
-        } else if (elapsed < msPerMonth) {
+        } if (elapsed < msPerMonth) {
           const number = Math.floor(elapsed / msPerDay)
           setTimeout(() => this.$forceUpdate(), (number + 1) * msPerDay - elapsed + 1)
           return `${number} day${number > 1 ? 's' : ''} ago`
-        } else if (elapsed < msPerYear) {
+        } if (elapsed < msPerYear) {
           const number = Math.floor(elapsed / msPerMonth)
           setTimeout(() => this.$forceUpdate(), (number + 1) * msPerMonth - elapsed + 1)
           return `${number} month${number > 1 ? 's' : ''} ago`
-        } else {
-          const number = Math.floor(elapsed / msPerYear)
-          setTimeout(() => this.$forceUpdate(), (number + 1) * msPerYear - elapsed + 1)
-          return `${number} year${number > 1 ? 's' : ''} ago`
         }
+        const number = Math.floor(elapsed / msPerYear)
+        setTimeout(() => this.$forceUpdate(), (number + 1) * msPerYear - elapsed + 1)
+        return `${number} year${number > 1 ? 's' : ''} ago`
       },
     },
   }

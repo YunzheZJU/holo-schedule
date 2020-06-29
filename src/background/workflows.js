@@ -38,7 +38,7 @@ const getCachedChannels = () => store.get('channels')
 const syncChannels = async () => {
   const channels = await getChannels()
 
-  await store.set({ channels })
+  await store.set({ channels }, true)
 
   return getCachedChannels()
 }
@@ -48,7 +48,7 @@ const getCachedMembers = () => store.get('members')
 const syncMembers = async () => {
   const members = await getMembers()
 
-  await store.set({ members })
+  await store.set({ members }, true)
 
   return getCachedMembers()
 }

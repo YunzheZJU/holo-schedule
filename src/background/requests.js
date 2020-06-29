@@ -1,4 +1,6 @@
 /* eslint-disable no-await-in-loop */
+import { getTimeAfterDays } from 'utils'
+
 const gatherResponse = async response => {
   if (response.headers.get('content-type').includes('application/json')) {
     return response.json()
@@ -19,15 +21,18 @@ const fetchData = async (...args) => {
 async function* liveFetcher(endpoint, options = {
   limit: 20,
 }) {
-  const { limit = 20 } = options
+  const { limit = 20, ...params } = options
+
+  const searchParams = new URLSearchParams({ limit, ...params })
 
   let page = 0
   let shouldContinue = true
 
   do {
     page += 1
+    searchParams.set('page', page.toString())
 
-    const { lives } = await fetchData(`https://holo.dev/api/v1/lives/${endpoint}?limit=${limit}&page=${page}`)
+    const { lives } = await fetchData(`https://holo.dev/api/v1/lives/${endpoint}?${searchParams.toString()}`)
 
     yield lives
 
@@ -50,7 +55,7 @@ const fetchLives = async (...args) => {
 
 const getCurrentLives = () => fetchLives('current')
 
-const getScheduledLives = () => fetchLives('scheduled')
+const getScheduledLives = () => fetchLives('scheduled', { start_before: getTimeAfterDays(7) })
 
 const getChannels = async () => {
   const { channels } = await fetchData('https://holo.dev/api/v1/channels?limit=100')

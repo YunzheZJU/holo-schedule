@@ -25,7 +25,7 @@ const syncCurrentLives = async () => {
 const getCachedScheduledLives = () => store.get('scheduledLives')
 
 const syncScheduledLives = async () => {
-  // TODO: Filter bilibili lives and free chat
+  // TODO: Filter bilibili lives
   const lives = await getScheduledLives()
 
   await store.set({ scheduledLives: lives })

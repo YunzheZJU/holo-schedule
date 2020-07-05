@@ -42,7 +42,7 @@
     width: 240px;
     padding: 4px 8px;
     border-radius: 2px;
-    color: var(--color-white);
+    color: var(--color-text-white);
     box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
 
     &.error {
@@ -61,7 +61,6 @@
   .close {
     align-self: start;
     padding: 0 4px;
-    color: var(--color-white);
     font-size: 12px;
   }
 </style>

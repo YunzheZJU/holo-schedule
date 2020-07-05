@@ -124,7 +124,7 @@
       padding: 0 4px;
       border-radius: 2px;
       background: rgba(0, 0, 0, 0.8);
-      color: var(--color-white);
+      color: var(--color-text-white);
       font-size: 12px;
     }
   }

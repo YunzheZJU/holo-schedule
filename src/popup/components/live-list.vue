@@ -1,9 +1,10 @@
 <template>
   <Fragment>
     <button type="button" class="anchor" @click="handleClickAnchor">
-      {{ anchorName }} ({{ lives.length }})
+      <span>{{ anchorName }}</span>
+      <span>{{ lives.length }}</span>
     </button>
-    <ul class="list">
+    <ul v-if="lives.length" class="list">
       <LiveItem v-for="live in lives"
                 ref="items"
                 :key="live['id']"
@@ -63,13 +64,14 @@
           hintId = this.$hints.add({ text: `Loading ${this.type} lives...` })
           this.lives = await syncLives(this.type)
         } catch (err) {
+          console.error(err)
           this.$toasts.add({ type: 'error', text: err.message })
         } finally {
           this.$hints.remove(hintId)
         }
       },
       handleClickAnchor() {
-        return this.$refs.items[0]?.scrollIntoView({ behavior: 'smooth' })
+        return this.$refs.items?.[0]?.scrollIntoView({ behavior: 'smooth' })
       },
     },
   }
@@ -78,7 +80,7 @@
 <style lang="less" scoped>
   .anchor {
     /* Calculated from padding and line-height */
-    @anchor-height: 26px;
+    @anchor-height: 40px;
 
     each(range(2), {
       /* This positions .anchor when it is stuck */
@@ -91,25 +93,26 @@
     position: sticky;
     z-index: 1;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto;
     gap: 8px;
     height: @anchor-height;
-    padding: 4px 12px;
+    padding: 8px 16px;
     background-color: var(--color-bg-base);
     background-image: linear-gradient(var(--color-bg-light), var(--color-bg-light));
-    color: var(--color-text-light);
-    font-weight: 700;
-    font-size: 12px;
+    color: var(--color-theme);
+    font-size: 16px;
 
     &:hover {
       background-image: linear-gradient(var(--color-bg-normal), var(--color-bg-normal));
     }
 
-    &:before, &:after {
+    &:after {
       content: '';
-      position: relative;
-      top: -50%;
-      border-bottom: 1px solid var(--color-bd);
+      position: absolute;
+      right: 12px;
+      bottom: 4px;
+      left: 12px;
+      border-top: 1px solid;
     }
   }
 
@@ -119,7 +122,7 @@
     display: grid;
     grid-template-columns: auto;
     gap: 4px;
-    margin: 0;
+    margin: 4px 0;
     padding: 0;
     list-style: none;
   }

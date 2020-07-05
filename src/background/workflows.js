@@ -1,4 +1,4 @@
-import { reverse, uniqBy } from 'lodash'
+import { filter, reverse, uniqBy } from 'lodash'
 import {
   getChannels,
   getCurrentLives,
@@ -10,6 +10,11 @@ import store from 'store'
 import { getTimeAfterDays, getTimeBeforeDays } from 'utils'
 import browser from 'webextension-polyfill'
 
+const filterByTitle = lives => filter(
+  lives,
+  ({ platform, title }) => platform !== 'bilibili' || /B.*限/.test(title),
+)
+
 const getCachedEndedLives = () => store.get('endedLives')
 
 const syncEndedLives = async () => {
@@ -18,12 +23,11 @@ const syncEndedLives = async () => {
     ...cashedLives.map(({ start_at: startAt }) => new Date(startAt).getTime() / 1000),
   ) + 1 : Date.now()
 
-  // TODO: Filter bilibili lives
-  const lives = await getEndedLives({
+  const lives = filterByTitle(await getEndedLives({
     startAfter: getTimeBeforeDays(3),
     startBefore,
     limit: 10,
-  })
+  }))
 
   const endedLives = uniqBy([...reverse(lives), ...cashedLives], 'id')
 
@@ -35,8 +39,7 @@ const syncEndedLives = async () => {
 const getCachedCurrentLives = () => store.get('currentLives')
 
 const syncCurrentLives = async () => {
-  // TODO: Filter bilibili lives
-  const lives = await getCurrentLives()
+  const lives = filterByTitle(await getCurrentLives())
 
   await browser.browserAction.setBadgeText({ text: lives.length.toString() })
 
@@ -50,8 +53,9 @@ const syncCurrentLives = async () => {
 const getCachedScheduledLives = () => store.get('scheduledLives')
 
 const syncScheduledLives = async () => {
-  // TODO: Filter bilibili lives
-  const lives = await getScheduledLives({ startBefore: getTimeAfterDays(7) })
+  const lives = filterByTitle(await getScheduledLives({
+    startBefore: getTimeAfterDays(7),
+  }))
 
   await store.set({ scheduledLives: lives })
 

@@ -5,7 +5,7 @@
     </div>
     <div ref="body" class="body">
       <div ref="loading" class="loading">{{ loadingText }}</div>
-      <div class="scroll">
+      <div ref="scroll" class="scroll">
         <LiveListEnded ref="liveListEnded" />
         <LiveList type="current" />
         <LiveList type="scheduled" />

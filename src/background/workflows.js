@@ -26,7 +26,7 @@ const syncEndedLives = async () => {
   const lives = filterByTitle(await getEndedLives({
     startAfter: getTimeBeforeDays(3),
     startBefore,
-    limit: 10,
+    limit: 18,
   }))
 
   const endedLives = uniqBy([...reverse(lives), ...cashedLives], 'id')

@@ -19,30 +19,26 @@
   export default {
     name: 'LiveListEnded',
     components: { LiveItem },
-    props: {},
     data() {
       return {
         lives: getCachedLives('ended') ?? [],
         parentElement: null,
       }
     },
+    mounted() {
+      this.parentElement = this.$parent.$refs.scroll
+    },
     beforeUpdate() {
-      if (this.parentElement) {
-        this.savedScrollHeight = this.parentElement.scrollHeight
-        this.savedScrollTop = this.parentElement.scrollTop
-      }
+      this.savedScrollHeight = this.parentElement.scrollHeight
+      this.savedScrollTop = this.parentElement.scrollTop
     },
     updated() {
-      if (this.parentElement) {
-        const newScrollTop = this.savedScrollTop
-          + (this.parentElement.scrollHeight - this.savedScrollHeight)
-        this.parentElement.scrollTop = newScrollTop
-        setTimeout(() => {
-          this.parentElement.scrollTo({ top: newScrollTop - 30, behavior: 'smooth' })
-        }, 0)
-      } else {
-        this.parentElement = this.$refs.root.parentElement
-      }
+      const newScrollTop = this.savedScrollTop
+        + (this.parentElement.scrollHeight - this.savedScrollHeight)
+      this.parentElement.scrollTop = newScrollTop
+      setTimeout(() => {
+        this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
+      }, 0)
     },
     methods: {
       async load() {

@@ -1,6 +1,6 @@
 <template>
   <li ref="item">
-    <a class="item" :href="roomURL">
+    <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail">
         <!-- TODO: Default image -->
         <img class="cover" :src="live['cover']" :alt="live['title']">

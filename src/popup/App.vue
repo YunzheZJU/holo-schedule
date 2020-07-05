@@ -58,13 +58,19 @@
         if (ratio >= ratioThreshold.high) {
           clearInterval(this.interval)
 
-          // TODO: Skip the first run
-          await Promise.allSettled([
-            this.loadNewItems(),
-            sleep(2000),
-          ]).then(() => {
-            this.loadingText = 'Pull to load more'
-          })
+          if (!this.$SKIP_THE_FIRST_RUN) {
+            this.$SKIP_THE_FIRST_RUN = true
+            // This gives user a hint
+            await sleep(500)
+          } else {
+            await Promise.allSettled([
+              this.loadNewItems(),
+              // This is a workaround for touchpad scrolling
+              sleep(2000),
+            ]).then(() => {
+              this.loadingText = 'Pull to load more'
+            })
+          }
 
           this.hidePullHint()
         } else if (ratio >= ratioThreshold.low) {
@@ -81,8 +87,7 @@
         this.loadingText = 'Success'
       },
       hidePullHint() {
-        const bodyElement = this.$refs.body
-        bodyElement.scrollTo({ top: 30, behavior: 'smooth' })
+        this.$refs.body.scrollTo({ top: 30, behavior: 'smooth' })
       },
     },
   }
@@ -121,7 +126,7 @@
 
     .scroll {
       overflow-y: auto;
-      max-height: 540px;
+      height: 540px;
       scrollbar-width: none;
       /* 40px refers to anchor-height */
       scroll-padding: 2 * 40px;

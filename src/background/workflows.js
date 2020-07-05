@@ -1,4 +1,4 @@
-import { reverse } from 'lodash'
+import { reverse, uniqBy } from 'lodash'
 import {
   getChannels,
   getCurrentLives,
@@ -12,16 +12,11 @@ import browser from 'webextension-polyfill'
 
 const getCachedEndedLives = () => store.get('endedLives')
 
-const getLowestStartAt = (lives = []) => {
-  if (lives.length === 0) {
-    return undefined
-  }
-  return Math.min(...lives.map(({ start_at: startAt }) => new Date(startAt).getTime() / 1000))
-}
-
 const syncEndedLives = async () => {
   const cashedLives = getCachedEndedLives() ?? []
-  const startBefore = getLowestStartAt(cashedLives) ?? Date.now()
+  const startBefore = cashedLives.length ? Math.min(
+    ...cashedLives.map(({ start_at: startAt }) => new Date(startAt).getTime() / 1000),
+  ) + 1 : Date.now()
 
   // TODO: Filter bilibili lives
   const lives = await getEndedLives({
@@ -30,9 +25,9 @@ const syncEndedLives = async () => {
     limit: 10,
   })
 
-  const mergedLives = [...reverse(lives), ...cashedLives]
+  const endedLives = uniqBy([...reverse(lives), ...cashedLives], 'id')
 
-  await store.set({ endedLives: mergedLives })
+  await store.set({ endedLives })
 
   return getCachedEndedLives()
 }

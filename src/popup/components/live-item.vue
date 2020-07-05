@@ -4,6 +4,7 @@
       <div class="thumbnail">
         <!-- TODO: Default image -->
         <img class="cover" :src="live['cover']" :alt="live['title']">
+        <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
       </div>
       <div class="header">
         <img class="avatar"
@@ -23,13 +24,11 @@
       </div>
       <div class="content" :title="live['title']">{{ live['title'] }}</div>
       <div class="accessory">
-        <Fragment v-if="type === 'current'">
-          <div class="badge">LIVE NOW</div>
-          <RelativeTime class="start-at" :time="live['start_at']" />
-        </Fragment>
+        <div v-if="type === 'current'" class="badge">LIVE NOW</div>
         <div v-if="type === 'scheduled'" class="start-at">
           {{ new Date(live['start_at']).toLocaleString() }}
         </div>
+        <RelativeTime v-else class="start-at" :time="live['start_at']" />
       </div>
     </a>
   </li>
@@ -37,8 +36,8 @@
 
 <script>
   import RelativeTime from 'components/relative-time'
+  import { formatDuration } from 'utils'
   import { liveTypeValidator } from 'validators'
-  import { Fragment } from 'vue-fragment'
   import browser from 'webextension-polyfill'
 
   const {
@@ -47,7 +46,7 @@
 
   export default {
     name: 'LiveItem',
-    components: { RelativeTime, Fragment },
+    components: { RelativeTime },
     props: {
       type: {
         type: String,
@@ -80,6 +79,9 @@
           return `https://live.bilibili.com/${room}`
         }
         return '#'
+      },
+      duration() {
+        return formatDuration(this.live['duration'])
       },
     },
     methods: {

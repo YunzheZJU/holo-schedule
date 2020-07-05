@@ -6,5 +6,6 @@ const getTimeAfterDays = days => {
   return Math.floor(result.getTime() / 1000)
 }
 
-// eslint-disable-next-line import/prefer-default-export
-export { getTimeAfterDays }
+const getTimeBeforeDays = days => getTimeAfterDays(-days)
+
+export { getTimeAfterDays, getTimeBeforeDays }

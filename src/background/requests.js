@@ -1,5 +1,4 @@
 /* eslint-disable no-await-in-loop */
-import { getTimeAfterDays } from 'utils'
 
 const gatherResponse = async response => {
   if (response.headers.get('content-type').includes('application/json')) {
@@ -53,9 +52,22 @@ const fetchLives = async (...args) => {
   return currentLives.flat()
 }
 
+// TODO: Use lodash to convert keys
+const getEndedLives = async ({ startAfter, startBefore, ...options }) => {
+  const { value } = await liveFetcher('ended', {
+    start_after: startAfter,
+    start_before: startBefore,
+    ...options,
+  }).next()
+  return value
+}
+
 const getCurrentLives = () => fetchLives('current')
 
-const getScheduledLives = () => fetchLives('scheduled', { start_before: getTimeAfterDays(7) })
+const getScheduledLives = ({ startBefore, ...options }) => fetchLives('scheduled', {
+  start_before: startBefore,
+  ...options,
+})
 
 const getChannels = async () => {
   const { channels } = await fetchData('https://holo.dev/api/v1/channels?limit=100')
@@ -65,6 +77,7 @@ const getChannels = async () => {
 const getMembers = () => fetchData('https://holo.dev/api/v1/members')
 
 export {
+  getEndedLives,
   getCurrentLives,
   getScheduledLives,
   getChannels,

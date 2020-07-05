@@ -3,9 +3,13 @@
     <div class="head">
       <img class="logo" :src="popupLogo" alt="logo">
     </div>
-    <div class="body">
-      <LiveList type="current" />
-      <LiveList type="scheduled" />
+    <div ref="body" class="body">
+      <div ref="loading" class="loading">{{ loadingText }}</div>
+      <div class="scroll">
+        <LiveListEnded ref="liveListEnded" />
+        <LiveList type="current" />
+        <LiveList type="scheduled" />
+      </div>
       <VToast style="top: 64px;z-index: 1;" />
       <VHint style="z-index: 1" />
     </div>
@@ -13,20 +17,72 @@
 </template>
 
 <script>
-  import browser from 'webextension-polyfill'
   import LiveList from 'components/live-list'
+  import LiveListEnded from 'components/live-list-ended'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
+  import { sleep } from 'utils'
+  import browser from 'webextension-polyfill'
+
+  const ratioThreshold = { high: 0.99, low: 0.01 }
 
   export default {
     name: 'App',
-    components: { LiveList, VToast, VHint },
+    components: {
+      LiveListEnded, LiveList, VToast, VHint,
+    },
     data() {
-      return {}
+      return {
+        loadingText: 'Pull to load more',
+        interval: null,
+      }
     },
     computed: {
       popupLogo() {
         return browser.runtime.getURL('assets/popup_logo.svg')
+      },
+    },
+    mounted() {
+      const intersectionObserver = new IntersectionObserver(
+        this.onIntersectionChange, {
+          root: this.$refs.body,
+          threshold: Object.values(ratioThreshold),
+        },
+      )
+      intersectionObserver.observe(this.$refs.loading)
+    },
+    methods: {
+      async onIntersectionChange(entries) {
+        const ratio = entries[0].intersectionRatio
+
+        if (ratio >= ratioThreshold.high) {
+          clearInterval(this.interval)
+
+          // TODO: Skip the first run
+          await Promise.allSettled([
+            this.loadNewItems(),
+            sleep(2000),
+          ]).then(() => {
+            this.loadingText = 'Pull to load more'
+          })
+
+          this.hidePullHint()
+        } else if (ratio >= ratioThreshold.low) {
+          this.interval = setTimeout(this.hidePullHint, 1000)
+        } else {
+          clearInterval(this.interval)
+        }
+      },
+      async loadNewItems() {
+        this.loadingText = 'Loading'
+
+        await this.$refs.liveListEnded.load()
+
+        this.loadingText = 'Success'
+      },
+      hidePullHint() {
+        const bodyElement = this.$refs.body
+        bodyElement.scrollTo({ top: 30, behavior: 'smooth' })
       },
     },
   }
@@ -52,11 +108,27 @@
     overflow-y: auto;
     max-height: 540px;
     scrollbar-width: none;
-    /* 26px refers to anchor-height */
-    scroll-padding: 2 * 26px;
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    .loading {
+      padding: 4px 0;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .scroll {
+      overflow-y: auto;
+      max-height: 540px;
+      scrollbar-width: none;
+      /* 40px refers to anchor-height */
+      scroll-padding: 2 * 40px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 </style>

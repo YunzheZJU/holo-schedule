@@ -4,7 +4,7 @@
       <img class="logo" :src="popupLogo" alt="logo">
     </div>
     <div ref="body" class="body">
-      <div ref="loading" class="loading">{{ loadingText }}</div>
+      <div ref="loading" class="loading">{{ LoadingStatuses.get(loadingStatus).text }}</div>
       <div ref="scroll" class="scroll">
         <LiveListEnded ref="liveListEnded" />
         <LiveList type="current" />
@@ -33,13 +33,21 @@
     },
     data() {
       return {
-        loadingText: 'Pull to load more',
+        loadingStatus: 'idle',
         interval: null,
       }
     },
     computed: {
       popupLogo() {
         return browser.runtime.getURL('assets/popup_logo.svg')
+      },
+      LoadingStatuses() {
+        return new Map([
+          ['idle', { text: 'Pull to load more' }],
+          ['loading', { text: 'Loading' }],
+          ['success', { text: 'Success' }],
+          ['ended', { text: 'That\'s all' }],
+        ])
       },
     },
     mounted() {
@@ -68,7 +76,7 @@
               // This is a workaround for touchpad scrolling
               sleep(2000),
             ]).then(() => {
-              this.loadingText = 'Pull to load more'
+              this.loadingStatus = this.loadingStatus === 'ended' ? 'ended' : 'idle'
             })
           }
 
@@ -80,11 +88,14 @@
         }
       },
       async loadNewItems() {
-        this.loadingText = 'Loading'
+        if (this.loadingStatus === 'ended') {
+          return
+        }
+        this.loadingStatus = 'loading'
 
-        await this.$refs.liveListEnded.load()
+        const ended = await this.$refs.liveListEnded.load()
 
-        this.loadingText = 'Success'
+        this.loadingStatus = ended ? 'ended' : 'success'
       },
       hidePullHint() {
         this.$refs.body.scrollTo({ top: 30, behavior: 'smooth' })

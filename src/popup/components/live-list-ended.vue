@@ -45,13 +45,18 @@
         let hintId
         try {
           hintId = this.$hints.add({ text: 'Loading Ended lives...' })
-          this.lives = await syncLives('ended')
+          const updatedLives = await syncLives('ended')
+          if (updatedLives?.[0]?.['id'] === this.lives?.[0]?.['id']) {
+            return true
+          }
+          this.lives = updatedLives
         } catch (err) {
           console.error(err)
           this.$toasts.add({ type: 'error', text: err.message })
         } finally {
           this.$hints.remove(hintId)
         }
+        return false
       },
     },
   }

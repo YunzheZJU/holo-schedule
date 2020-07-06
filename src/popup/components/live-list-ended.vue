@@ -1,11 +1,18 @@
 <template>
   <ul v-if="lives.length" ref="root" class="list">
-    <LiveItem v-for="live in lives"
-              ref="items"
-              :key="live['id']"
-              type="ended"
-              :live="live"
-    />
+    <template v-for="(live, index) in lives">
+      <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)"
+           :key="`anchor-${live['id']}`"
+           class="date"
+      >
+        <span class="date-value">{{ getDateOfLive(index) }}</span>
+      </div>
+      <LiveItem ref="items"
+                :key="`item-${live['id']}`"
+                type="ended"
+                :live="live"
+      />
+    </template>
   </ul>
 </template>
 
@@ -58,6 +65,12 @@
         }
         return false
       },
+      getDateOfLive(index) {
+        if (index < 0) {
+          return undefined
+        }
+        return new Date(this.lives[index]['start_at']).getDate()
+      },
     },
   }
 </script>
@@ -72,5 +85,29 @@
     margin: 4px 0;
     padding: 0;
     list-style: none;
+  }
+
+  .date {
+    position: relative;
+    text-align: center;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      left: 16px;
+      height: 1px;
+      background-color: var(--color-bd);
+    }
+
+    .date-value {
+      position: relative;
+      padding: 0 4px;
+      background-color: var(--color-bg-light);
+      color: var(--color-text-light);
+      font-weight: 700;
+      font-size: 12px;
+    }
   }
 </style>

@@ -25,18 +25,18 @@
       <div class="content" :title="live['title']">{{ live['title'] }}</div>
       <div class="accessory">
         <div v-if="type === 'current'" class="badge">LIVE NOW</div>
-        <div v-if="type === 'scheduled'" class="start-at">
-          {{ new Date(live['start_at']).toLocaleString() }}
+        <div class="start-at" :title="startAtFull">
+          <template v-if="type === 'ended'">{{ startAtSimple }},</template>
+          <template v-if="type === 'scheduled'">{{ startAtCalendar }},</template>
+          <template>{{ startAtFromNow }}</template>
         </div>
-        <RelativeTime v-else class="start-at" :time="live['start_at']" />
       </div>
     </a>
   </li>
 </template>
 
 <script>
-  import RelativeTime from 'components/relative-time'
-  import { formatDuration } from 'utils'
+  import moment from 'moment'
   import { liveTypeValidator } from 'validators'
   import browser from 'webextension-polyfill'
 
@@ -46,7 +46,6 @@
 
   export default {
     name: 'LiveItem',
-    components: { RelativeTime },
     props: {
       type: {
         type: String,
@@ -81,7 +80,29 @@
         return '#'
       },
       duration() {
-        return formatDuration(this.live['duration'])
+        return moment.duration(this.live['duration'], 'seconds').format('h:mm:ss')
+      },
+      startAt() {
+        return moment(this.live['start_at'])
+      },
+      startAtFromNow() {
+        return this.startAt.fromNow()
+      },
+      startAtCalendar() {
+        return this.startAt.calendar({
+          sameDay: '[Today at ]H:mm A',
+          nextDay: '[Tomorrow ]H:mm A',
+          nextWeek: 'dddd[ at ]H:mm A',
+          lastDay: '[Yesterday ]H:mm A',
+          lastWeek: '[Last] dddd H:mm A',
+          sameElse: 'DD/MM/YYYY H:mm A',
+        })
+      },
+      startAtSimple() {
+        return this.startAt.format('H:mm A')
+      },
+      startAtFull() {
+        return this.startAt.format('MMMM D, YYYY H:mm A')
       },
     },
     methods: {

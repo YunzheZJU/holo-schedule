@@ -3,9 +3,9 @@
     <template v-for="(live, index) in lives">
       <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)"
            :key="`anchor-${live['id']}`"
-           class="date"
+           class="anchor"
       >
-        <span class="date-value">{{ getDateOfLive(index) }}</span>
+        <span class="date">{{ formatCalendar(lives[index]) }}</span>
       </div>
       <LiveItem ref="items"
                 :key="`item-${live['id']}`"
@@ -19,6 +19,7 @@
 <script>
   // TODO: Merge into live-list
   import LiveItem from 'components/live-item'
+  import moment from 'moment'
   import browser from 'webextension-polyfill'
 
   const { workflows: { getCachedLives, syncLives } } = browser.extension.getBackgroundPage()
@@ -69,7 +70,14 @@
         if (index < 0) {
           return undefined
         }
-        return new Date(this.lives[index]['start_at']).getDate()
+        return moment(this.lives[index]['start_at']).date()
+      },
+      formatCalendar(live) {
+        return moment(live['start_at']).calendar({
+          lastDay: 'MMM Do, [Yesterday]',
+          lastWeek: 'MMM Do, dddd',
+          sameElse: 'MMM Do',
+        })
       },
     },
   }
@@ -87,23 +95,27 @@
     list-style: none;
   }
 
-  .date {
-    position: relative;
+  .anchor {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 4px 0;
+    background-color: var(--color-bg-light);
     text-align: center;
 
     &:before {
       content: '';
       position: absolute;
       top: 50%;
-      right: 16px;
-      left: 16px;
+      right: 12px;
+      left: 12px;
       height: 1px;
       background-color: var(--color-bd);
     }
 
-    .date-value {
+    .date {
       position: relative;
-      padding: 0 4px;
+      padding: 0 8px;
       background-color: var(--color-bg-light);
       color: var(--color-text-light);
       font-weight: 700;

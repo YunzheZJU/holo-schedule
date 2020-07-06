@@ -7,7 +7,7 @@ import {
   getScheduledLives,
 } from 'requests'
 import store from 'store'
-import { getTimeAfterDays, getTimeBeforeDays } from 'utils'
+import { getUnixAfterDays, getUnixBeforeDays, getUnix } from 'utils'
 import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
@@ -20,11 +20,11 @@ const getCachedEndedLives = () => store.get('endedLives')
 const syncEndedLives = async () => {
   const cashedLives = getCachedEndedLives() ?? []
   const startBefore = cashedLives.length ? Math.min(
-    ...cashedLives.map(({ start_at: startAt }) => new Date(startAt).getTime() / 1000),
-  ) + 1 : Date.now()
+    ...cashedLives.map(({ start_at: startAt }) => getUnix(startAt)),
+  ) + 1 : getUnix()
 
   const lives = filterByTitle(await getEndedLives({
-    startAfter: getTimeBeforeDays(3),
+    startAfter: getUnixBeforeDays(3),
     startBefore,
     limit: 18,
   }))
@@ -54,7 +54,7 @@ const getCachedScheduledLives = () => store.get('scheduledLives')
 
 const syncScheduledLives = async () => {
   const lives = filterByTitle(await getScheduledLives({
-    startBefore: getTimeAfterDays(7),
+    startBefore: getUnixAfterDays(7),
   }))
 
   await store.set({ scheduledLives: lives })

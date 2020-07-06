@@ -1,11 +1,9 @@
-const getTimeAfterDays = days => {
-  const result = new Date()
+import moment from 'moment'
 
-  result.setDate(result.getDate() + days)
+const getUnixAfterDays = days => moment().add(days, 'days').unix()
 
-  return Math.floor(result.getTime() / 1000)
-}
+const getUnixBeforeDays = days => getUnixAfterDays(-days)
 
-const getTimeBeforeDays = days => getTimeAfterDays(-days)
+const getUnix = input => moment(input).unix()
 
-export { getTimeAfterDays, getTimeBeforeDays }
+export { getUnixAfterDays, getUnixBeforeDays, getUnix }

@@ -1,3 +1,5 @@
+import 'moment'
+import 'moment-duration-format'
 import HintPlugin from 'plugins/hint'
 import ToastPlugin from 'plugins/toast'
 import Vue from 'vue'

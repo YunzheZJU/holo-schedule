@@ -42,13 +42,8 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.js$/,
-          use: [{
-            loader: '@sucrase/webpack-loader',
-            options: {
-              // Necessary
-              transforms: [],
-            },
-          }],
+          exclude: /node_modules/,
+          loader: 'babel-loader',
         },
       ],
     },

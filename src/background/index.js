@@ -1,7 +1,13 @@
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
+import store from 'store'
+import alarm from 'alarm'
 
 window.workflows = workflows
+window.store = store
+window.alarm = alarm
+
+alarm.init(store)
 
 const { syncChannels, syncCurrentLives, syncMembers } = workflows
 

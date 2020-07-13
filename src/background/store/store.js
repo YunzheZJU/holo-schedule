@@ -1,6 +1,9 @@
 import { cloneDeep } from 'lodash'
+import browser from 'webextension-polyfill'
 
-const createStore = storage => {
+const storage = browser.storage.local
+
+const createStore = () => {
   const getStorage = async () => {
     const { store: $store = {} } = await storage.get('store')
     return $store

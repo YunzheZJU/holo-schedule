@@ -1,7 +1,6 @@
 import createStore from './store'
-import storage from './storage'
 
-const store = createStore(storage)
+const store = createStore()
 
 store.init()
   .catch(err => console.error(err))

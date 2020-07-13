@@ -38,6 +38,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.1.0",
+    "jest-webextension-mock": "^3.6.0",
     "less": "^3.11.3",
     "less-loader": "^6.1.1",
     "resolve-entry-modules-webpack-plugin": "^2.0.0",

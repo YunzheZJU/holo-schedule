@@ -49,6 +49,7 @@ module.exports = (env, argv) => {
     },
     resolve: {
       extensions: ['.js', '.json', '.vue'],
+      modules: [path.join(ROOT_PATH, 'src'), 'node_modules'],
     },
     plugins: [
       new CopyPlugin({

@@ -1,8 +1,8 @@
-import { createEnhancedArray } from 'lib/enhancedArray'
+import { createEnhancedArray } from 'shared/lib/enhancedArray'
 
-const hints = createEnhancedArray([
-  // { id: 999, text: 'Default hint' },
-])
+const hints = createEnhancedArray()
+
+// hints.add({ id: 999, text: 'Default hint' })
 
 const HintPlugin = {
   install(Vue) {

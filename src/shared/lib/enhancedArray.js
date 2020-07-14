@@ -1,7 +1,7 @@
 import { uniqueId } from 'lodash'
 
-const createEnhancedArray = (defaultValue = []) => {
-  const enhancedArray = defaultValue
+const createEnhancedArray = () => {
+  const enhancedArray = []
 
   Object.defineProperty(enhancedArray, 'any', {
     get() {

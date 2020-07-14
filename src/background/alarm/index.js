@@ -1,6 +1,6 @@
 import { differenceBy, find, uniqBy } from 'lodash'
 import moment from 'moment'
-import { createEnhancedArray } from '../lib/enhancedArray'
+import { createEnhancedArray } from 'shared/lib/enhancedArray'
 
 const alarm = {
   livesToAlarm: createEnhancedArray(),

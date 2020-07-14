@@ -1,11 +1,5 @@
 import { createEnhancedArray } from './enhancedArray'
 
-test('should use defaults', () => {
-  const enhancedArray = createEnhancedArray([{ text: 'Item' }])
-  expect(enhancedArray.any).toBeTruthy()
-  expect(enhancedArray.last.text).toEqual('Item')
-})
-
 test('should add items', () => {
   const enhancedArray = createEnhancedArray()
   expect(enhancedArray.any).toBeFalsy()

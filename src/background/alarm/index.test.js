@@ -1,5 +1,5 @@
 import moment from 'moment'
-import createStore from '../store/store'
+import createStore from 'store/store'
 import alarm from './index'
 
 test('should work', async () => {

@@ -1,0 +1,5 @@
+export const ENDED_LIVES = 'endedLives'
+export const CURRENT_LIVES = 'currentLives'
+export const SCHEDULED_LIVES = 'scheduledLives'
+export const CHANNELS = 'channels'
+export const MEMBERS = 'members'

@@ -17,11 +17,13 @@
 
 <script>
   import LiveItem from 'components/live-item'
+  import { CURRENT_LIVES, SCHEDULED_LIVES } from 'shared/store/keys'
   import { liveTypeValidator } from 'validators'
   import { Fragment } from 'vue-fragment'
+  import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
-  const { workflows: { getCachedLives, syncLives } } = browser.extension.getBackgroundPage()
+  const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
 
   const anchorNameMap = new Map([
     ['ended', 'Ended Live'],
@@ -39,15 +41,16 @@
         default: 'current',
       },
     },
-    data() {
-      return {
-        lives: getCachedLives(this.type) ?? [],
-      }
-    },
     computed: {
       anchorName() {
         return anchorNameMap.get(this.type)
       },
+      ...mapState({
+        lives(state) {
+          const key = this.type === 'current' ? CURRENT_LIVES : SCHEDULED_LIVES
+          return state[key]
+        },
+      }),
     },
     async created() {
       await this.reloadLives()
@@ -62,7 +65,7 @@
         let hintId
         try {
           hintId = this.$hints.add({ text: `Loading ${this.type} lives...` })
-          this.lives = await syncLives(this.type)
+          await syncLives(this.type)
         } catch (err) {
           console.error(err)
           this.$toasts.add({ type: 'error', text: err.message })

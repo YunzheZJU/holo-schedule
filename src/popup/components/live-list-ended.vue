@@ -20,18 +20,24 @@
   // TODO: Merge into live-list
   import LiveItem from 'components/live-item'
   import moment from 'moment'
+  import { ENDED_LIVES } from 'shared/store/keys'
+  import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
-  const { workflows: { getCachedLives, syncLives } } = browser.extension.getBackgroundPage()
+  const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
 
   export default {
     name: 'LiveListEnded',
     components: { LiveItem },
     data() {
       return {
-        lives: getCachedLives('ended') ?? [],
         parentElement: null,
       }
+    },
+    computed: {
+      ...mapState({
+        lives: ENDED_LIVES,
+      }),
     },
     mounted() {
       this.parentElement = this.$parent.$refs.scroll
@@ -57,7 +63,6 @@
           if (updatedLives?.[0]?.['id'] === this.lives?.[0]?.['id']) {
             return true
           }
-          this.lives = updatedLives
         } catch (err) {
           console.error(err)
           this.$toasts.add({ type: 'error', text: err.message })

@@ -6,8 +6,15 @@ import {
   getMembers,
   getScheduledLives,
 } from 'requests'
+import {
+  CHANNELS,
+  CURRENT_LIVES,
+  ENDED_LIVES,
+  MEMBERS,
+  SCHEDULED_LIVES,
+} from 'shared/store/keys'
 import store from 'store'
-import { getUnixAfterDays, getUnixBeforeDays, getUnix } from 'utils'
+import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
 import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
@@ -15,7 +22,7 @@ const filterByTitle = lives => filter(
   ({ platform, title }) => platform !== 'bilibili' || /B.*限/.test(title),
 )
 
-const getCachedEndedLives = () => store.get('endedLives')
+const getCachedEndedLives = () => store.get(ENDED_LIVES)
 
 const syncEndedLives = async () => {
   const cashedLives = getCachedEndedLives() ?? []
@@ -36,7 +43,7 @@ const syncEndedLives = async () => {
   return getCachedEndedLives()
 }
 
-const getCachedCurrentLives = () => store.get('currentLives')
+const getCachedCurrentLives = () => store.get(CURRENT_LIVES)
 
 const syncCurrentLives = async () => {
   const lives = filterByTitle(await getCurrentLives())
@@ -50,7 +57,7 @@ const syncCurrentLives = async () => {
   return getCachedCurrentLives()
 }
 
-const getCachedScheduledLives = () => store.get('scheduledLives')
+const getCachedScheduledLives = () => store.get(SCHEDULED_LIVES)
 
 const syncScheduledLives = async () => {
   const lives = filterByTitle(await getScheduledLives({
@@ -62,7 +69,7 @@ const syncScheduledLives = async () => {
   return getCachedScheduledLives()
 }
 
-const getCachedChannels = () => store.get('channels')
+const getCachedChannels = () => store.get(CHANNELS)
 
 const syncChannels = async () => {
   const channels = await getChannels()
@@ -72,7 +79,7 @@ const syncChannels = async () => {
   return getCachedChannels()
 }
 
-const getCachedMembers = () => store.get('members')
+const getCachedMembers = () => store.get(MEMBERS)
 
 const syncMembers = async () => {
   const members = await getMembers()

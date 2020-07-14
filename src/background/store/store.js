@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash'
+import { cloneDeep, pull } from 'lodash'
 import browser from 'webextension-polyfill'
 
 const storage = browser.storage.local
@@ -9,11 +9,23 @@ const createStore = () => {
     return $store
   }
 
+  const ports = []
+
+  const onConnect = port => {
+    if (port.name !== 'store') return
+
+    ports.push(port)
+
+    port.onDisconnect.addListener(() => pull(ports, port))
+  }
+
   return {
     data: {},
     callbacks: [],
+    ports,
     async init() {
       await this.set(await getStorage())
+      browser.runtime.onConnect.addListener(onConnect)
     },
     get(key) {
       return cloneDeep(this.data)[key]
@@ -26,6 +38,10 @@ const createStore = () => {
         this.data[key] = value
 
         this.callbacks.forEach(callback => callback(key, value, oldValue))
+
+        this.ports.forEach(port => {
+          port.postMessage({ key, value })
+        })
       })
       if (toStorage) {
         await storage.set({ store: { ...await getStorage(), ...obj } })

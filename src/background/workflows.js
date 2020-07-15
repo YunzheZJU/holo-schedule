@@ -1,4 +1,6 @@
-import { filter, reverse, uniqBy } from 'lodash'
+import {
+  differenceBy, filter, reverse, uniqBy,
+} from 'lodash'
 import {
   getChannels,
   getCurrentLives,
@@ -52,7 +54,14 @@ const syncCurrentLives = async () => {
 
   console.log(`[syncLives]Badge text has been set to ${lives.length}`)
 
-  await store.set({ currentLives: lives })
+  // Simplified cause here is the only write to currentLives
+  await store.set({
+    currentLives: lives,
+    endedLives: [
+      ...(getCachedEndedLives() ?? []),
+      ...differenceBy((getCachedCurrentLives() ?? []), lives, 'id'),
+    ],
+  })
 
   return getCachedCurrentLives()
 }

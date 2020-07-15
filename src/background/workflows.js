@@ -38,9 +38,9 @@ const syncEndedLives = async () => {
     limit: 18,
   }))
 
-  const endedLives = uniqBy([...reverse(lives), ...cashedLives], 'id')
-
-  await store.set({ endedLives })
+  await store.set({
+    [ENDED_LIVES]: uniqBy([...reverse(lives), ...cashedLives], 'id'),
+  })
 
   return getCachedEndedLives()
 }
@@ -54,10 +54,10 @@ const syncCurrentLives = async () => {
 
   console.log(`[syncLives]Badge text has been set to ${lives.length}`)
 
-  // Simplified cause here is the only write to currentLives
+  // Subscription is simplified cause here is the only mutation of currentLives
   await store.set({
-    currentLives: lives,
-    endedLives: [
+    [CURRENT_LIVES]: lives,
+    [ENDED_LIVES]: [
       ...(getCachedEndedLives() ?? []),
       ...differenceBy((getCachedCurrentLives() ?? []), lives, 'id'),
     ],
@@ -73,7 +73,7 @@ const syncScheduledLives = async () => {
     startBefore: getUnixAfterDays(7),
   }))
 
-  await store.set({ scheduledLives: lives })
+  await store.set({ [SCHEDULED_LIVES]: lives })
 
   return getCachedScheduledLives()
 }
@@ -83,7 +83,7 @@ const getCachedChannels = () => store.get(CHANNELS)
 const syncChannels = async () => {
   const channels = await getChannels()
 
-  await store.set({ channels }, true)
+  await store.set({ [CHANNELS]: channels }, true)
 
   return getCachedChannels()
 }
@@ -93,7 +93,7 @@ const getCachedMembers = () => store.get(MEMBERS)
 const syncMembers = async () => {
   const members = await getMembers()
 
-  await store.set({ members }, true)
+  await store.set({ [MEMBERS]: members }, true)
 
   return getCachedMembers()
 }

@@ -119,8 +119,13 @@ const syncLives = type => {
 }
 
 export default {
+  filterByTitle,
   getCachedCurrentLives,
   syncCurrentLives,
+  getCachedEndedLives,
+  syncEndedLives,
+  getCachedScheduledLives,
+  syncScheduledLives,
   getCachedChannels,
   syncChannels,
   getCachedMembers,

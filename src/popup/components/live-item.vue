@@ -5,6 +5,16 @@
         <!-- TODO: Default image -->
         <img class="cover" :src="live['cover']" :alt="live['title']">
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
+        <button v-if="type === 'scheduled'"
+                :class="['remind', {active: isScheduled}]"
+                @click.stop.prevent="handleRemind"
+        >
+          <span class="text">
+            <template v-if="isScheduled">CANCEL REMINDER</template>
+            <template v-else>REMIND ME</template>
+          </span>
+          <h-icon name="alarm" class="icon" />
+        </button>
       </div>
       <div class="header">
         <img class="avatar"
@@ -36,15 +46,17 @@
 </template>
 
 <script>
+  import HIcon from 'components/h-icon'
   import moment from 'moment'
   import { constructRoomUrl } from 'shared/utils'
   import { liveTypeValidator } from 'validators'
   import browser from 'webextension-polyfill'
 
-  const { workflows: { getMember } } = browser.extension.getBackgroundPage()
+  const { alarm, workflows: { getMember } } = browser.extension.getBackgroundPage()
 
   export default {
     name: 'LiveItem',
+    components: { HIcon },
     props: {
       type: {
         type: String,
@@ -57,6 +69,11 @@
           return {}
         },
       },
+    },
+    data() {
+      return {
+        alarmCacheFlag: Date.now(),
+      }
     },
     computed: {
       defaultAvatar() {
@@ -93,10 +110,21 @@
       startAtFull() {
         return this.startAt.format('MMMM D, YYYY H:mm A')
       },
+      isScheduled() {
+        return this.alarmCacheFlag && alarm.isScheduled(this.live)
+      },
     },
     methods: {
       scrollIntoView(...args) {
         this.$refs.item.scrollIntoView(...args)
+      },
+      handleRemind() {
+        if (this.isScheduled) {
+          alarm.remove(this.live)
+        } else {
+          alarm.schedule(this.live)
+        }
+        this.alarmCacheFlag = Date.now()
       },
     },
   }
@@ -112,6 +140,10 @@
 
     &:hover {
       background: var(--color-bg-normal);
+    }
+
+    &:not(:hover) .remind:not(.active) {
+      display: none;
     }
   }
 
@@ -129,7 +161,7 @@
       height: 100%;
     }
 
-    .badge {
+    .badge, .remind {
       position: absolute;
       right: 4px;
       bottom: 4px;
@@ -138,6 +170,33 @@
       background: rgba(0, 0, 0, 0.8);
       color: var(--color-text-white);
       font-size: 12px;
+    }
+
+    .remind {
+      display: grid;
+      grid-template-columns: auto;
+      grid-auto-columns: auto;
+      grid-auto-flow: column;
+      gap: 4px;
+      align-items: center;
+      width: unset;
+      padding: 4px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 1);
+      }
+
+      &:not(:hover) .text {
+        display: none;
+      }
+
+      .icon {
+        font-size: 16px;
+      }
+
+      &.active .icon {
+        color: var(--color-theme);
+      }
     }
   }
 

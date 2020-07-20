@@ -21,7 +21,7 @@ import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
   lives,
-  ({ platform, title }) => platform !== 'bilibili' || /B.*限/.test(title),
+  ({ platform, title }) => platform !== 'bilibili' || /B.*限/i.test(title),
 )
 
 const getCachedEndedLives = () => store.get(ENDED_LIVES)

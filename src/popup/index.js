@@ -1,3 +1,4 @@
+import 'assets/iconfont'
 import 'moment'
 import 'moment-duration-format'
 import HintPlugin from 'plugins/hint'

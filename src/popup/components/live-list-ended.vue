@@ -79,6 +79,7 @@
       },
       formatCalendar(live) {
         return moment(live['start_at']).calendar({
+          sameDay: '[Today]',
           lastDay: 'MMM Do, [Yesterday]',
           lastWeek: 'MMM Do, dddd',
           sameElse: 'MMM Do',

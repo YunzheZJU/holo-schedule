@@ -2,7 +2,19 @@ import moment from 'moment'
 import createStore from 'store/store'
 import alarm from './index'
 
-test('should work', async () => {
+test('should schedule and remove', async () => {
+  const live = { id: 0 }
+
+  alarm.schedule(live)
+
+  expect(alarm.isScheduled(live)).toBeTruthy()
+
+  alarm.remove(live)
+
+  expect(alarm.isScheduled(live)).toBeFalsy()
+})
+
+test('should subscribe to store', async () => {
   const store = createStore()
   await store.init()
   alarm.init(store)

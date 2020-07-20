@@ -8,10 +8,16 @@ const alarm = {
   savedScheduledLives: [],
   fire({ id, title }) {
     console.log(`An alarm has been fired: ${title}`)
-    this.livesToAlarm.remove(find(this.livesToAlarm, { id }))
+    this.remove({ id })
   },
   schedule(live) {
     return this.livesToAlarm.add(live)
+  },
+  remove(live) {
+    this.livesToAlarm.remove(find(this.livesToAlarm, { id: live['id'] }))
+  },
+  isScheduled(live) {
+    return find(this.livesToAlarm, { id: live['id'] })
   },
   init(store) {
     store.subscribe('currentLives', (lives, prevLives) => {

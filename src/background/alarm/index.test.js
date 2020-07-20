@@ -2,7 +2,7 @@ import moment from 'moment'
 import createStore from 'store/store'
 import alarm from './index'
 
-test('should schedule and remove', async () => {
+test('should schedule and remove alarms', async () => {
   const live = { id: 0 }
 
   alarm.schedule(live)
@@ -269,4 +269,40 @@ test('should subscribe to store', async () => {
   })
   expect(alarm.fire).toHaveBeenCalledTimes(0)
   alarm.fire.mockClear()
+})
+
+test('should fire scheduled alarms', async () => {
+  const store = createStore()
+  await store.init()
+  alarm.init(store)
+
+  alarm.fire = jest.fn(alarm.fire)
+
+  // Initialize
+  await store.set({
+    currentLives: [],
+    scheduledLives: [],
+  })
+
+  // Schedule a live and set up an alarm
+  const live = {
+    id: 0,
+    title: 'Title',
+    start_at: moment().add(15, 'minutes').toISOString(),
+  }
+  await store.set({
+    currentLives: [],
+    scheduledLives: [live],
+  })
+  alarm.schedule(live)
+  expect(alarm.isScheduled(live)).toBeTruthy()
+
+  // The scheduled live has started
+  await store.set({
+    currentLives: [live],
+    scheduledLives: [],
+  })
+  expect(alarm.fire).toHaveBeenCalledTimes(1)
+
+  expect(alarm.isScheduled(live)).toBeFalsy()
 })

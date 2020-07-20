@@ -6,10 +6,6 @@ const alarm = {
   livesToAlarm: createEnhancedArray(),
   savedCurrentLives: [],
   savedScheduledLives: [],
-  fire({ id, title }) {
-    console.log(`An alarm has been fired: ${title}`)
-    this.remove({ id })
-  },
   schedule(live) {
     return this.livesToAlarm.add(live)
   },
@@ -19,13 +15,17 @@ const alarm = {
   isScheduled(live) {
     return find(this.livesToAlarm, { id: live['id'] })
   },
+  fire({ id, title }) {
+    console.log(`An alarm has been fired: ${title}`)
+    this.remove({ id })
+  },
   init(store) {
     store.subscribe('currentLives', (lives, prevLives) => {
       // Skip the first run
       if (prevLives !== undefined) {
         // Scheduled alarms
         differenceBy(lives, this.savedCurrentLives, 'id').forEach(live => {
-          if (find(this.livesToAlarm, { id: live['id'] })) {
+          if (this.isScheduled(live)) {
             this.fire(live)
           }
         })

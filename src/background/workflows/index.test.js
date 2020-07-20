@@ -145,7 +145,7 @@ test('should sync current lives', async () => {
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesOne)
-  expect(store.data[ENDED_LIVES]).toEqual([])
+  expect(store.data[ENDED_LIVES]).toEqual(undefined)
   expect(returnValueOne).toEqual(currentLivesOne)
   // Second run
   getCurrentLives.mockClear()

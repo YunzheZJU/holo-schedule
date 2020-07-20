@@ -55,13 +55,14 @@ const syncCurrentLives = async () => {
   console.log(`[syncLives]Badge text has been set to ${lives.length}`)
 
   // Subscription is simplified cause here is the only mutation of currentLives
-  await store.set({
-    [CURRENT_LIVES]: lives,
-    [ENDED_LIVES]: [
-      ...(getCachedEndedLives() ?? []),
-      ...differenceBy((getCachedCurrentLives() ?? []), lives, 'id'),
-    ],
-  })
+  const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), lives, 'id')
+  if (newEndedLives.length > 0) {
+    await store.set({
+      [ENDED_LIVES]: [...(getCachedEndedLives() ?? []), ...newEndedLives],
+    })
+  }
+
+  await store.set({ [CURRENT_LIVES]: lives })
 
   return getCachedCurrentLives()
 }

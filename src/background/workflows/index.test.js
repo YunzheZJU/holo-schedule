@@ -63,7 +63,7 @@ test('should get cached ended lives', async () => {
 
   expect(workflows.getCachedEndedLives()).toEqual(undefined)
 
-  store.set({ [ENDED_LIVES]: endedLives })
+  await store.set({ [ENDED_LIVES]: endedLives })
 
   expect(workflows.getCachedEndedLives()).toEqual(endedLives)
 })
@@ -130,7 +130,7 @@ test('should get cached current lives', async () => {
 
   expect(workflows.getCachedCurrentLives()).toEqual(undefined)
 
-  store.set({ [CURRENT_LIVES]: currentLives })
+  await store.set({ [CURRENT_LIVES]: currentLives })
 
   expect(workflows.getCachedCurrentLives()).toEqual(currentLives)
 })
@@ -180,7 +180,7 @@ test('should get cached scheduled lives', async () => {
 
   expect(workflows.getCachedScheduledLives()).toEqual(undefined)
 
-  store.set({ [SCHEDULED_LIVES]: scheduledLives })
+  await store.set({ [SCHEDULED_LIVES]: scheduledLives })
 
   expect(workflows.getCachedScheduledLives()).toEqual(scheduledLives)
 })
@@ -205,7 +205,7 @@ test('should get cached channels', async () => {
 
   expect(workflows.getCachedChannels()).toEqual(undefined)
 
-  store.set({ [CHANNELS]: channels })
+  await store.set({ [CHANNELS]: channels })
 
   expect(workflows.getCachedChannels()).toEqual(channels)
 })
@@ -226,7 +226,7 @@ test('should get cached members', async () => {
 
   expect(workflows.getCachedMembers()).toEqual(undefined)
 
-  store.set({ [MEMBERS]: members })
+  await store.set({ [MEMBERS]: members })
 
   expect(workflows.getCachedMembers()).toEqual(members)
 })

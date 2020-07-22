@@ -1,6 +1,10 @@
 import moment from 'moment'
-import createStore from 'store/store'
+import notification from 'notification'
+import { CHANNELS, MEMBERS } from 'shared/store/keys'
+import store from 'store'
 import alarm from './index'
+
+jest.mock('notification')
 
 test('should schedule and remove alarms', async () => {
   const live = { id: 0 }
@@ -15,8 +19,6 @@ test('should schedule and remove alarms', async () => {
 })
 
 test('should subscribe to store', async () => {
-  const store = createStore()
-  await store.init()
   alarm.init(store)
 
   alarm.fire = jest.fn(alarm.fire)
@@ -272,8 +274,6 @@ test('should subscribe to store', async () => {
 })
 
 test('should fire scheduled alarms', async () => {
-  const store = createStore()
-  await store.init()
   alarm.init(store)
 
   alarm.fire = jest.fn(alarm.fire)
@@ -305,4 +305,28 @@ test('should fire scheduled alarms', async () => {
   expect(alarm.fire).toHaveBeenCalledTimes(1)
 
   expect(alarm.isScheduled(live)).toBeFalsy()
+})
+
+test('should create notification when firing alarms', async () => {
+  const members = [{ id: 1, name: 'Member', avatar: 'https://example.com' }]
+  const channels = [{ id: 1, member_id: 1 }]
+  const live = {
+    id: 1,
+    platform: 'youtube',
+    title: 'Title',
+    channel_id: 1,
+    room: 'Room',
+  }
+
+  await store.set({ [MEMBERS]: members, [CHANNELS]: channels })
+  notification.create = jest.fn()
+
+  alarm.fire(live)
+
+  expect(notification.create).toHaveBeenCalledTimes(1)
+  expect(notification.create).toHaveBeenCalledWith(live.id.toString(), expect.objectContaining({
+    title: live.title,
+    message: `${members[0].name} is waiting for you`,
+    iconUrl: members[0].avatar,
+  }))
 })

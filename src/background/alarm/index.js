@@ -1,6 +1,10 @@
 import { differenceBy, find, uniqBy } from 'lodash'
 import moment from 'moment'
+import notification from 'notification'
 import { createEnhancedArray } from 'shared/lib/enhancedArray'
+import { constructRoomUrl } from 'shared/utils'
+import browser from 'webextension-polyfill'
+import workflows from 'workflows'
 
 const alarm = {
   livesToAlarm: createEnhancedArray(),
@@ -15,8 +19,21 @@ const alarm = {
   isScheduled(live) {
     return find(this.livesToAlarm, { id: live['id'] })
   },
-  fire({ id, title }) {
-    console.log(`An alarm has been fired: ${title}`)
+  fire(live) {
+    const { id, title } = live
+    const member = workflows.getMember(live)
+
+    notification.create(id.toString(), {
+      title,
+      message: `${member['name']} is waiting for you`,
+      iconUrl: member['avatar'] ?? browser.runtime.getURL('assets/default_avatar.png'),
+      onClick() {
+        browser.tabs.create({ url: constructRoomUrl(live) }).then(
+          () => console.log('Successfully created a tab'),
+        )
+      },
+    })
+
     this.remove({ id })
   },
   init(store) {

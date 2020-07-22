@@ -37,6 +37,7 @@
 
 <script>
   import moment from 'moment'
+  import { constructRoomUrl } from 'shared/utils'
   import { liveTypeValidator } from 'validators'
   import browser from 'webextension-polyfill'
 
@@ -70,14 +71,7 @@
         return members.find(({ id }) => id === channel['member_id']) ?? {}
       },
       roomURL() {
-        const { platform, room } = this.live
-        if (platform === 'youtube') {
-          return `https://www.youtube.com/watch?v=${room}`
-        }
-        if (platform === 'bilibili') {
-          return `https://live.bilibili.com/${room}`
-        }
-        return '#'
+        return constructRoomUrl(this.live) ?? '#'
       },
       duration() {
         return moment.duration(this.live['duration'], 'seconds').format('h:mm:ss')

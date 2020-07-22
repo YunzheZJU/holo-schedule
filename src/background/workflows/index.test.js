@@ -241,3 +241,17 @@ test('should sync members', async () => {
   expect(store.data[MEMBERS]).toEqual(members)
   expect(returnValue).toEqual(members)
 })
+
+test('should get member info', async () => {
+  const members = [{ id: 1, name: 'Member' }]
+  const channels = [{ id: 1, member_id: 1 }, { id: 1, member_id: 1 }]
+  const liveOne = { channel_id: 1 }
+  const liveTwo = { channel_id: 2 }
+  const liveThree = { channel_id: 3 }
+
+  await store.set({ [MEMBERS]: members, [CHANNELS]: channels })
+
+  expect(workflows.getMember(liveOne)).toEqual(members[0])
+  expect(workflows.getMember(liveTwo)).toEqual({})
+  expect(workflows.getMember(liveThree)).toEqual({})
+})

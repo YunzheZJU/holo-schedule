@@ -119,6 +119,13 @@ const syncLives = type => {
   return syncScheduledLives()
 }
 
+const getMember = live => {
+  const channels = getCachedChannels() ?? []
+  const members = getCachedMembers() ?? []
+  const channel = channels.find(({ id }) => id === live['channel_id']) ?? {}
+  return members.find(({ id }) => id === channel['member_id']) ?? {}
+}
+
 export default {
   filterByTitle,
   getCachedCurrentLives,
@@ -133,4 +140,5 @@ export default {
   syncMembers,
   getCachedLives,
   syncLives,
+  getMember,
 }

@@ -41,9 +41,7 @@
   import { liveTypeValidator } from 'validators'
   import browser from 'webextension-polyfill'
 
-  const {
-    workflows: { getCachedChannels, getCachedMembers },
-  } = browser.extension.getBackgroundPage()
+  const { workflows: { getMember } } = browser.extension.getBackgroundPage()
 
   export default {
     name: 'LiveItem',
@@ -65,10 +63,7 @@
         return browser.runtime.getURL('assets/default_avatar.png')
       },
       member() {
-        const channels = getCachedChannels() || []
-        const members = getCachedMembers() || []
-        const channel = channels.find(({ id }) => id === this.live['channel_id']) ?? {}
-        return members.find(({ id }) => id === channel['member_id']) ?? {}
+        return getMember(this.live)
       },
       roomURL() {
         return constructRoomUrl(this.live) ?? '#'

@@ -136,8 +136,20 @@ test('should get cached current lives', async () => {
 })
 
 test('should sync current lives', async () => {
+  Date.now = jest.fn(() => unixTime * 1000)
   // First run
-  const currentLivesOne = [{ id: 1 }, { id: 2 }]
+  const currentLivesOne = [
+    {
+      id: 1,
+      start_at: moment().subtract(3, 'hours').toISOString(),
+      duration: 0,
+    },
+    {
+      id: 2,
+      start_at: moment().subtract(2, 'hours').toISOString(),
+      duration: 0,
+    },
+  ]
   getCurrentLives.mockResolvedValueOnce(currentLivesOne)
 
   const returnValueOne = await workflows.syncCurrentLives()
@@ -150,7 +162,14 @@ test('should sync current lives', async () => {
   // Second run
   getCurrentLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
-  const currentLivesTwo = [{ id: 2 }, { id: 3 }]
+  const currentLivesTwo = [
+    currentLivesOne[1],
+    {
+      id: 3,
+      start_at: moment().subtract(1, 'hours').toISOString(),
+      duration: 0,
+    },
+  ]
   getCurrentLives.mockResolvedValueOnce(currentLivesTwo)
 
   const returnValueTwo = await workflows.syncCurrentLives()
@@ -158,7 +177,12 @@ test('should sync current lives', async () => {
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
-  expect(store.data[ENDED_LIVES]).toEqual([{ id: 1 }])
+  expect(store.data[ENDED_LIVES]).toEqual([
+    {
+      ...currentLivesOne[0],
+      duration: moment.duration(3, 'hours').as('seconds'),
+    },
+  ])
   expect(returnValueTwo).toEqual(currentLivesTwo)
   // Third run
   getCurrentLives.mockClear()
@@ -171,7 +195,19 @@ test('should sync current lives', async () => {
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '0' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesThree)
-  expect(store.data[ENDED_LIVES]).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }])
+  expect(store.data[ENDED_LIVES]).toEqual([
+    {
+      ...currentLivesOne[0],
+      duration: moment.duration(3, 'hours').as('seconds'),
+    },
+    {
+      ...currentLivesOne[1],
+      duration: moment.duration(2, 'hours').as('seconds'),
+    }, {
+      ...currentLivesTwo[1],
+      duration: moment.duration(1, 'hours').as('seconds'),
+    },
+  ])
   expect(returnValueThree).toEqual(currentLivesThree)
 })
 

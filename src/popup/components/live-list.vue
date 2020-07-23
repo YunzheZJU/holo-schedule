@@ -1,6 +1,7 @@
 <template>
   <Fragment>
     <button type="button" class="anchor" @click="handleClickAnchor">
+      <HIcon class="icon" :name="type === 'current' ? 'play' : 'calendar'" />
       <span>{{ anchorName }}</span>
       <span>{{ lives.length }}</span>
     </button>
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+  import HIcon from 'components/h-icon'
   import LiveItem from 'components/live-item'
   import { CURRENT_LIVES, SCHEDULED_LIVES } from 'shared/store/keys'
   import { liveTypeValidator } from 'validators'
@@ -33,7 +35,7 @@
 
   export default {
     name: 'LiveList',
-    components: { Fragment, LiveItem },
+    components: { HIcon, Fragment, LiveItem },
     props: {
       type: {
         type: String,
@@ -96,8 +98,9 @@
     position: sticky;
     z-index: 1;
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 8px;
+    grid-template-columns: auto 1fr auto;
+    gap: 4px;
+    align-items: center;
     height: @anchor-height;
     padding: 8px 16px;
     background-color: var(--color-bg-base);
@@ -116,6 +119,10 @@
       bottom: 4px;
       left: 12px;
       border-top: 1px solid;
+    }
+
+    .icon {
+      font-size: 20px;
     }
   }
 

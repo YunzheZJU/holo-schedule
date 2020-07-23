@@ -13,7 +13,7 @@
             <template v-if="isScheduled">CANCEL REMINDER</template>
             <template v-else>REMIND ME</template>
           </span>
-          <h-icon name="alarm" class="icon" />
+          <h-icon :name="isScheduled ? 'alarm-ok' : 'alarm'" class="icon" />
         </button>
       </div>
       <div class="header">

@@ -4,7 +4,10 @@
       <img class="logo" :src="popupLogo" alt="logo">
     </div>
     <div ref="body" class="body">
-      <div ref="loading" class="loading">{{ LoadingStatuses.get(loadingStatus).text }}</div>
+      <div ref="loading" class="loading">
+        <HIcon class="icon" :name="loadingConfig.icon" />
+        <span>{{ loadingConfig.text }}</span>
+      </div>
       <div ref="scroll" class="scroll">
         <LiveListEnded ref="liveListEnded" />
         <LiveList type="current" />
@@ -17,6 +20,7 @@
 </template>
 
 <script>
+  import HIcon from 'components/h-icon'
   import LiveList from 'components/live-list'
   import LiveListEnded from 'components/live-list-ended'
   import VHint from 'components/v-hint'
@@ -28,9 +32,7 @@
 
   export default {
     name: 'App',
-    components: {
-      LiveListEnded, LiveList, VToast, VHint,
-    },
+    components: { HIcon, LiveListEnded, LiveList, VToast, VHint },
     data() {
       return {
         loadingStatus: 'idle',
@@ -43,11 +45,14 @@
       },
       LoadingStatuses() {
         return new Map([
-          ['idle', { text: 'Pull to load more' }],
-          ['loading', { text: 'Loading' }],
-          ['success', { text: 'Success' }],
-          ['ended', { text: 'That\'s all' }],
+          ['idle', { text: 'Pull to load more', icon: 'pull' }],
+          ['loading', { text: 'Loading', icon: 'loading' }],
+          ['success', { text: 'Success', icon: 'success' }],
+          ['ended', { text: 'That\'s all', icon: 'top' }],
         ])
+      },
+      loadingConfig() {
+        return this.LoadingStatuses.get(this.loadingStatus)
       },
     },
     mounted() {
@@ -130,9 +135,18 @@
     }
 
     .loading {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
       padding: 4px 0;
+      color: var(--color-text-light);
       font-size: 14px;
-      text-align: center;
+
+      .icon {
+        font-size: 20px;
+      }
     }
 
     .scroll {

@@ -33,35 +33,35 @@
     margin: 0;
     padding: 0;
     list-style: none;
-  }
 
-  .toast {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 4px;
-    width: 240px;
-    padding: 4px 8px;
-    border-radius: 2px;
-    color: var(--color-text-white);
-    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
+    .toast {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4px;
+      width: 240px;
+      padding: 4px 8px;
+      border-radius: 2px;
+      color: var(--color-text-white);
+      box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.1);
 
-    &.error {
-      background: var(--color-error);
+      &.error {
+        background: var(--color-error);
+      }
+
+      &.info {
+        background: var(--color-theme);
+      }
     }
 
-    &.info {
-      background: var(--color-theme);
+    .text {
+      font-size: 14px;
     }
-  }
 
-  .text {
-    font-size: 14px;
-  }
-
-  .close {
-    align-self: start;
-    padding: 0 4px;
-    color: var(--color-text-white);
-    font-size: 12px;
+    .close {
+      align-self: start;
+      padding: 0 4px;
+      color: var(--color-text-white);
+      font-size: 12px;
+    }
   }
 </style>

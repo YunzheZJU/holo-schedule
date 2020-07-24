@@ -2,19 +2,26 @@
   <div class="app">
     <div class="head">
       <img class="logo" :src="popupLogo" alt="logo">
+      <HIcon class="icon" name="settings" @click="onClickSettings" />
     </div>
-    <div ref="body" class="body">
-      <div ref="loading" class="loading">
-        <HIcon class="icon" :name="loadingConfig.icon" />
-        <span>{{ loadingConfig.text }}</span>
+    <div class="body">
+      <div ref="main" class="main">
+        <!-- TODO: Handle click event -->
+        <div ref="loading" class="loading">
+          <HIcon class="icon" :name="loadingConfig.icon" />
+          <span>{{ loadingConfig.text }}</span>
+        </div>
+        <div ref="scroll" class="scroll">
+          <LiveListEnded ref="liveListEnded" />
+          <LiveList type="current" />
+          <LiveList type="scheduled" />
+        </div>
+        <VToast class="toast" />
+        <VHint class="hint" />
       </div>
-      <div ref="scroll" class="scroll">
-        <LiveListEnded ref="liveListEnded" />
-        <LiveList type="current" />
-        <LiveList type="scheduled" />
+      <div v-if="route === 'settings'" class="settings">
+        Settings
       </div>
-      <VToast style="top: 64px;z-index: 1;" />
-      <VHint style="z-index: 1" />
     </div>
   </div>
 </template>
@@ -37,6 +44,7 @@
       return {
         loadingStatus: 'idle',
         interval: null,
+        route: 'main',
       }
     },
     computed: {
@@ -58,7 +66,7 @@
     mounted() {
       const intersectionObserver = new IntersectionObserver(
         this.onIntersectionChange, {
-          root: this.$refs.body,
+          root: this.$refs.main,
           threshold: Object.values(ratioThreshold),
         },
       )
@@ -103,7 +111,10 @@
         this.loadingStatus = ended ? 'ended' : 'success'
       },
       hidePullHint() {
-        this.$refs.body.scrollTo({ top: 30, behavior: 'smooth' })
+        this.$refs.main.scrollTo({ top: 30, behavior: 'smooth' })
+      },
+      onClickSettings() {
+        this.route = this.route === 'settings' ? 'main' : 'settings'
       },
     },
   }
@@ -117,15 +128,33 @@
   }
 
   .head {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: space-between;
     padding: 12px 16px;
     background: linear-gradient(45deg, #268C89, #65E5B4);
 
     .logo {
       height: 32px;
     }
+
+    .icon {
+      color: var(--color-text-white);
+      font-size: 24px;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
   }
 
   .body {
+    position: relative;
+  }
+
+  .main {
     overflow-y: auto;
     max-height: 540px;
     scrollbar-width: none;
@@ -133,32 +162,52 @@
     &::-webkit-scrollbar {
       display: none;
     }
+  }
 
-    .loading {
-      display: grid;
-      grid-auto-flow: column;
-      gap: 4px;
-      align-items: center;
-      justify-content: center;
-      padding: 4px 0;
-      color: var(--color-text-light);
-      font-size: 14px;
+  .loading {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0;
+    color: var(--color-text-light);
+    font-size: 14px;
 
-      .icon {
-        font-size: 20px;
-      }
+    .icon {
+      font-size: 20px;
     }
+  }
 
-    .scroll {
-      overflow-y: auto;
-      height: 540px;
-      scrollbar-width: none;
-      /* 40px refers to anchor-height */
-      scroll-padding: 2 * 40px;
+  .scroll {
+    overflow-y: auto;
+    height: 540px;
+    scrollbar-width: none;
+    /* 40px refers to anchor-height */
+    scroll-padding: 2 * 40px;
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+    &::-webkit-scrollbar {
+      display: none;
     }
+  }
+
+  .toast {
+    top: 64px;
+    z-index: 1;
+  }
+
+  .hint {
+    z-index: 1;
+  }
+
+  .settings {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.95);
+    font-size: 16px;
   }
 </style>

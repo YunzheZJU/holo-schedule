@@ -6,8 +6,7 @@
     </div>
     <div class="body">
       <div ref="main" class="main">
-        <!-- TODO: Handle click event -->
-        <div ref="loading" class="loading">
+        <div ref="loading" class="loading" @click="onClickLoading">
           <HIcon class="icon" :name="loadingConfig.icon" />
           <span>{{ loadingConfig.text }}</span>
         </div>
@@ -113,6 +112,13 @@
       hidePullHint() {
         this.$refs.main.scrollTo({ top: 30, behavior: 'smooth' })
       },
+      onClickLoading() {
+        // Manually toggle the intersection observer callback
+        // This is a fallback where pull hint can not hide itself automatically
+        // Note that loading status and first run are not handled in this fallback
+        // Overusing this 'exit' may lead to inconsistent state
+        this.onIntersectionChange([{ intersectionRatio: 1 }])
+      },
       onClickSettings() {
         this.route = this.route === 'settings' ? 'main' : 'settings'
       },
@@ -173,6 +179,7 @@
     padding: 4px 0;
     color: var(--color-text-light);
     font-size: 14px;
+    cursor: pointer;
 
     .icon {
       font-size: 20px;

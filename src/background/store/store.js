@@ -4,6 +4,8 @@ import browser from 'webextension-polyfill'
 const storage = browser.storage.local
 
 const createStore = () => {
+  const data = {}
+
   const getStorage = async () => {
     const { store: $store = {} } = await storage.get('store')
     return $store
@@ -16,13 +18,18 @@ const createStore = () => {
 
     ports.push(port)
 
+    // Set default values
+    Object.entries(data).map(
+      ([key, value]) => port.postMessage({ key, value }),
+    )
+
     port.onDisconnect.addListener(() => pull(ports, port))
   }
 
   return {
-    data: {},
-    callbacks: [],
+    data,
     ports,
+    callbacks: [],
     async init() {
       await this.set(await getStorage())
       browser.runtime.onConnect.addListener(onConnect)

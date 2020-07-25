@@ -104,12 +104,11 @@
     height: @anchor-height;
     padding: 8px 16px;
     background-color: var(--color-bg-base);
-    background-image: linear-gradient(var(--color-bg-light), var(--color-bg-light));
     color: var(--color-theme);
     font-size: 16px;
 
     &:hover {
-      background-image: linear-gradient(var(--color-bg-normal), var(--color-bg-normal));
+      background-color: var(--color-bg-light);
     }
 
     &:after {

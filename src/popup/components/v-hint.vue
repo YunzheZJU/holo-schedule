@@ -27,8 +27,7 @@
     bottom: 0;
     padding: 0 8px;
     border-radius: 4px 0 0 0;
-    background-color: var(--color-bg-base);
-    background-image: linear-gradient(var(--color-bg-normal), var(--color-bg-normal));
+    background-color: var(--color-bg-light);
     color: var(--color-text-dark);
     box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.1);
     font-size: 12px;

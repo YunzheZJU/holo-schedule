@@ -102,11 +102,12 @@
   }
 
   .anchor {
+    --bg-color: var(--color-bg-base);
     position: sticky;
     top: 0;
     z-index: 1;
     padding: 4px 0;
-    background-color: var(--color-bg-light);
+    background-color: var(--bg-color);
     text-align: center;
 
     &:before {
@@ -115,14 +116,13 @@
       top: 50%;
       right: 12px;
       left: 12px;
-      height: 1px;
-      background-color: var(--color-bd);
+      border-top: 1px solid var(--color-bd);
     }
 
     .date {
       position: relative;
       padding: 0 8px;
-      background-color: var(--color-bg-light);
+      background-color: var(--bg-color);
       color: var(--color-text-light);
       font-weight: 700;
       font-size: 12px;

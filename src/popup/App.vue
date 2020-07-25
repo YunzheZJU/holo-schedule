@@ -130,7 +130,6 @@
   .app {
     width: 375px;
     background-color: var(--color-bg-base);
-    background-image: linear-gradient(var(--color-bg-light), var(--color-bg-light));
   }
 
   .head {

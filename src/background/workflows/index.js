@@ -1,6 +1,4 @@
-import {
-  differenceBy, filter, reverse, uniqBy,
-} from 'lodash'
+import { differenceBy, filter, reverse, uniqBy } from 'lodash'
 import moment from 'moment'
 import {
   getChannels,
@@ -13,6 +11,7 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
+  IS_NTF_ENABLED,
   MEMBERS,
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
@@ -130,6 +129,11 @@ const getMember = live => {
   return members.find(({ id }) => id === channel['member_id']) ?? {}
 }
 
+const toggleIsNtfEnabled = () => store.set(
+  { [IS_NTF_ENABLED]: !store.get(IS_NTF_ENABLED) },
+  true,
+)
+
 export default {
   filterByTitle,
   getCachedCurrentLives,
@@ -145,4 +149,5 @@ export default {
   getCachedLives,
   syncLives,
   getMember,
+  toggleIsNtfEnabled,
 }

@@ -11,6 +11,7 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
+  IS_NTF_ENABLED,
   MEMBERS,
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
@@ -290,4 +291,16 @@ test('should get member info', async () => {
   expect(workflows.getMember(liveOne)).toEqual(members[0])
   expect(workflows.getMember(liveTwo)).toEqual({})
   expect(workflows.getMember(liveThree)).toEqual({})
+})
+
+test('should toggle isNtfEnabled', async () => {
+  await store.set({ [IS_NTF_ENABLED]: false })
+
+  await workflows.toggleIsNtfEnabled()
+
+  expect(store.data[IS_NTF_ENABLED]).toEqual(true)
+
+  await workflows.toggleIsNtfEnabled()
+
+  expect(store.data[IS_NTF_ENABLED]).toEqual(false)
 })

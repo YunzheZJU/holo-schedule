@@ -7,7 +7,7 @@ window.workflows = workflows
 window.store = store
 window.alarm = alarm
 
-alarm.init(store)
+alarm.init(store).catch(err => console.error(err))
 
 const { syncChannels, syncCurrentLives, syncMembers } = workflows
 

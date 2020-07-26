@@ -1,6 +1,7 @@
+// TODO: Split tests
 import moment from 'moment'
 import notification from 'notification'
-import { CHANNELS, MEMBERS } from 'shared/store/keys'
+import { CHANNELS, IS_NTF_ENABLED, MEMBERS } from 'shared/store/keys'
 import store from 'store'
 import alarm from './index'
 
@@ -19,7 +20,7 @@ test('should schedule and remove alarms', async () => {
 })
 
 test('should subscribe to store', async () => {
-  alarm.init(store)
+  await alarm.init(store)
 
   alarm.fire = jest.fn(alarm.fire)
 
@@ -274,7 +275,7 @@ test('should subscribe to store', async () => {
 })
 
 test('should fire scheduled alarms', async () => {
-  alarm.init(store)
+  await alarm.init(store)
 
   alarm.fire = jest.fn(alarm.fire)
 
@@ -308,6 +309,8 @@ test('should fire scheduled alarms', async () => {
 })
 
 test('should create notification when firing alarms', async () => {
+  await alarm.init(store)
+
   const members = [{ id: 1, name: 'Member', avatar: 'https://example.com' }]
   const channels = [{ id: 1, member_id: 1 }]
   const live = {
@@ -329,4 +332,60 @@ test('should create notification when firing alarms', async () => {
     message: `${members[0].name} is waiting for you`,
     iconUrl: members[0].avatar,
   }))
+})
+
+test('should get is notification enabled', async () => {
+  // For single test
+  alarm.$store = store
+
+  alarm.$defaultIsNtfEnabled = false
+  await store.set({ [IS_NTF_ENABLED]: undefined })
+
+  expect(alarm.getIsNtfEnabled()).toEqual(false)
+
+  alarm.$defaultIsNtfEnabled = true
+  await store.set({ [IS_NTF_ENABLED]: undefined })
+
+  expect(alarm.getIsNtfEnabled()).toEqual(true)
+
+  alarm.$defaultIsNtfEnabled = false
+  await store.set({ [IS_NTF_ENABLED]: false })
+
+  expect(alarm.getIsNtfEnabled()).toEqual(false)
+
+  alarm.$defaultIsNtfEnabled = true
+  await store.set({ [IS_NTF_ENABLED]: false })
+
+  expect(alarm.getIsNtfEnabled()).toEqual(false)
+
+  alarm.$defaultIsNtfEnabled = false
+  await store.set({ [IS_NTF_ENABLED]: true })
+
+  expect(alarm.getIsNtfEnabled()).toEqual(true)
+
+  alarm.$defaultIsNtfEnabled = true
+  await store.set({ [IS_NTF_ENABLED]: true })
+
+  expect(alarm.getIsNtfEnabled()).toEqual(true)
+})
+
+test('should not create notification when alarm is disabled', async () => {
+  alarm.getIsNtfEnabled = jest.fn(() => false)
+
+  const members = [{ id: 1, name: 'Member', avatar: 'https://example.com' }]
+  const channels = [{ id: 1, member_id: 1 }]
+  const live = {
+    id: 1,
+    platform: 'youtube',
+    title: 'Title',
+    channel_id: 1,
+    room: 'Room',
+  }
+
+  await store.set({ [MEMBERS]: members, [CHANNELS]: channels })
+  notification.create = jest.fn()
+
+  alarm.fire(live)
+
+  expect(notification.create).toHaveBeenCalledTimes(0)
 })

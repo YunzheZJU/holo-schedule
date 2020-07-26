@@ -2,11 +2,14 @@ import { differenceBy, find, uniqBy } from 'lodash'
 import moment from 'moment'
 import notification from 'notification'
 import { createEnhancedArray } from 'shared/lib/enhancedArray'
+import { IS_NTF_ENABLED } from 'shared/store/keys'
 import { constructRoomUrl } from 'shared/utils'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
 
 const alarm = {
+  $defaultIsNtfEnabled: true,
+  $store: undefined,
   livesToAlarm: createEnhancedArray(),
   savedCurrentLives: [],
   savedScheduledLives: [],
@@ -19,8 +22,17 @@ const alarm = {
   isScheduled(live) {
     return find(this.livesToAlarm, { id: live['id'] })
   },
+  getIsNtfEnabled() {
+    console.log(this.$store.get(IS_NTF_ENABLED))
+    return this.$store.get(IS_NTF_ENABLED) ?? this.$defaultIsNtfEnabled
+  },
   fire(live) {
     const { id, title } = live
+
+    this.remove({ id })
+
+    if (!this.getIsNtfEnabled()) return
+
     const member = workflows.getMember(live)
 
     notification.create(id.toString(), {
@@ -33,10 +45,12 @@ const alarm = {
         )
       },
     })
-
-    this.remove({ id })
   },
-  init(store) {
+  async init(store) {
+    this.$store = store
+
+    await store.set({ [IS_NTF_ENABLED]: this.getIsNtfEnabled() }, true)
+
     store.subscribe('currentLives', (lives, prevLives) => {
       // Skip the first run
       if (prevLives !== undefined) {

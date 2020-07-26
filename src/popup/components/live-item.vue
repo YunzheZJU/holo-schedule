@@ -5,7 +5,7 @@
         <!-- TODO: Default image -->
         <img class="cover" :src="live['cover']" :alt="live['title']">
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
-        <button v-if="type === 'scheduled' && isAlarmEnabled"
+        <button v-if="type === 'scheduled' && isNtfEnabled"
                 type="button"
                 :class="['remind', {active: isScheduled}]"
                 @click.stop.prevent="handleRemind"
@@ -49,8 +49,10 @@
 <script>
   import HIcon from 'components/h-icon'
   import moment from 'moment'
+  import { IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
   import { liveTypeValidator } from 'validators'
+  import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
   const { alarm, workflows: { getMember } } = browser.extension.getBackgroundPage()
@@ -114,6 +116,9 @@
       isScheduled() {
         return this.alarmCacheFlag && alarm.isScheduled(this.live)
       },
+      ...mapState({
+        isNtfEnabled: IS_NTF_ENABLED,
+      }),
     },
     methods: {
       scrollIntoView(...args) {

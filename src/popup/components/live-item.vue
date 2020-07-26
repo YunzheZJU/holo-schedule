@@ -5,7 +5,8 @@
         <!-- TODO: Default image -->
         <img class="cover" :src="live['cover']" :alt="live['title']">
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
-        <button v-if="type === 'scheduled'"
+        <button v-if="type === 'scheduled' && isAlarmEnabled"
+                type="button"
                 :class="['remind', {active: isScheduled}]"
                 @click.stop.prevent="handleRemind"
         >

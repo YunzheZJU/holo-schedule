@@ -11,8 +11,8 @@
                 @click.stop.prevent="handleRemind"
         >
           <span class="text">
-            <template v-if="isScheduled">CANCEL REMINDER</template>
-            <template v-else>REMIND ME</template>
+            <template v-if="isScheduled">{{ i18n('cancelReminder') }}</template>
+            <template v-else>{{ i18n('setReminder') }}</template>
           </span>
           <h-icon :name="isScheduled ? 'alarm-ok' : 'alarm'" class="icon" />
         </button>
@@ -35,7 +35,7 @@
       </div>
       <div class="content" :title="live['title']">{{ live['title'] }}</div>
       <div class="accessory">
-        <div v-if="type === 'current'" class="badge">LIVE NOW</div>
+        <div v-if="type === 'current'" class="badge">{{ i18n('liveNow') }}</div>
         <div class="start-at" :title="startAtFull">
           <template v-if="type === 'ended'">{{ startAtSimple }},</template>
           <template v-if="type === 'scheduled'">{{ startAtCalendar }},</template>
@@ -132,6 +132,7 @@
         }
         this.alarmCacheFlag = Date.now()
       },
+      i18n: browser.i18n.getMessage,
     },
   }
 </script>
@@ -194,6 +195,10 @@
 
       &:not(:hover) .text {
         display: none;
+      }
+
+      .text {
+        text-transform: uppercase;
       }
 
       .icon {
@@ -263,6 +268,7 @@
       border: 1px solid;
       border-radius: 2px;
       color: var(--color-theme);
+      text-transform: uppercase;
     }
 
     .start-at {

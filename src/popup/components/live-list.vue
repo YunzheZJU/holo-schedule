@@ -2,7 +2,7 @@
   <Fragment>
     <button type="button" class="anchor" @click="handleClickAnchor">
       <HIcon class="icon" :name="type === 'current' ? 'play' : 'calendar'" />
-      <span>{{ anchorName }}</span>
+      <span class="name">{{ anchorName }}</span>
       <span>{{ lives.length }}</span>
     </button>
     <ul v-if="lives.length" class="list">
@@ -28,9 +28,9 @@
   const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
 
   const anchorNameMap = new Map([
-    ['ended', 'Ended Live'],
-    ['current', 'Living'],
-    ['scheduled', 'Scheduled Live'],
+    ['ended', browser.i18n.getMessage('endedLive')],
+    ['current', browser.i18n.getMessage('currentLive')],
+    ['scheduled', browser.i18n.getMessage('scheduledLive')],
   ])
 
   export default {
@@ -122,6 +122,10 @@
 
     .icon {
       font-size: 20px;
+    }
+
+    .name {
+      text-transform: capitalize;
     }
   }
 

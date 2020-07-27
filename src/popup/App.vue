@@ -13,9 +13,9 @@
         <div class="settings">
           <button type="button" class="back" @click="onClickSettings">
             <HIcon class="icon" name="back" />
-            <span class="text">Back</span>
+            <span class="text">{{ i18n('back') }}</span>
           </button>
-          <span class="title">Settings</span>
+          <span class="title">{{ i18n('settings') }}</span>
         </div>
       </template>
     </div>
@@ -36,21 +36,19 @@
       <div v-if="route === 'settings'" class="settings">
         <div class="option">
           <label class="label">
-            <span>Enable notifications</span>
+            <span>{{ i18n('enableNtf') }}</span>
             <input type="checkbox" :checked="isNtfEnabled" @input="onChangeAlarmEnabled">
           </label>
-          <div class="description">
-            Notify you by desktop notifications about the guerilla lives and reminders you’ve set.
-          </div>
+          <div class="description">{{ i18n('enableNtfDesc') }}</div>
         </div>
         <hr>
         <div class="info">
           <div class="engine">
-            Powered by
+            {{ i18n('engine') }}
             <a href="https://github.com/YunzheZJU/non-stop-story" target="_blank">Non-stop-story</a>
           </div>
           <div class="contact">
-            If you have any question, please contact
+            {{ i18n('contact') }}
             <a href="mailto:help@holo.dev" target="_blank">help@holo.dev</a>
           </div>
         </div>
@@ -90,10 +88,10 @@
       },
       LoadingStatuses() {
         return new Map([
-          ['idle', { text: 'Pull to load more', icon: 'pull' }],
-          ['loading', { text: 'Loading', icon: 'loading' }],
-          ['success', { text: 'Success', icon: 'success' }],
-          ['ended', { text: 'That\'s all', icon: 'top' }],
+          ['idle', { text: browser.i18n.getMessage('pullHint'), icon: 'pull' }],
+          ['loading', { text: browser.i18n.getMessage('pullLoading'), icon: 'loading' }],
+          ['success', { text: browser.i18n.getMessage('pullSuccess'), icon: 'success' }],
+          ['ended', { text: browser.i18n.getMessage('pullFinished'), icon: 'top' }],
         ])
       },
       loadingConfig() {
@@ -166,6 +164,7 @@
       onChangeAlarmEnabled() {
         return toggleIsNtfEnabled()
       },
+      i18n: browser.i18n.getMessage,
     },
   }
 </script>

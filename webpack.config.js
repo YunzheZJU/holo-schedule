@@ -57,6 +57,7 @@ module.exports = (env, argv) => {
           'manifest.json',
           'icons/*',
           'assets/*',
+          '_locales/**/*',
         ],
       }),
       new HtmlWebpackPlugin({

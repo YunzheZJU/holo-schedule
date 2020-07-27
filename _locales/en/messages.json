@@ -1,0 +1,66 @@
+{
+  "setReminder": {
+    "message": "Remind me",
+    "description": "Prompt users to add the reminder for a scheduled live"
+  },
+  "cancelReminder": {
+    "message": "Cancel reminder",
+    "description": "Prompt users to cancel the reminder"
+  },
+  "liveNow": {
+    "message": "Live now",
+    "description": "Indicate that this live is undergoing"
+  },
+  "endedLive": {
+    "message": "Living",
+    "description": "Lives that has ended"
+  },
+  "currentLive": {
+    "message": "Living",
+    "description": "Lives that are undergoing"
+  },
+  "scheduledLive": {
+    "message": "Scheduled live",
+    "description": "Lives that are scheduled to perform"
+  },
+  "back": {
+    "message": "Back",
+    "description": "Prompt users to go to the previous page"
+  },
+  "settings": {
+    "message": "Settings",
+    "description": "Name of page where users can change settings"
+  },
+  "enableNtf": {
+    "message": "Enable desktop notification",
+    "description": "Prompt users to enable desktop notification"
+  },
+  "enableNtfDesc": {
+    "message": "Notify you by desktop notifications about the guerrilla lives and reminders you’ve set.",
+    "description": "Description for enableNtf"
+  },
+  "engine": {
+    "message": "Powered by",
+    "description": "Description prepended to the engine name"
+  },
+  "contact": {
+    "message": "If you have any question, please contact",
+    "description": "Description prepended to the contact email"
+  },
+  "pullHint": {
+    "message": "Pull to load more",
+    "description": "Prompt users to pull down the list to load new data"
+  },
+  "pullLoading": {
+    "message": "Loading",
+    "description": "Indicate that the loading is being performed"
+  },
+  "pullSuccess": {
+    "message": "Success",
+    "description": "Indicate that the loading is done successfully"
+  },
+  "pullFinished": {
+    "message": "That's all",
+    "description": "Indicate that all available data has been loaded"
+  }
+}

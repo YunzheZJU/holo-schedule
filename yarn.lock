@@ -1044,6 +1044,19 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@intlify/eslint-plugin-vue-i18n@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@intlify/eslint-plugin-vue-i18n/-/eslint-plugin-vue-i18n-0.7.0.tgz#49cf25bc4e2d07de9d4e43f63aa53ad2c9a8b0a1"
+  integrity sha512-6VVGuygMinrfWTaJnuYLBM3YYXJwWysK++aIayn//NStAQc8xOVOAUBCHLoseAvm7yQ5g+8udMozUynxV3+/Yg==
+  dependencies:
+    eslint-plugin-jsonc "^0.3.1"
+    fast-diff "^1.2.0"
+    glob "^7.1.3"
+    ignore "^5.0.5"
+    lodash "^4.17.11"
+    parse5 "^6.0.0"
+    vue-eslint-parser "^7.0.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -4038,6 +4051,11 @@ eslint-plugin-import@^2.21.2:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
+eslint-plugin-jsonc@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-0.3.1.tgz#363b3516ce57a4ef49b8149f108837a3151c06a0"
+  integrity sha512-MkvmvKv4WYrxYMds0LjzC+rn+g4EpGIs1xLYeZeULSK/m90CxKPHrsKKnEMyp+bXVTU2WgBV/d8xIpEHTJWbUw==
+
 eslint-plugin-no-unsafe-innerhtml@1.0.16:
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/eslint-plugin-no-unsafe-innerhtml/-/eslint-plugin-no-unsafe-innerhtml-1.0.16.tgz#7d02878c8e9bf7916b88836d5ac122b42f151932"
@@ -4470,6 +4488,11 @@ fast-deep-equal@^3.1.1:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
+
+fast-diff@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
+  integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
 
 fast-glob@^3.1.1, fast-glob@^3.2.2:
   version "3.2.2"
@@ -5291,7 +5314,7 @@ ignore@^4.0.6:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ignore@^5.1.4, ignore@^5.1.8:
+ignore@^5.0.5, ignore@^5.1.4, ignore@^5.1.8:
   version "5.1.8"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.8.tgz#f150a8b50a34289b33e22f5889abd4d8016f0e57"
   integrity sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==
@@ -6377,6 +6400,15 @@ json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
+json5-loader@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/json5-loader/-/json5-loader-4.0.0.tgz#4b6ea337c76fdf4107158491fae2408500fb6cb0"
+  integrity sha512-v+wc6+u/k0qxOLhmfsk3aE0q7Kl8YwppfRuaUYASJ3zInbWZr50sI4b5WGLzNjerN3OVDSIMPxGClJ0GfUh9lg==
+  dependencies:
+    json5 "^2.1.3"
+    loader-utils "^2.0.0"
+    schema-utils "^2.6.5"
+
 json5@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
@@ -6384,7 +6416,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.1.2:
+json5@^2.1.2, json5@^2.1.3:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.1.3.tgz#c9b0f7fa9233bfe5807fe66fcf3a5617ed597d43"
   integrity sha512-KXPvOm8K9IJKFM0bmdn8QXh7udDh1g/giieX0NLCaMnb4hEiVFqnop2ImTXCc5e0/oHz3LTqmHGtExn5hfMkOA==
@@ -7768,6 +7800,11 @@ parse5@^3.0.1:
   integrity sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==
   dependencies:
     "@types/node" "*"
+
+parse5@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
+  integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
 
 pascal-case@^3.1.1:
   version "3.1.1"
@@ -10340,6 +10377,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-i18n@^8.19.0:
+  version "8.19.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.19.0.tgz#4326ade6cba7e18b22030ac1a14c59864b6dfc43"
+  integrity sha512-jXPsvkmDMkwhjGQEDF6BgGsmJQLjIO1CXJQ1RjZRnU80kzRG+/+277ADFTulAPQSb0hUlrsp4VzEPdeO7lKcRA==
 
 vue-loader@^15.9.2:
   version "15.9.2"

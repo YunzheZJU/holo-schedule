@@ -2,7 +2,7 @@
   <ul class="v-toast">
     <li v-for="toast in toasts" :key="toast.$id" :class="['toast', toast.type]">
       <div class="text">{{ toast.text }}</div>
-      <button type="button" class="close" @click="() => toasts.remove(toast)">x</button>
+      <button type="button" class="close" @click="() => toasts.remove(toast)" />
     </li>
   </ul>
 </template>
@@ -62,6 +62,10 @@
       padding: 0 4px;
       color: var(--color-text-white);
       font-size: 12px;
+
+      &:before {
+        content: 'x';
+      }
     }
   }
 </style>

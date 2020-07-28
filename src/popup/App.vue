@@ -13,9 +13,9 @@
         <div class="settings">
           <button type="button" class="back" @click="onClickSettings">
             <HIcon class="icon" name="back" />
-            <span class="text">{{ i18n('back') }}</span>
+            <span class="text">{{ $t('app.settings.back') }}</span>
           </button>
-          <span class="title">{{ i18n('settings') }}</span>
+          <span class="title">{{ $t('app.settings.label') }}</span>
         </div>
       </template>
     </div>
@@ -36,20 +36,30 @@
       <div v-if="route === 'settings'" class="settings">
         <div class="option">
           <label class="label">
-            <span>{{ i18n('enableNtf') }}</span>
+            <span>{{ $t('app.settings.enableNtf.label') }}</span>
             <input type="checkbox" :checked="isNtfEnabled" @input="onChangeAlarmEnabled">
           </label>
-          <div class="description">{{ i18n('enableNtfDesc') }}</div>
+          <div class="description">{{ $t('app.settings.enableNtf.description') }}</div>
         </div>
         <hr>
         <div class="info">
           <div class="engine">
-            {{ i18n('engine') }}
-            <a href="https://github.com/YunzheZJU/non-stop-story" target="_blank">Non-stop-story</a>
+            <i18n path="app.settings.engine.label" :tag="false">
+              <template v-slot:link>
+                <a :href="$t('app.settings.engine.href')" target="_blank">
+                  {{ $t('app.settings.engine.value') }}
+                </a>
+              </template>
+            </i18n>
           </div>
           <div class="contact">
-            {{ i18n('contact') }}
-            <a href="mailto:help@holo.dev" target="_blank">help@holo.dev</a>
+            <i18n path="app.settings.contact.label" :tag="false">
+              <template v-slot:link>
+                <a :href="$t('app.settings.contact.href')" target="_blank">
+                  {{ $t('app.settings.contact.value') }}
+                </a>
+              </template>
+            </i18n>
           </div>
         </div>
       </div>
@@ -88,10 +98,10 @@
       },
       LoadingStatuses() {
         return new Map([
-          ['idle', { text: browser.i18n.getMessage('pullHint'), icon: 'pull' }],
-          ['loading', { text: browser.i18n.getMessage('pullLoading'), icon: 'loading' }],
-          ['success', { text: browser.i18n.getMessage('pullSuccess'), icon: 'success' }],
-          ['ended', { text: browser.i18n.getMessage('pullFinished'), icon: 'top' }],
+          ['idle', { text: this.$t('app.pullToLoad.hint'), icon: 'pull' }],
+          ['loading', { text: this.$t('app.pullToLoad.loading'), icon: 'loading' }],
+          ['success', { text: this.$t('app.pullToLoad.success'), icon: 'success' }],
+          ['ended', { text: this.$t('app.pullToLoad.finished'), icon: 'top' }],
         ])
       },
       loadingConfig() {
@@ -164,7 +174,6 @@
       onChangeAlarmEnabled() {
         return toggleIsNtfEnabled()
       },
-      i18n: browser.i18n.getMessage,
     },
   }
 </script>
@@ -334,5 +343,4 @@
       }
     }
   }
-
 </style>

@@ -58,7 +58,7 @@
       async load() {
         let hintId
         try {
-          hintId = this.$hints.add({ text: 'Loading Ended lives...' })
+          hintId = this.$hints.add({ text: this.$t('liveList.lives.ended.loading') })
           const updatedLives = await syncLives('ended')
           if (updatedLives?.[0]?.['id'] === this.lives?.[0]?.['id']) {
             return true
@@ -79,10 +79,10 @@
       },
       formatCalendar(live) {
         return moment(live['start_at']).calendar({
-          sameDay: '[Today]',
-          lastDay: 'MMM Do, [Yesterday]',
-          lastWeek: 'MMM Do, dddd',
-          sameElse: 'MMM Do',
+          sameDay: this.$t('liveListEnded.calendar.sameDay'),
+          lastDay: this.$t('liveListEnded.calendar.lastDay'),
+          lastWeek: this.$t('liveListEnded.calendar.lastWeek'),
+          sameElse: this.$t('liveListEnded.calendar.sameElse'),
         })
       },
     },

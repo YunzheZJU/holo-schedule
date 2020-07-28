@@ -1,0 +1,117 @@
+{
+  // Commonly used tokens
+  common: {
+    // Name of this locale
+    locale: "中文",
+  },
+  // Component App
+  app: {
+    // Page Settings
+    settings: {
+      // Prompt users to go to the previous page
+      "back": "返回",
+      // Name of page where users can change settings
+      "label": "设置",
+      // Prompt users to enable desktop notification
+      enableNtf: {
+        // Label for enableNtf
+        label: "允许桌面通知",
+        // Description for enableNtf
+        "description": "突击直播或设置了提醒的直播开始时，通过桌面通知提醒您"
+      },
+      // Describe the backend engine of this project
+      engine: {
+        // Template used to construct the description for the engine
+        label: "由 {link} 强力驱动",
+        // Name of the engine. There is no need to translate this key
+        value: "Non-stop-story",
+        // Link to the engine's homepage. There is no need to translate this key
+        href: "https://github.com/YunzheZJU/non-stop-story",
+      },
+      // Description prepended to the contact email
+      contact: {
+        // Template used to construct the description for the engine
+        label: "如果您有任何疑问，请联系 {link}",
+        // Name of the engine. There is no need to translate this key
+        value: "help@holo.dev",
+        // Link to the engine's homepage. There is no need to translate this key
+        href: "mailto:@:app.settings.contact.value",
+      },
+    },
+    // Pull-to-load
+    pullToLoad: {
+      // Prompt users to pull down the list to load new data
+      hint: "下拉以加载更多",
+      // Indicate that the loading is being performed
+      loading: "正在加载",
+      // Indicate that the loading is done successfully
+      success: "加载成功",
+      // Indicate that all available data has been loaded
+      finished: "已加载全部",
+    },
+  },
+  // Component LiveList
+  liveList: {
+    lives: {
+      // Lives that has ended
+      ended: {
+        label: "已结束",
+        loading: "正在加载已结束直播...",
+      },
+      // Lives that are undergoing
+      current: {
+        label: "正在直播",
+        loading: "正在加载进行中的直播...",
+      },
+      // Lives that are scheduled to perform
+      scheduled: {
+        label: "即将进行",
+        loading: "正在加载即将进行的直播...",
+      }
+    }
+  },
+  // Component LiveListEnded
+  liveListEnded: {
+    // Used to customize moment#calendar output
+    calendar: {
+      // A token string representing the format when displaying datetime with moment.js.
+      // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
+      // See also: https://momentjs.com/docs/#/displaying/format/
+      sameDay: "[今天]",
+      lastDay: "MMMDo [昨天]",
+      lastWeek: "MMMDo dddd",
+      sameElse: "MMMDo",
+    }
+  },
+  // Component LiveItem
+  liveItem: {
+    // Indicate that this live is undergoing
+    liveNow: "正在直播",
+    // A reminder can notify the user about the starting of a live
+    reminder: {
+      // Prompt users to set the reminder for a scheduled live
+      set: "设置提醒",
+      // Prompt users to cancel the reminder
+      cancel: "取消提醒",
+    },
+    // Used to customize moment#calendar output
+    calendar: {
+      // A token string representing the format when displaying datetime with moment.js.
+      // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
+      // See also: https://momentjs.com/docs/#/displaying/format/
+      sameDay: "[今天]A H:mm",
+      nextDay: "[明天]A H:mm",
+      nextWeek: "dddd A H:mm",
+      lastDay: "[昨天]A H:mm",
+      lastWeek: "[上周] dddd A H:mm",
+      sameElse: "DD/MM/YYYY A H:mm",
+    },
+    // Display the start time of this live
+    startAt: {
+      // LT in 24 hours. Use the same format as liveItem.calendar
+      simple: "A H:mm",
+      // LLL in 24 hours. Use the same format as liveItem.calendar
+      full: "MMMM D, YYYY A H:mm",
+    }
+  },
+}

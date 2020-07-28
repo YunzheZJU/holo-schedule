@@ -7,6 +7,7 @@ module.exports = {
   extends: [
     'plugin:vue/recommended',
     'airbnb-base',
+    'plugin:@intlify/vue-i18n/recommended',
   ],
   parserOptions: {
     ecmaVersion: 11,
@@ -41,4 +42,10 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    'vue-i18n': {
+      // It should fail to parse json5
+      localeDir: './path/to/locales/*.json5',
+    },
+  },
 }

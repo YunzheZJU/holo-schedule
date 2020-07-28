@@ -45,6 +45,11 @@ module.exports = (env, argv) => {
           exclude: /node_modules/,
           loader: 'babel-loader',
         },
+        {
+          test: /\.json5$/i,
+          loader: 'json5-loader',
+          type: 'javascript/auto',
+        },
       ],
     },
     resolve: {
@@ -57,7 +62,6 @@ module.exports = (env, argv) => {
           'manifest.json',
           'icons/*',
           'assets/*',
-          '_locales/**/*',
         ],
       }),
       new HtmlWebpackPlugin({

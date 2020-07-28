@@ -27,12 +27,6 @@
 
   const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
 
-  const anchorNameMap = new Map([
-    ['ended', browser.i18n.getMessage('endedLive')],
-    ['current', browser.i18n.getMessage('currentLive')],
-    ['scheduled', browser.i18n.getMessage('scheduledLive')],
-  ])
-
   export default {
     name: 'LiveList',
     components: { HIcon, Fragment, LiveItem },
@@ -45,7 +39,7 @@
     },
     computed: {
       anchorName() {
-        return anchorNameMap.get(this.type)
+        return this.$t(`liveList.lives.${this.type}.label`)
       },
       ...mapState({
         lives(state) {
@@ -66,7 +60,7 @@
       async reloadLives() {
         let hintId
         try {
-          hintId = this.$hints.add({ text: `Loading ${this.type} lives...` })
+          hintId = this.$hints.add({ text: this.$t(`liveList.lives.${this.type}.loading`) })
           await syncLives(this.type)
         } catch (err) {
           console.error(err)

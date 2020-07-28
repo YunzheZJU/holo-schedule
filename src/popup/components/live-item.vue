@@ -11,8 +11,8 @@
                 @click.stop.prevent="handleRemind"
         >
           <span class="text">
-            <template v-if="isScheduled">{{ i18n('cancelReminder') }}</template>
-            <template v-else>{{ i18n('setReminder') }}</template>
+            <template v-if="isScheduled">{{ $t('liveItem.reminder.set') }}</template>
+            <template v-else>{{ $t('liveItem.reminder.cancel') }}</template>
           </span>
           <h-icon :name="isScheduled ? 'alarm-ok' : 'alarm'" class="icon" />
         </button>
@@ -23,22 +23,22 @@
              :src="member['avatar'] || defaultAvatar"
              :style="{color: member['color_main']}"
         >
-        <div class="member" :title="member['name']">
-          {{ member['name'] }}
-        </div>
-        <div class="separator">
-          |
-        </div>
-        <div class="platform">
-          {{ live['platform'] }}
-        </div>
+        <div class="member" :title="member['name']">{{ member['name'] }}</div>
+        <div class="separator" />
+        <div class="platform">{{ live['platform'] }}</div>
       </div>
       <div class="content" :title="live['title']">{{ live['title'] }}</div>
       <div class="accessory">
-        <div v-if="type === 'current'" class="badge">{{ i18n('liveNow') }}</div>
+        <div v-if="type === 'current'" class="badge">{{ $t('liveItem.liveNow') }}</div>
         <div class="start-at" :title="startAtFull">
-          <template v-if="type === 'ended'">{{ startAtSimple }},</template>
-          <template v-if="type === 'scheduled'">{{ startAtCalendar }},</template>
+          <template v-if="type === 'ended'">
+            {{ startAtSimple }}
+            <span class="separator" />
+          </template>
+          <template v-if="type === 'scheduled'">
+            {{ startAtCalendar }}
+            <span class="separator" />
+          </template>
           <template>{{ startAtFromNow }}</template>
         </div>
       </div>
@@ -99,19 +99,19 @@
       },
       startAtCalendar() {
         return this.startAt.calendar({
-          sameDay: '[Today at ]H:mm A',
-          nextDay: '[Tomorrow ]H:mm A',
-          nextWeek: 'dddd[ at ]H:mm A',
-          lastDay: '[Yesterday ]H:mm A',
-          lastWeek: '[Last] dddd H:mm A',
-          sameElse: 'DD/MM/YYYY H:mm A',
+          sameDay: this.$t('liveItem.calendar.sameDay'),
+          nextDay: this.$t('liveItem.calendar.nextDay'),
+          nextWeek: this.$t('liveItem.calendar.nextWeek'),
+          lastDay: this.$t('liveItem.calendar.lastDay'),
+          lastWeek: this.$t('liveItem.calendar.lastWeek'),
+          sameElse: this.$t('liveItem.calendar.sameElse'),
         })
       },
       startAtSimple() {
-        return this.startAt.format('H:mm A')
+        return this.startAt.format(this.$t('liveItem.startAt.simple'))
       },
       startAtFull() {
-        return this.startAt.format('MMMM D, YYYY H:mm A')
+        return this.startAt.format(this.$t('liveItem.startAt.full'))
       },
       isScheduled() {
         return this.alarmCacheFlag && alarm.isScheduled(this.live)
@@ -132,7 +132,6 @@
         }
         this.alarmCacheFlag = Date.now()
       },
-      i18n: browser.i18n.getMessage,
     },
   }
 </script>
@@ -236,6 +235,10 @@
 
     .separator {
       color: var(--color-bd);
+
+      &:before {
+        content: '|';
+      }
     }
 
     .platform {
@@ -275,6 +278,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      .separator:before {
+        content: ',';
+      }
     }
   }
 </style>

@@ -12,6 +12,7 @@ import {
   CURRENT_LIVES,
   ENDED_LIVES,
   IS_NTF_ENABLED,
+  LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
@@ -134,6 +135,10 @@ const toggleIsNtfEnabled = () => store.set(
   true,
 )
 
+const getLocale = () => store.get(LOCALE)
+
+const setLocale = locale => store.set({ [LOCALE]: locale }, true)
+
 export default {
   filterByTitle,
   getCachedCurrentLives,
@@ -150,4 +155,6 @@ export default {
   syncLives,
   getMember,
   toggleIsNtfEnabled,
+  getLocale,
+  setLocale,
 }

@@ -12,6 +12,7 @@ import {
   CURRENT_LIVES,
   ENDED_LIVES,
   IS_NTF_ENABLED,
+  LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
@@ -303,4 +304,24 @@ test('should toggle isNtfEnabled', async () => {
   await workflows.toggleIsNtfEnabled()
 
   expect(store.data[IS_NTF_ENABLED]).toEqual(false)
+})
+
+test('should get locale', async () => {
+  expect(workflows.getLocale()).toEqual(undefined)
+
+  await store.set({ [LOCALE]: 'en' })
+
+  expect(workflows.getLocale()).toEqual('en')
+})
+
+test('should set locale', async () => {
+  expect(store.data[LOCALE]).toEqual(undefined)
+
+  await workflows.setLocale('en')
+
+  expect(store.data[LOCALE]).toEqual('en')
+
+  await workflows.setLocale('zh-CN')
+
+  expect(store.data[LOCALE]).toEqual('zh-CN')
 })

@@ -23,7 +23,6 @@ const alarm = {
     return find(this.livesToAlarm, { id: live['id'] })
   },
   getIsNtfEnabled() {
-    console.log(this.$store.get(IS_NTF_ENABLED))
     return this.$store.get(IS_NTF_ENABLED) ?? this.$defaultIsNtfEnabled
   },
   fire(live) {

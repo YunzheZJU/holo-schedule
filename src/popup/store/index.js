@@ -4,9 +4,14 @@ import {
   CURRENT_LIVES,
   ENDED_LIVES,
   IS_NTF_ENABLED,
+  LOCALE,
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
+import Vue from 'vue'
+import Vuex from 'vuex'
 import connect from './connect'
+
+Vue.use(Vuex)
 
 const store = {
   state: {
@@ -14,9 +19,10 @@ const store = {
     [CURRENT_LIVES]: [],
     [SCHEDULED_LIVES]: [],
     [IS_NTF_ENABLED]: false,
+    [LOCALE]: 'en',
   },
   mutations: {
-    ...Object.fromEntries([ENDED_LIVES, CURRENT_LIVES, SCHEDULED_LIVES, IS_NTF_ENABLED].map(
+    ...Object.fromEntries([ENDED_LIVES, CURRENT_LIVES, SCHEDULED_LIVES, IS_NTF_ENABLED, LOCALE].map(
       key => [key, (state, value) => {
         state[key] = value
       }],
@@ -25,4 +31,4 @@ const store = {
   plugins: [connect],
 }
 
-export default store
+export default new Vuex.Store(store)

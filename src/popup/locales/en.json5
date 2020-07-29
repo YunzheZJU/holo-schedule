@@ -1,28 +1,35 @@
 {
-  // Commonly used tokens
-  common: {
-    // Name of this locale
-    locale: "中文",
-  },
   // Component App
   app: {
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      "back": "返回",
+      back: "Back",
       // Name of page where users can change settings
-      "label": "设置",
+      label: "Settings",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "允许桌面通知",
+        label: "Enable desktop notification",
         // Description for enableNtf
-        "description": "突击直播或设置了提醒的直播开始时，通过桌面通知提醒您"
+        description: "Notify you by desktop notifications about the guerrilla lives and reminders you’ve set.",
+      },
+      // Prompt users to switch the UI language
+      language: {
+        // Label for language
+        label: "Language",
+        // Description for language
+        description: "Switch the UI language",
+        // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
+        locales: {
+          en: "English",
+          "zh-CN": "简体中文",
+        },
       },
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "由 {link} 强力驱动",
+        label: "Powered by {link}",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -31,7 +38,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "如果您有任何疑问，请联系 {link}",
+        label: "If you have any question, please contact {link}",
         // Name of the engine. There is no need to translate this key
         value: "help@holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -41,13 +48,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "下拉以加载更多",
+      hint: "Pull to load more",
       // Indicate that the loading is being performed
-      loading: "正在加载",
+      loading: "Loading",
       // Indicate that the loading is done successfully
-      success: "加载成功",
+      success: "Success",
       // Indicate that all available data has been loaded
-      finished: "已加载全部",
+      finished: "That's all",
     },
   },
   // Component LiveList
@@ -55,18 +62,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "已结束",
-        loading: "正在加载已结束直播...",
+        label: "Ended lives",
+        loading: "Loading ended lives...",
       },
       // Lives that are undergoing
       current: {
-        label: "正在直播",
-        loading: "正在加载进行中的直播...",
+        label: "Living",
+        loading: "Loading current lives...",
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "即将进行",
-        loading: "正在加载即将进行的直播...",
+        label: "Scheduled lives",
+        loading: "Loading scheduled lives...",
       }
     }
   },
@@ -77,41 +84,41 @@
       // A token string representing the format when displaying datetime with moment.js.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://momentjs.com/docs/#/displaying/format/
-      sameDay: "[今天]",
-      lastDay: "MMMDo [昨天]",
-      lastWeek: "MMMDo dddd",
-      sameElse: "MMMDo",
+      sameDay: "[Today]",
+      lastDay: "MMM Do, [Yesterday]",
+      lastWeek: "MMM Do, dddd",
+      sameElse: "MMM Do",
     }
   },
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "正在直播",
+    liveNow: "Live now",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "设置提醒",
+      set: "Remind me",
       // Prompt users to cancel the reminder
-      cancel: "取消提醒",
+      cancel: "Cancel reminder",
     },
     // Used to customize moment#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with moment.js.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://momentjs.com/docs/#/displaying/format/
-      sameDay: "[今天]A H:mm",
-      nextDay: "[明天]A H:mm",
-      nextWeek: "dddd A H:mm",
-      lastDay: "[昨天]A H:mm",
-      lastWeek: "[上周] dddd A H:mm",
-      sameElse: "DD/MM/YYYY A H:mm",
+      sameDay: "[Today at ]H:mm A",
+      nextDay: "[Tomorrow ]H:mm A",
+      nextWeek: "dddd[ at ]H:mm A",
+      lastDay: "[Yesterday ]H:mm A",
+      lastWeek: "[Last] dddd H:mm A",
+      sameElse: "DD/MM/YYYY H:mm A",
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
-      simple: "A H:mm",
+      simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY A H:mm",
+      full: "MMMM D, YYYY H:mm A",
     }
   },
 }

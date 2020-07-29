@@ -37,9 +37,20 @@
         <div class="option">
           <label class="label">
             <span>{{ $t('app.settings.enableNtf.label') }}</span>
-            <input type="checkbox" :checked="isNtfEnabled" @input="onChangeAlarmEnabled">
+            <input type="checkbox" :checked="isNtfEnabled" @change="onChangeIsNtfEnabled">
           </label>
           <div class="description">{{ $t('app.settings.enableNtf.description') }}</div>
+        </div>
+        <div class="option">
+          <label class="label">
+            <span>{{ $t('app.settings.language.label') }}</span>
+            <select :value="locale" @change="onChangeLocale">
+              <option v-for="$locale in locales" :key="$locale" :value="$locale">
+                {{ $t(`app.settings.language.locales.${$locale}`) }}
+              </option>
+            </select>
+          </label>
+          <div class="description">{{ $t('app.settings.language.description') }}</div>
         </div>
         <hr>
         <div class="info">
@@ -73,12 +84,12 @@
   import LiveListEnded from 'components/live-list-ended'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
-  import { IS_NTF_ENABLED } from 'shared/store/keys'
+  import { IS_NTF_ENABLED, LOCALE } from 'shared/store/keys'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
-  const { workflows: { toggleIsNtfEnabled } } = browser.extension.getBackgroundPage()
+  const { workflows: { toggleIsNtfEnabled, setLocale } } = browser.extension.getBackgroundPage()
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
 
@@ -93,6 +104,9 @@
       }
     },
     computed: {
+      locales() {
+        return Object.keys(this.$root.$i18n.messages)
+      },
       popupLogo() {
         return browser.runtime.getURL('assets/popup_logo.svg')
       },
@@ -109,6 +123,7 @@
       },
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
+        locale: LOCALE,
       }),
     },
     mounted() {
@@ -171,8 +186,11 @@
       onClickSettings() {
         this.route = this.route === 'settings' ? 'main' : 'settings'
       },
-      onChangeAlarmEnabled() {
+      onChangeIsNtfEnabled() {
         return toggleIsNtfEnabled()
+      },
+      onChangeLocale(event) {
+        return setLocale(event.target.value)
       },
     },
   }

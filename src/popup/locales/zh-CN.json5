@@ -1,6 +1,8 @@
 {
   // Component App
   app: {
+    // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
+    bgInitError: "初始化时发生致命错误: \"{msg}\"。 如果重启浏览器后依旧出现此消息，请联系 @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page

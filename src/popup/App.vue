@@ -89,7 +89,8 @@
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
-  const { workflows: { toggleIsNtfEnabled, setLocale } } = browser.extension.getBackgroundPage()
+  // eslint-disable-next-line max-len
+  const { workflows: { toggleIsNtfEnabled, setLocale }, bgInitError } = browser.extension.getBackgroundPage()
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
 
@@ -127,6 +128,13 @@
       }),
     },
     mounted() {
+      if (bgInitError) {
+        this.$toasts.add({
+          type: 'error',
+          text: this.$t('app.bgInitError', { msg: bgInitError.message }),
+        })
+      }
+
       const intersectionObserver = new IntersectionObserver(
         this.onIntersectionChange, {
           root: this.$refs.main,

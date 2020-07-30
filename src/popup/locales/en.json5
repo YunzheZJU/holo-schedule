@@ -1,6 +1,8 @@
 {
   // Component App
   app: {
+    // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
+    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page

@@ -14,7 +14,7 @@
     "start": "yarn run web-ext --start-url about:debugging#/runtime/this-firefox",
     "start:chromium": "yarn run web-ext -t chromium --start-url chrome://extensions/",
     "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && web-ext build -s dist",
     "lint:css": "stylelint \"**/*.{css,less,vue}\"",
     "lint:css:fix": "yarn run lint:css --fix",
     "lint:ext": "yarn web-ext lint",

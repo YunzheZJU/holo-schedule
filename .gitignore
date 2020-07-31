@@ -2,5 +2,6 @@
 .yarn/
 node_modules/
 dist/
+web-ext-artifacts/
 
 .yarnrc

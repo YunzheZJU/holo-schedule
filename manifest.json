@@ -33,5 +33,10 @@
   },
   "web_accessible_resources": [
     "assets/*"
-  ]
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "holo-schedule@holo.dev"
+    }
+  }
 }

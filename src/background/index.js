@@ -6,11 +6,15 @@ import workflows from 'workflows'
 
 const ALARM_NAME = 'fetch-data-alarm'
 
-const { syncChannels, syncCurrentLives, syncMembers, getLocale } = workflows
+const {
+  syncChannels, syncCurrentLives, syncScheduledLives, syncMembers, getLocale,
+} = workflows
 
 const handleAlarm = async ({ name }) => {
   if (name === ALARM_NAME) {
-    await syncCurrentLives().catch(err => console.error(err))
+    await syncCurrentLives()
+      .then(() => syncScheduledLives())
+      .catch(err => console.error(err))
   }
 }
 

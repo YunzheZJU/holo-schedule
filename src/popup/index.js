@@ -1,5 +1,5 @@
 import 'assets/iconfont'
-import i18n from 'locale'
+import i18n from 'locales'
 import 'moment-duration-format'
 import HintPlugin from 'plugins/hint'
 import ToastPlugin from 'plugins/toast'

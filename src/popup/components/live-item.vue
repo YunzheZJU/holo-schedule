@@ -11,8 +11,8 @@
                 @click.stop.prevent="handleRemind"
         >
           <span class="text">
-            <template v-if="isScheduled">{{ $t('liveItem.reminder.set') }}</template>
-            <template v-else>{{ $t('liveItem.reminder.cancel') }}</template>
+            <template v-if="isScheduled">{{ $t('liveItem.reminder.cancel') }}</template>
+            <template v-else>{{ $t('liveItem.reminder.set') }}</template>
           </span>
           <h-icon :name="isScheduled ? 'alarm-ok' : 'alarm'" class="icon" />
         </button>

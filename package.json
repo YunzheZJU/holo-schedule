@@ -13,7 +13,7 @@
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production",
     "web-ext": "web-ext run -s dist",
-    "web-ext:build": "web-ext build -s dist",
+    "web-ext:build": "yarn run build && web-ext build -s dist -o",
     "start": "yarn run web-ext --start-url about:debugging#/runtime/this-firefox",
     "start:profile": "yarn run start --firefox-profile \"C:\\Users\\Yunzhe\\Desktop\\firefox-profile\" --keep-profile-changes",
     "start:chromium": "yarn run web-ext -t chromium --start-url chrome://extensions/",

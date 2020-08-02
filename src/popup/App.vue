@@ -320,6 +320,11 @@
     }
 
     .settings {
+      @supports (backdrop-filter: blur(10px)) {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+      }
+
       position: absolute;
       top: 0;
       right: 0;

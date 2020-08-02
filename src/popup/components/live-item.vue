@@ -145,7 +145,7 @@
     padding: 4px 12px;
 
     &:hover {
-      background: var(--color-bg-normal);
+      background: var(--color-bg-light);
     }
 
     &:not(:hover) .remind:not(.active) {

@@ -14,7 +14,7 @@
         // Label for enableNtf
         label: "允许桌面通知",
         // Description for enableNtf
-        "description": "突击直播或设置了提醒的直播开始时，通过桌面通知提醒您"
+        "description": "突击直播（预定于10分钟内开始的直播）或设置了提醒的直播开始时，通过桌面通知提醒您"
       },
       // Prompt users to switch the UI language
       language: {

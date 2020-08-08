@@ -38,7 +38,7 @@ test('should use browser UI language', async () => {
 
   await i18n.init(store)
 
-  expect(i18n.locale).toEqual(locale.toLowerCase())
+  expect(i18n.locale).toEqual(locale)
 })
 
 test('should use browser UI language with partial match', async () => {

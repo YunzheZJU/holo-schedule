@@ -5,13 +5,14 @@ import workflows from 'workflows'
 import en from './locales/en.json5'
 import zhCN from './locales/zh-CN.json5'
 
-const supportedLocales = ['en', 'zh-cn']
+const messages = { en, 'zh-CN': zhCN }
+const supportedLocales = Object.keys(messages)
 
 const i18n = {
+  messages,
   locale: supportedLocales[0],
-  messages: { en, 'zh-cn': zhCN },
   async init(store) {
-    const localeFromBrowser = browser.i18n.getUILanguage().toLowerCase()
+    const localeFromBrowser = browser.i18n.getUILanguage()
     if (supportedLocales.find(locale => locale.startsWith(localeFromBrowser))) {
       this.locale = localeFromBrowser
     }
@@ -22,7 +23,7 @@ const i18n = {
     await store.set({ [LOCALE]: this.locale }, true)
 
     store.subscribe(LOCALE, locale => {
-      this.locale = locale.toLowerCase()
+      this.locale = locale
     })
   },
   getMessage(path, msg = {}) {

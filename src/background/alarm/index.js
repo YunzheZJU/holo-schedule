@@ -2,7 +2,11 @@ import { differenceBy, find, uniqBy } from 'lodash'
 import moment from 'moment'
 import notification from 'notification'
 import { createEnhancedArray } from 'shared/lib/enhancedArray'
-import { IS_NTF_ENABLED } from 'shared/store/keys'
+import {
+  CURRENT_LIVES,
+  IS_NTF_ENABLED,
+  SCHEDULED_LIVES,
+} from 'shared/store/keys'
 import { constructRoomUrl } from 'shared/utils'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
@@ -50,7 +54,7 @@ const alarm = {
 
     await store.set({ [IS_NTF_ENABLED]: this.getIsNtfEnabled() }, true)
 
-    store.subscribe('currentLives', (lives, prevLives) => {
+    store.subscribe(CURRENT_LIVES, (lives, prevLives) => {
       // Skip the first run
       if (prevLives !== undefined) {
         // Scheduled alarms
@@ -69,7 +73,7 @@ const alarm = {
       this.savedCurrentLives = uniqBy([...this.savedCurrentLives, ...lives], 'id')
     })
 
-    store.subscribe('scheduledLives', (lives, prevLives) => {
+    store.subscribe(SCHEDULED_LIVES, (lives, prevLives) => {
       // Skip the first run
       if (prevLives !== undefined) {
         // Guerrilla lives

@@ -2,8 +2,8 @@
   // Desktop notification
   notification: {
     // Inform users that a guerrilla live has started
-    guerrilla: 'A guerrilla live has started! {name} is waiting for your watching',
+    guerrilla: 'A guerrilla live has started! {name} is waiting for your watching!',
     // Inform users that a scheduled live has started
-    reminder: 'This scheduled live has started! {name} is waiting for your watching',
+    reminder: 'A scheduled live has started! {name} is waiting for your watching!',
   },
 }

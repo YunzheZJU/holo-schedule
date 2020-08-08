@@ -1,14 +1,12 @@
 import alarm from 'alarm'
-import { LOCALE } from 'shared/store/keys'
+import i18n from 'i18n'
 import store from 'store'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
 
 const ALARM_NAME = 'fetch-data-alarm'
 
-const {
-  syncChannels, syncCurrentLives, syncScheduledLives, syncMembers, getLocale,
-} = workflows
+const { syncChannels, syncCurrentLives, syncScheduledLives, syncMembers } = workflows
 
 const handleAlarm = async ({ name }) => {
   if (name === ALARM_NAME) {
@@ -24,10 +22,7 @@ const initOnce = async () => {
   window.alarm = alarm
 
   await alarm.init(store)
-  await store.set(
-    { [LOCALE]: getLocale() ?? browser.i18n.getUILanguage() },
-    true,
-  )
+  await i18n.init(store)
 
   browser.alarms.onAlarm.addListener(handleAlarm)
 

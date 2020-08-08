@@ -1,0 +1,9 @@
+{
+  // Desktop notification
+  notification: {
+    // Inform users that a guerrilla live has started
+    guerrilla: '突击! {name} 正在等你哦',
+    // Inform users that a scheduled live has started
+    reminder: '预约直播开始了! {name} 正在等你哦',
+  },
+}

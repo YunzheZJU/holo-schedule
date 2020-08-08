@@ -4,8 +4,8 @@ import store from 'store'
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import browser from 'webextension-polyfill'
-import en from './en.json5'
-import zhCN from './zh-CN.json5'
+import en from './locales/en.json5'
+import zhCN from './locales/zh-CN.json5'
 
 const locale = browser.extension.getBackgroundPage().workflows.getLocale()
 

@@ -1,3 +1,4 @@
+import i18n from 'i18n'
 import { differenceBy, find, uniqBy } from 'lodash'
 import moment from 'moment'
 import notification from 'notification'
@@ -29,7 +30,7 @@ const alarm = {
   getIsNtfEnabled() {
     return this.$store.get(IS_NTF_ENABLED) ?? this.$defaultIsNtfEnabled
   },
-  fire(live) {
+  fire(live, isGuerrilla = false) {
     const { id, title } = live
 
     this.remove({ id })
@@ -40,7 +41,9 @@ const alarm = {
 
     notification.create(id.toString(), {
       title,
-      message: `${member['name']} is waiting for you`,
+      message: i18n.getMessage(
+        `notification.${isGuerrilla ? 'guerrilla' : 'reminder'}`, { name: member['name'] },
+      ),
       iconUrl: member['avatar'] ?? browser.runtime.getURL('assets/default_avatar.png'),
       onClick() {
         browser.tabs.create({ url: constructRoomUrl(live) }).then(
@@ -66,7 +69,7 @@ const alarm = {
 
         // Guerrilla lives
         differenceBy(lives, this.savedScheduledLives, this.savedCurrentLives, 'id').forEach(live => {
-          this.fire(live)
+          this.fire(live, true)
         })
       }
 
@@ -79,7 +82,7 @@ const alarm = {
         // Guerrilla lives
         differenceBy(lives, this.savedScheduledLives, 'id').forEach(live => {
           if (moment().add(10, 'minutes').isAfter(moment(live['start_at']))) {
-            this.fire(live)
+            this.fire(live, true)
           }
         })
       }

@@ -1,4 +1,5 @@
 // TODO: Split tests
+import i18n from 'i18n'
 import moment from 'moment'
 import notification from 'notification'
 import { CHANNELS, IS_NTF_ENABLED, MEMBERS } from 'shared/store/keys'
@@ -311,27 +312,58 @@ test('should fire scheduled alarms', async () => {
 test('should create notification when firing alarms', async () => {
   await alarm.init(store)
 
-  const members = [{ id: 1, name: 'Member', avatar: 'https://example.com' }]
-  const channels = [{ id: 1, member_id: 1 }]
-  const live = {
+  const members = [{
+    id: 1,
+    name: 'Member 1',
+    avatar: 'https://example.com',
+  }, {
+    id: 2,
+    name: 'Member 2',
+    avatar: 'https://example.com',
+  }]
+  const channels = [{ id: 1, member_id: 1 }, { id: 2, member_id: 2 }]
+  const liveReminder = {
     id: 1,
     platform: 'youtube',
-    title: 'Title',
+    title: 'Title 1',
     channel_id: 1,
-    room: 'Room',
+    room: 'Room 1',
+    start_at: moment().subtract(5, 'minutes').toISOString(),
+  }
+  const liveGuerrilla = {
+    id: 2,
+    platform: 'youtube',
+    title: 'Title 2',
+    channel_id: 2,
+    room: 'Room 2',
+    start_at: moment().add(5, 'minutes').toISOString(),
   }
 
   await store.set({ [MEMBERS]: members, [CHANNELS]: channels })
   notification.create = jest.fn()
 
-  alarm.fire(live)
+  alarm.fire(liveReminder)
+  alarm.fire(liveGuerrilla, true)
 
-  expect(notification.create).toHaveBeenCalledTimes(1)
-  expect(notification.create).toHaveBeenCalledWith(live.id.toString(), expect.objectContaining({
-    title: live.title,
-    message: `${members[0].name} is waiting for you`,
-    iconUrl: members[0].avatar,
-  }))
+  expect(notification.create).toHaveBeenCalledTimes(2)
+  expect(notification.create).toHaveBeenNthCalledWith(
+    1,
+    liveReminder.id.toString(),
+    expect.objectContaining({
+      title: liveReminder.title,
+      message: i18n.getMessage('notification.reminder', { name: members[0].name }),
+      iconUrl: members[0].avatar,
+    }),
+  )
+  expect(notification.create).toHaveBeenNthCalledWith(
+    2,
+    liveGuerrilla.id.toString(),
+    expect.objectContaining({
+      title: liveGuerrilla.title,
+      message: i18n.getMessage('notification.guerrilla', { name: members[1].name }),
+      iconUrl: members[1].avatar,
+    }),
+  )
 })
 
 test('should get is notification enabled', async () => {

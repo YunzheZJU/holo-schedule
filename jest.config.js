@@ -8,4 +8,8 @@ module.exports = {
     'src',
     'node_modules',
   ],
+  transform: {
+    '^.+\\.json5?$': 'json5-jest',
+    '^.+\\.[jt]sx?$': 'babel-jest',
+  },
 }

@@ -5876,6 +5876,13 @@ json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
+json5-jest@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json5-jest/-/json5-jest-1.0.1.tgz#3839f6de8a89be4366b6ad1c60aa1a2c2fe9b352"
+  integrity sha512-3LwSMrhlQtbQQUUa6cImz+Aga8xs7LZCmS/Ke+Kgu6ZmyWOaGBnoUI1jnhEEJ3AM90k40oTGr/EnFchtv261mQ==
+  dependencies:
+    json5 "^1.0.1"
+
 json5-loader@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/json5-loader/-/json5-loader-4.0.0.tgz#4b6ea337c76fdf4107158491fae2408500fb6cb0"

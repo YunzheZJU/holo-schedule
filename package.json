@@ -40,6 +40,7 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.1.0",
     "jest-webextension-mock": "^3.6.0",
+    "json5-jest": "^1.0.1",
     "json5-loader": "^4.0.0",
     "less": "^3.11.3",
     "less-loader": "^6.1.1",

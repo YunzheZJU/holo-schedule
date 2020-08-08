@@ -59,9 +59,9 @@ module.exports = (env, argv) => {
     plugins: [
       new CopyPlugin({
         patterns: [
-          'manifest.json',
-          'icons/*',
-          'assets/*',
+          'src/manifest.json',
+          { from: 'src/icons', to: 'icons' },
+          { from: 'src/assets', to: 'assets' },
         ],
       }),
       new HtmlWebpackPlugin({

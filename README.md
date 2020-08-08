@@ -1,4 +1,4 @@
-<p align="center"><img src="./icons/icon@128.png" alt="holo-schedule logo"></p>
+<p align="center"><img src="./src/icons/icon@128.png" alt="holo-schedule logo"></p>
 
 # holo-schedule
 

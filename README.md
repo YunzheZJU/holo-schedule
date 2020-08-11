@@ -2,6 +2,8 @@
 
 # holo-schedule
 
+![Test status](https://github.com/YunzheZJU/holo-schedule/workflows/Test/badge.svg)
+
 —— Keep in touch with Hololive.
 
 One browser extension COVERs all scheduled and guerrilla livestreams.

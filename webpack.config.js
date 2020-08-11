@@ -3,6 +3,7 @@ const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin')
+const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
 
 const ROOT_PATH = __dirname
 
@@ -59,7 +60,6 @@ module.exports = (env, argv) => {
     plugins: [
       new CopyPlugin({
         patterns: [
-          'src/manifest.json',
           { from: 'src/icons', to: 'icons' },
           { from: 'src/assets', to: 'assets' },
         ],
@@ -71,6 +71,10 @@ module.exports = (env, argv) => {
       }),
       new VueLoaderPlugin(),
       new ResolveEntryModulesPlugin(),
+      new GenerateJsonFromJsPlugin({
+        path: './src/manifest.js',
+        filename: 'manifest.json',
+      }),
     ],
     devtool: isDevelopment ? 'inline-source-map' : undefined,
   }

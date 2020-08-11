@@ -4444,6 +4444,11 @@ fx-runner@1.0.13:
     which "1.2.4"
     winreg "0.0.12"
 
+generate-json-from-js-webpack-plugin@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/generate-json-from-js-webpack-plugin/-/generate-json-from-js-webpack-plugin-0.1.1.tgz#d688d7e77d65c6f1dff5e14b3fb2dcc56e90c778"
+  integrity sha512-y3fzWC8/OrsR4/KVXNx/XsCGQ5C1l3e0obNm+pWAKuvPuKo6IiYLJX0Vtp5J8AelkkM+jHDt0kElII3s2CvvzA==
+
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.1.tgz#58f4361ff987e5ff6e1e7a210827aa371eaac269"

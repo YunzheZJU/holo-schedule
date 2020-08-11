@@ -1,10 +1,12 @@
+const PACKAGE = require('../package.json')
+
 module.exports = {
   manifest_version: 2,
-  name: 'holo-schedule',
-  version: '1.0.1',
-  description: 'One browser extension COVERs all livestreams.',
-  homepage_url: 'https://github.com/YunzheZJU/holo-schedule',
-  author: 'Yunzhe <yunzhe@zju.edu.cn>',
+  name: PACKAGE.name,
+  version: PACKAGE.version,
+  description: PACKAGE.description,
+  homepage_url: PACKAGE.repository,
+  author: PACKAGE.author,
   icons: {
     16: 'icons/icon@16.png',
     32: 'icons/icon@32.png',

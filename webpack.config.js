@@ -8,7 +8,7 @@ const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
 const ROOT_PATH = __dirname
 
 module.exports = (env, argv) => {
-  const isDevelopment = argv.mode === 'development'
+  const isDevelopment = argv?.mode === 'development'
 
   return {
     context: ROOT_PATH,

@@ -9,6 +9,7 @@ const ROOT_PATH = __dirname
 
 module.exports = (env, argv) => {
   const isDevelopment = argv?.mode === 'development'
+  const isChrome = Boolean(argv?.chrome)
 
   return {
     context: ROOT_PATH,
@@ -74,6 +75,7 @@ module.exports = (env, argv) => {
       new GenerateJsonFromJsPlugin({
         path: './src/manifest.js',
         filename: 'manifest.json',
+        data: { isChrome },
       }),
     ],
     devtool: isDevelopment ? 'inline-source-map' : undefined,

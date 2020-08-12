@@ -1,8 +1,9 @@
+const { startCase } = require('lodash')
 const PACKAGE = require('../package.json')
 
-module.exports = {
+module.exports = ({ isChrome } = {}) => ({
   manifest_version: 2,
-  name: PACKAGE.name,
+  name: isChrome ? startCase(PACKAGE.name).replace(' ', '') : PACKAGE.name,
   version: PACKAGE.version,
   description: PACKAGE.description,
   homepage_url: PACKAGE.repository,
@@ -36,11 +37,14 @@ module.exports = {
   web_accessible_resources: [
     'assets/*',
   ],
-  browser_specific_settings: {
-    gecko: {
-      id: 'holo-schedule@holo.dev',
-      strict_min_version: '57.0',
+  ...(isChrome ? {
+    minimum_chrome_version: '57.0',
+  } : {
+    browser_specific_settings: {
+      gecko: {
+        id: 'holo-schedule@holo.dev',
+        strict_min_version: '57.0',
+      },
     },
-  },
-  minimum_chrome_version: '57.0',
-}
+  }),
+})

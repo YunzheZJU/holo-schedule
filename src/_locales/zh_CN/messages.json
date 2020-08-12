@@ -1,0 +1,14 @@
+{
+  "extensionName": {
+    "message": "Holo 直播伴侣",
+    "description": "Name of this extension which will be list in the store like AMO and Chrome Web Store"
+  },
+  "extensionDescription": {
+    "message": "精彩直播，尽在掌握。",
+    "description": "Description of this extension"
+  },
+  "browserActionTitle": {
+    "message": "精彩直播，尽在掌握",
+    "description": "Title to show when user hover on the browser action button"
+  }
+}

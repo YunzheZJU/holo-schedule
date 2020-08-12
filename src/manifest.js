@@ -1,12 +1,11 @@
-const { startCase } = require('lodash')
-
 module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
   manifest_version: 2,
-  name: isChrome ? startCase(PACKAGE.name).replace(' ', '') : PACKAGE.name,
+  name: '__MSG_extensionName__',
+  description: '__MSG_extensionDescription__',
   version: PACKAGE.version,
-  description: PACKAGE.description,
   homepage_url: PACKAGE.repository,
   author: PACKAGE.author,
+  default_locale: 'en',
   icons: {
     16: 'icons/icon@16.png',
     32: 'icons/icon@32.png',
@@ -26,7 +25,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
   },
   browser_action: {
     browser_style: true,
-    default_title: 'Keep in touch with Hololive',
+    default_title: '__MSG_browserActionTitle__',
     default_icon: {
       16: 'icons/icon@16.png',
       32: 'icons/icon@32.png',

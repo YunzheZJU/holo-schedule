@@ -13,25 +13,25 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Install all dependencies
-    - name: Install modules
-      run: yarn
+      # Install all dependencies
+      - name: Install modules
+        run: yarn
 
-    # Run JEST test suite
-    - name: Run tests
-      run: yarn run test
+      # Run JEST test suite
+      - name: Run tests
+        run: yarn run test
 
-    # Lint JS
-    - name: Lint JS
-      run: yarn run lint:js
+      # Lint JS
+      - name: Lint JS
+        run: yarn run lint:js
 
-    # Lint CSS
-    - name: Lint CSS
-      run: yarn run lint:css
+      # Lint CSS
+      - name: Lint CSS
+        run: yarn run lint:css
 
-    # Lint extension, for Firefox build only
-    - name: Lint extension for Firefox build
-      run: yarn run build && yarn run lint_ext
+      # Lint extension, for Firefox build only
+      - name: Lint extension for Firefox build
+        run: yarn run build && yarn run lint_ext

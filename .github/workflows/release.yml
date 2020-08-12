@@ -4,7 +4,7 @@ on:
   release:
     types: [published]
     branches:
-    - master
+      - master
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -15,28 +15,28 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Install all dependencies
-    - name: Install modules
-      run: yarn
+      # Install all dependencies
+      - name: Install modules
+        run: yarn
 
-    # Build extension for Firefox
-    - name: Build extension for Firefox
-      run: |
-        yarn run web-ext:build
-        for f in holo*.zip; do mv "$f" "firefox-$f"; done
+      # Build extension for Firefox
+      - name: Build extension for Firefox
+        run: |
+          yarn run web-ext:build
+          for f in holo*.zip; do mv "$f" "firefox-$f"; done
 
-    # Build extension for Chrome
-    - name: Build extension for Chrome
-      run: |
-        yarn run web-ext:build:chrome
-        for f in holo*.zip; do mv "$f" "chrome-$f"; done
+      # Build extension for Chrome
+      - name: Build extension for Chrome
+        run: |
+          yarn run web-ext:build:chrome
+          for f in holo*.zip; do mv "$f" "chrome-$f"; done
 
-    # Upload artifacts to release
-    - name: Upload to release
-      uses: AButler/upload-release-assets@v2.0
-      with:
-        files: 'web-ext-artifacts/*.zip'
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      # Upload artifacts to release
+      - name: Upload to release
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: 'web-ext-artifacts/*.zip'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -20,6 +20,18 @@ jobs:
     - name: Install modules
       run: yarn
 
-    # Run Jest test suite
+    # Run JEST test suite
     - name: Run tests
-      run: yarn test
+      run: yarn run test
+
+    # Lint JS
+    - name: Lint JS
+      run: yarn run lint:js
+
+    # Lint CSS
+    - name: Lint CSS
+      run: yarn run lint:css
+
+    # Lint extension, for Firefox build only
+    - name: Lint extension for Firefox build
+      run: yarn run build && yarn run lint_ext

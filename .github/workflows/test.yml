@@ -39,4 +39,4 @@ jobs:
 
       # Lint extension, for Firefox build only
       - name: Lint extension for Firefox build
-        run: yarn run build && yarn run lint_ext
+        run: yarn run build && yarn run lint:ext

@@ -31,13 +31,17 @@ jobs:
       - name: Build extension for Firefox
         run: |
           yarn run web-ext:build
+          cd web-ext-artifacts
           for f in holo*.zip; do mv "$f" "firefox-$f"; done
+          cd ..
 
       # Build extension for Chrome
       - name: Build extension for Chrome
         run: |
           yarn run web-ext:build:chrome
+          cd web-ext-artifacts
           for f in holo*.zip; do mv "$f" "chrome-$f"; done
+          cd ..
 
       # Upload artifacts to release
       - name: Upload to release

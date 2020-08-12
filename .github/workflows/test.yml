@@ -16,6 +16,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Use NodeJS v14
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
       # Install all dependencies
       - name: Install modules
         run: yarn

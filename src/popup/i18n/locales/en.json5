@@ -28,6 +28,8 @@
           "zh-CN": "简体中文",
         },
       },
+      // Display the current version
+      version: "Version: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine

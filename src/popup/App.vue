@@ -54,6 +54,9 @@
         </div>
         <hr>
         <div class="info">
+          <div class="version">
+            {{ $t('app.settings.version', { version }) }}
+          </div>
           <div class="engine">
             <i18n path="app.settings.engine.label" :tag="false">
               <template v-slot:link>
@@ -88,6 +91,7 @@
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
+  import PACKAGE from '../../package.json'
 
   // eslint-disable-next-line max-len
   const { workflows: { toggleIsNtfEnabled, setLocale }, bgInitError } = browser.extension.getBackgroundPage()
@@ -105,6 +109,9 @@
       }
     },
     computed: {
+      version() {
+        return PACKAGE.version
+      },
       locales() {
         return Object.keys(this.$root.$i18n.messages)
       },
@@ -363,9 +370,10 @@
         display: grid;
         gap: 8px;
 
-        .engine, .contact {
+        .version, .engine, .contact {
           color: var(--color-text-normal);
-          font-size: 14px;
+          font-size: 12px;
+          text-align: center;
 
           a {
             color: var(--color-theme);

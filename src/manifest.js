@@ -1,7 +1,6 @@
 const { startCase } = require('lodash')
-const PACKAGE = require('../package.json')
 
-module.exports = ({ isChrome } = {}) => ({
+module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
   manifest_version: 2,
   name: isChrome ? startCase(PACKAGE.name).replace(' ', '') : PACKAGE.name,
   version: PACKAGE.version,

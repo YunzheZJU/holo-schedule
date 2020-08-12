@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin')
 const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
+const webpack = require('webpack')
+const PACKAGE = require('./package.json')
 
 const ROOT_PATH = __dirname
 
@@ -75,7 +77,10 @@ module.exports = (env, argv) => {
       new GenerateJsonFromJsPlugin({
         path: './src/manifest.js',
         filename: 'manifest.json',
-        data: { isChrome },
+        data: { isChrome, PACKAGE },
+      }),
+      new webpack.DefinePlugin({
+        VERSION: JSON.stringify(PACKAGE.version),
       }),
     ],
     devtool: isDevelopment ? 'inline-source-map' : undefined,

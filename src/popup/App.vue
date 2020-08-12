@@ -91,7 +91,6 @@
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
-  import PACKAGE from '../../package.json'
 
   // eslint-disable-next-line max-len
   const { workflows: { toggleIsNtfEnabled, setLocale }, bgInitError } = browser.extension.getBackgroundPage()
@@ -110,7 +109,7 @@
     },
     computed: {
       version() {
-        return PACKAGE.version
+        return VERSION
       },
       locales() {
         return Object.keys(this.$root.$i18n.messages)

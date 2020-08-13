@@ -1,7 +1,7 @@
 ---
-name: Help with translation
+name: Translation improvement
 about: Help this project by improving translation
-title: Translation improvement
+title: '[I18N] '
 labels: ''
 assignees: ''
 

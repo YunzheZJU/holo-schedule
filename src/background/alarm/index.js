@@ -1,6 +1,5 @@
 import i18n from 'i18n'
 import { differenceBy, find, uniqBy } from 'lodash'
-import moment from 'moment'
 import notification from 'notification'
 import { createEnhancedArray } from 'shared/lib/enhancedArray'
 import {
@@ -9,6 +8,7 @@ import {
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
 import { constructRoomUrl } from 'shared/utils'
+import { isGuerrillaLive } from 'utils'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
 
@@ -69,7 +69,9 @@ const alarm = {
 
         // Guerrilla lives
         differenceBy(lives, this.savedScheduledLives, this.savedCurrentLives, 'id').forEach(live => {
-          this.fire(live, true)
+          if (isGuerrillaLive(live)) {
+            this.fire(live, true)
+          }
         })
       }
 
@@ -81,7 +83,7 @@ const alarm = {
       if (prevLives !== undefined) {
         // Guerrilla lives
         differenceBy(lives, this.savedScheduledLives, 'id').forEach(live => {
-          if (moment().add(10, 'minutes').isAfter(moment(live['start_at']))) {
+          if (isGuerrillaLive(live)) {
             this.fire(live, true)
           }
         })

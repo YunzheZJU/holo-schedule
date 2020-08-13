@@ -38,11 +38,13 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(15, 'minutes').toISOString(),
       },
     ],
@@ -56,6 +58,7 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -63,6 +66,7 @@ test('should subscribe to store', async () => {
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
@@ -76,11 +80,13 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -88,6 +94,7 @@ test('should subscribe to store', async () => {
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
@@ -102,6 +109,7 @@ test('should subscribe to store', async () => {
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -109,6 +117,7 @@ test('should subscribe to store', async () => {
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
@@ -122,11 +131,13 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -134,6 +145,7 @@ test('should subscribe to store', async () => {
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
@@ -147,11 +159,13 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -159,6 +173,7 @@ test('should subscribe to store', async () => {
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
@@ -172,16 +187,19 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -196,16 +214,19 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -213,6 +234,7 @@ test('should subscribe to store', async () => {
       {
         id: 4,
         title: 'Title 4',
+        created_at: moment().toISOString(),
         start_at: moment().add(15, 'minutes').toISOString(),
       },
     ],
@@ -226,16 +248,19 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
     ],
@@ -250,16 +275,19 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
+        created_at: moment().toISOString(),
         start_at: moment().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
@@ -267,11 +295,57 @@ test('should subscribe to store', async () => {
       {
         id: 4,
         title: 'Title 4',
+        created_at: moment().toISOString(),
         start_at: moment().add(5, 'minutes').toISOString(),
       },
     ],
   })
   expect(alarm.fire).toHaveBeenCalledTimes(0)
+  alarm.fire.mockClear()
+
+  // Two current lives including a guerrilla exist during the system's sleep
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: moment().toISOString(),
+        start_at: moment().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: moment().toISOString(),
+        start_at: moment().toISOString(),
+      },
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: moment().toISOString(),
+        start_at: moment().add(5, 'minutes').toISOString(),
+      },
+      {
+        id: 4,
+        title: 'Title 4',
+        created_at: moment().toISOString(),
+        start_at: moment().add(5, 'minutes').toISOString(),
+      },
+      {
+        id: 5,
+        title: 'Title 5',
+        created_at: moment().toISOString(),
+        start_at: moment().add(5, 'minutes').toISOString(),
+      },
+      {
+        id: 6,
+        title: 'Title 6',
+        created_at: moment().toISOString(),
+        start_at: moment().add(15, 'minutes').toISOString(),
+      },
+    ],
+    scheduledLives: [],
+  })
+  expect(alarm.fire).toHaveBeenCalledTimes(1)
   alarm.fire.mockClear()
 })
 
@@ -290,6 +364,7 @@ test('should fire scheduled alarms', async () => {
   const live = {
     id: 0,
     title: 'Title',
+    created_at: moment().toISOString(),
     start_at: moment().add(15, 'minutes').toISOString(),
   }
   await store.set({

@@ -25,6 +25,7 @@
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           en: "English",
+          ja: "日本語",
           "zh-CN": "简体中文",
         }
       },

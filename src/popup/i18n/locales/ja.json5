@@ -2,26 +2,26 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "初期化中に致命的なエラーが発生しました。: \"{msg}\". ブラウザを再起動した後もこのメッセージが表示される場合は、 @:app.settings.contact.value まで御連絡ください。",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "戻る",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "設定",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "デスクトップ通知の有効化",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set.",
+        description: "ゲリラライブ（配信予約から開始まで10分以内のライブ）および予約済みライブの配信開始を通知します。",
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "言語",
         // Description for language
-        description: "Switch the UI language",
+        description: "UIの言語を設定します。",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           en: "English",
@@ -30,7 +30,7 @@
         },
       },
       // Display the current version
-      version: "Version: v{version}",
+      version: "バージョン: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
@@ -43,7 +43,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "質問・お問い合わせはこちらまで： {link}",
         // Name of the engine. There is no need to translate this key
         value: "help@holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -53,13 +53,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "さらに読み込む場合はプルダウン",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "読み込み中...",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "完了",
       // Indicate that all available data has been loaded
-      finished: "That's all",
+      finished: "全てのデータを読み込みました",
     },
   },
   // Component LiveList
@@ -67,18 +67,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives...",
+        label: "配信終了",
+        loading: "終了したライブを読み込み中...",
       },
       // Lives that are undergoing
       current: {
-        label: "Living",
-        loading: "Loading current lives...",
+        label: "配信中",
+        loading: "配信中のライブを読み込み中...",
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives...",
+        label: "配信予約済み",
+        loading: "配信予約済みのライブを読み込み中...",
       }
     }
   },
@@ -89,8 +89,8 @@
       // A token string representing the format when displaying datetime with moment.js.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://momentjs.com/docs/#/displaying/format/
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
+      sameDay: "[今日]",
+      lastDay: "MMM Do, [昨日]",
       lastWeek: "MMM Do, dddd",
       sameElse: "MMM Do",
     }
@@ -98,32 +98,32 @@
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "配信中",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
+      set: "通知する",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder",
+      cancel: "通知をキャンセル",
     },
     // Used to customize moment#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with moment.js.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://momentjs.com/docs/#/displaying/format/
-      sameDay: "[Today at ]H:mm A",
-      nextDay: "[Tomorrow ]H:mm A",
-      nextWeek: "dddd[ at ]H:mm A",
-      lastDay: "[Yesterday ]H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "DD/MM/YYYY H:mm A",
+      sameDay: "[今日]A H:mm",
+      nextDay: "[明日]A H:mm",
+      nextWeek: "dddd A H:mm",
+      lastDay: "[昨日]A H:mm",
+      lastWeek: "[先週] dddd A H:mm",
+      sameElse: "DD/MM/YYYY A H:mm",
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
-      simple: "H:mm A",
+      simple: "A H:mm",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A",
+      full: "MMMM D, YYYY A H:mm",
     }
   },
 }

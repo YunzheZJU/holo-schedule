@@ -33,8 +33,8 @@ or
 
 | Browser                   | Support Level                                                                                      |
 | ------------------------- | -------------------------------------------------------------------------------------------------- |
-| Chrome (>=57.0)           | *Officially Supported* v57 is the minimum version required to support Firefox's modern add-on.     |
-| Firefox (>=57.0)          | *Officially Supported* v57 is the minimum version required to support CSS Grid layout.             |
+| Firefox (>=57.0)          | *Officially Supported* v57 is the minimum version required to support Firefox's modern add-on.     |
+| Chrome (>=57.0)           | *Officially Supported* v57 is the minimum version required to support CSS Grid layout.             |
 | Opera / Edge (>=79.0.309) | *Unofficially Supported* as a Chrome-compatible target                                             |
 
 **last 3 Firefox and Chrome versions** are recommended to unlock all functionalities of holo-schedule.

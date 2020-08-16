@@ -2,10 +2,11 @@ import { get } from 'lodash'
 import { LOCALE } from 'shared/store/keys'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
+import ja from './locales/ja.json5'
 import en from './locales/en.json5'
 import zhCN from './locales/zh-CN.json5'
 
-const messages = { en, 'zh-CN': zhCN }
+const messages = { en, ja, 'zh-CN': zhCN }
 const supportedLocales = Object.keys(messages)
 
 const i18n = {

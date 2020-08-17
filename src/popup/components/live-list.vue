@@ -60,7 +60,7 @@
       async reloadLives() {
         let hintId
         try {
-          hintId = this.$hints.add({ text: this.$t(`liveList.lives.${this.type}.loading`) })
+          hintId = this.$hints.add({ text: `${this.$t(`liveList.lives.${this.type}.loading`)}...` })
           await syncLives(this.type)
         } catch (err) {
           console.error(err)

@@ -68,17 +68,17 @@
       // Lives that has ended
       ended: {
         label: "已结束",
-        loading: "正在加载已结束直播...",
+        loading: "正在加载已结束直播",
       },
       // Lives that are undergoing
       current: {
         label: "正在直播",
-        loading: "正在加载进行中的直播...",
+        loading: "正在加载进行中的直播",
       },
       // Lives that are scheduled to perform
       scheduled: {
         label: "即将进行",
-        loading: "正在加载即将进行的直播...",
+        loading: "正在加载即将进行的直播",
       }
     }
   },

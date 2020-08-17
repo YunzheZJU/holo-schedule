@@ -58,7 +58,7 @@
       async load() {
         let hintId
         try {
-          hintId = this.$hints.add({ text: this.$t('liveList.lives.ended.loading') })
+          hintId = this.$hints.add({ text: `${this.$t('liveList.lives.ended.loading')}...` })
           const updatedLives = await syncLives('ended')
           if (updatedLives?.[0]?.['id'] === this.lives?.[0]?.['id']) {
             return true

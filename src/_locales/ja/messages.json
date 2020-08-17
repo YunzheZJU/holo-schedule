@@ -1,14 +1,14 @@
 {
   "extensionName": {
-    "message": "HoloSchedule",
+    "message": "ホロスケジュール",
     "description": "Name of this extension which will be list in the store like AMO and Chrome Web Store"
   },
   "extensionDescription": {
-    "message": "One browser extension COVERs all livestreams.",
+    "message": "ホロライブの配信情報をリアルタイムに表示＆通知",
     "description": "Description of this extension"
   },
   "browserActionTitle": {
-    "message": "Keep in touch with Hololive",
+    "message": "ホロライブ配信情報",
     "description": "Title to show when user hover on the browser action button"
   }
 }

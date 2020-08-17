@@ -43,7 +43,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "質問・お問い合わせはこちらまで： {link}",
+        label: "質問・問い合わせ等はこちらまで： {link}",
         // Name of the engine. There is no need to translate this key
         value: "help@holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -55,7 +55,7 @@
       // Prompt users to pull down the list to load new data
       hint: "さらに読み込む場合はプルダウン",
       // Indicate that the loading is being performed
-      loading: "読み込み中...",
+      loading: "読み込み中",
       // Indicate that the loading is done successfully
       success: "完了",
       // Indicate that all available data has been loaded
@@ -68,17 +68,17 @@
       // Lives that has ended
       ended: {
         label: "配信終了",
-        loading: "終了したライブを読み込み中...",
+        loading: "終了したライブを読み込み中",
       },
       // Lives that are undergoing
       current: {
         label: "配信中",
-        loading: "配信中のライブを読み込み中...",
+        loading: "配信中のライブを読み込み中",
       },
       // Lives that are scheduled to perform
       scheduled: {
         label: "配信予約済み",
-        loading: "配信予約済みのライブを読み込み中...",
+        loading: "配信予約済みのライブを読み込み中",
       }
     }
   },

@@ -2,8 +2,8 @@
   // Desktop notification
   notification: {
     // Inform users that a guerrilla live has started
-    ゲリラライブ: '{name} がゲリラライブを開始しました！',
+    guerrilla: '{name} がゲリラライブを開始しました！',
     // Inform users that a scheduled live has started
-    リマインダ: '{name} が配信を開始しました！',
+    reminder: '{name} が配信を開始しました！',
   },
 }

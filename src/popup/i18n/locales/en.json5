@@ -68,17 +68,17 @@
       // Lives that has ended
       ended: {
         label: "Ended lives",
-        loading: "Loading ended lives...",
+        loading: "Loading ended lives",
       },
       // Lives that are undergoing
       current: {
         label: "Living",
-        loading: "Loading current lives...",
+        loading: "Loading current lives",
       },
       // Lives that are scheduled to perform
       scheduled: {
         label: "Scheduled lives",
-        loading: "Loading scheduled lives...",
+        loading: "Loading scheduled lives",
       }
     }
   },

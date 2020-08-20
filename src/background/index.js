@@ -21,6 +21,7 @@ const initOnce = async () => {
   window.store = store
   window.alarm = alarm
 
+  await store.init()
   await alarm.init(store)
   await i18n.init(store)
 

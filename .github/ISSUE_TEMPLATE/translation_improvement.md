@@ -1,8 +1,8 @@
 ---
 name: Translation improvement
 about: Help this project by improving translation
-title: '[I18N] '
-labels: ''
+title: "[I18N] "
+labels: i18n
 assignees: ''
 
 ---

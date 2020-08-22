@@ -27,7 +27,10 @@ jest.mock('requests')
 const unixTime = Math.floor(Date.now() / 1000)
 
 beforeEach(() => {
-  store.data = {}
+  // eslint-disable-next-line no-restricted-syntax
+  for (const prop of Object.getOwnPropertyNames(store.data)) {
+    delete store.data[prop]
+  }
 })
 
 test('should filter lives by title', () => {

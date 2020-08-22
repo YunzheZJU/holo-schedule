@@ -55,7 +55,10 @@ const alarm = {
   async init(store) {
     this.$store = store
 
-    await store.set({ [IS_NTF_ENABLED]: this.getIsNtfEnabled() }, { local: true })
+    await store.set(
+      { [IS_NTF_ENABLED]: this.getIsNtfEnabled() },
+      { local: true, sync: true },
+    )
 
     store.subscribe(CURRENT_LIVES, (lives, prevLives) => {
       // Skip the first run

@@ -21,7 +21,10 @@ const i18n = {
     const localeFromStore = workflows.getLocale()
     this.locale = localeFromStore ?? this.locale
 
-    await store.set({ [LOCALE]: this.locale }, { local: true })
+    await store.set(
+      { [LOCALE]: this.locale },
+      { local: true, sync: true },
+    )
 
     store.subscribe(LOCALE, locale => {
       this.locale = locale

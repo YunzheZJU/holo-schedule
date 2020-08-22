@@ -11,8 +11,8 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
-  IS_POPUP_FIRST_RUN,
   IS_NTF_ENABLED,
+  IS_POPUP_FIRST_RUN,
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
@@ -133,12 +133,15 @@ const getMember = live => {
 
 const toggleIsNtfEnabled = () => store.set(
   { [IS_NTF_ENABLED]: !store.get(IS_NTF_ENABLED) },
-  { local: true },
+  { local: true, sync: true },
 )
 
 const getLocale = () => store.get(LOCALE)
 
-const setLocale = locale => store.set({ [LOCALE]: locale }, { local: true })
+const setLocale = locale => store.set(
+  { [LOCALE]: locale },
+  { local: true, sync: true },
+)
 
 const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
 

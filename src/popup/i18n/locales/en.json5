@@ -19,7 +19,7 @@
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings (Experimental)",
+        label: "Sync settings",
         // Description for shouldSyncSettings
         description: "Share settings between different devices with the same browser account logged in",
       },

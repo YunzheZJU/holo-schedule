@@ -19,7 +19,7 @@
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "TODO:Sync settings (Experimental)",
+        label: "TODO:Sync settings",
         // Description for shouldSyncSettings
         description: "TODO:Share settings between different devices with the same browser account logged in.",
       },

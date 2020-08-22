@@ -19,7 +19,7 @@
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "同步设置（实验性功能）",
+        label: "同步设置",
         // Description for shouldSyncSettings
         description: "在登录同一浏览器账号的不同设备间共享您的设置",
       },

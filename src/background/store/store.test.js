@@ -1,12 +1,14 @@
 import browser from 'webextension-polyfill'
 import createStore from './store'
 
-const storage = browser.storage.local
+const localStorage = browser.storage.local
+const syncStorage = browser.storage.sync
 
 test('should init', async () => {
   await createStore().init()
 
-  expect(storage.get).toHaveBeenCalledTimes(1)
+  expect(localStorage.get).toHaveBeenCalledTimes(1)
+  expect(syncStorage.get).toHaveBeenCalledTimes(1)
 })
 
 test('should set and get value', async () => {
@@ -21,10 +23,18 @@ test('should set and get value', async () => {
 test('should use storage', async () => {
   const store = await createStore()
 
-  await store.set({ a: 'string', b: 1, c: { name: 'object' } }, true)
-  expect(storage.set).toHaveBeenCalledTimes(1)
   await store.set({ d: 'other value' })
-  expect(storage.set).toHaveBeenCalledTimes(1)
+  expect(localStorage.set).toHaveBeenCalledTimes(0)
+  expect(syncStorage.set).toHaveBeenCalledTimes(0)
+  await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { local: true })
+  expect(localStorage.set).toHaveBeenCalledTimes(1)
+  expect(syncStorage.set).toHaveBeenCalledTimes(0)
+  await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { sync: true })
+  expect(localStorage.set).toHaveBeenCalledTimes(1)
+  expect(syncStorage.set).toHaveBeenCalledTimes(1)
+  await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { local: true, sync: true })
+  expect(localStorage.set).toHaveBeenCalledTimes(2)
+  expect(syncStorage.set).toHaveBeenCalledTimes(2)
 })
 
 test('should subscribe live', async () => {

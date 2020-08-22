@@ -89,7 +89,7 @@ const getCachedChannels = () => store.get(CHANNELS)
 const syncChannels = async () => {
   const channels = await getChannels()
 
-  await store.set({ [CHANNELS]: channels }, true)
+  await store.set({ [CHANNELS]: channels }, { local: true })
 
   return getCachedChannels()
 }
@@ -99,7 +99,7 @@ const getCachedMembers = () => store.get(MEMBERS)
 const syncMembers = async () => {
   const members = await getMembers()
 
-  await store.set({ [MEMBERS]: members }, true)
+  await store.set({ [MEMBERS]: members }, { local: true })
 
   return getCachedMembers()
 }
@@ -133,12 +133,12 @@ const getMember = live => {
 
 const toggleIsNtfEnabled = () => store.set(
   { [IS_NTF_ENABLED]: !store.get(IS_NTF_ENABLED) },
-  true,
+  { local: true },
 )
 
 const getLocale = () => store.get(LOCALE)
 
-const setLocale = locale => store.set({ [LOCALE]: locale }, true)
+const setLocale = locale => store.set({ [LOCALE]: locale }, { local: true })
 
 const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
 

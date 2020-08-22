@@ -1,15 +1,13 @@
 import { cloneDeep, pull } from 'lodash'
 import browser from 'webextension-polyfill'
 
-const storage = browser.storage.local
+const getStorage = async storageArea => {
+  const { store = {} } = await browser.storage[storageArea].get('store')
+  return store
+}
 
 const createStore = () => {
   const data = {}
-
-  const getStorage = async () => {
-    const { store: $store = {} } = await storage.get('store')
-    return $store
-  }
 
   const ports = []
 
@@ -31,13 +29,16 @@ const createStore = () => {
     ports,
     callbacks: [],
     async init() {
-      await this.set(await getStorage())
+      await this.set({
+        ...await getStorage('local'),
+        ...await getStorage('sync'),
+      })
       browser.runtime.onConnect.addListener(onConnect)
     },
     get(key) {
       return cloneDeep(this.data)[key]
     },
-    async set(obj, toStorage = false) {
+    async set(obj, toStorage = { local: false, sync: false }) {
       Object.entries(obj).forEach(([key, value]) => {
         console.log(`[store]${key} has been stored/updated successfully.`)
 
@@ -50,9 +51,13 @@ const createStore = () => {
           port.postMessage({ key, value })
         })
       })
-      if (toStorage) {
-        await storage.set({ store: { ...await getStorage(), ...obj } })
-      }
+      await Promise.all(
+        Object.entries(toStorage)
+          .filter(([, value]) => value)
+          .map(async ([key]) => browser.storage[key].set({
+            store: { ...await getStorage(key), ...obj },
+          })),
+      )
     },
     subscribe(key = '', callback = () => null) {
       this.callbacks.push(($key, ...args) => {

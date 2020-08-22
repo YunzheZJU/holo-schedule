@@ -6,7 +6,9 @@ import workflows from 'workflows'
 
 const ALARM_NAME = 'fetch-data-alarm'
 
-const { syncChannels, syncCurrentLives, syncScheduledLives, syncMembers } = workflows
+const {
+  syncChannels, syncCurrentLives, syncScheduledLives, syncMembers, setIsPopupFirstRun,
+} = workflows
 
 const handleAlarm = async ({ name }) => {
   if (name === ALARM_NAME) {
@@ -24,6 +26,8 @@ const initOnce = async () => {
   await store.init()
   await alarm.init(store)
   await i18n.init(store)
+
+  await setIsPopupFirstRun(true)
 
   browser.alarms.onAlarm.addListener(handleAlarm)
 

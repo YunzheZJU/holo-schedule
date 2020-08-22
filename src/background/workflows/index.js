@@ -11,6 +11,7 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
+  IS_POPUP_FIRST_RUN,
   IS_NTF_ENABLED,
   LOCALE,
   MEMBERS,
@@ -139,6 +140,8 @@ const getLocale = () => store.get(LOCALE)
 
 const setLocale = locale => store.set({ [LOCALE]: locale }, true)
 
+const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
+
 export default {
   filterByTitle,
   getCachedCurrentLives,
@@ -157,4 +160,5 @@ export default {
   toggleIsNtfEnabled,
   getLocale,
   setLocale,
+  setIsPopupFirstRun,
 }

@@ -78,6 +78,7 @@
         </div>
       </div>
     </div>
+    <OpeningAnim />
   </div>
 </template>
 
@@ -85,6 +86,7 @@
   import HIcon from 'components/h-icon'
   import LiveList from 'components/live-list'
   import LiveListEnded from 'components/live-list-ended'
+  import OpeningAnim from 'components/opening-anim'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
   import { IS_NTF_ENABLED, LOCALE } from 'shared/store/keys'
@@ -99,7 +101,7 @@
 
   export default {
     name: 'App',
-    components: { HIcon, LiveListEnded, LiveList, VToast, VHint },
+    components: { OpeningAnim, HIcon, LiveListEnded, LiveList, VToast, VHint },
     data() {
       return {
         loadingStatus: 'idle',

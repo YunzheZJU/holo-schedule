@@ -151,6 +151,8 @@ const toggleShouldSyncSettings = () => store.set(
   { local: true },
 )
 
+const downloadSettings = store.downloadFromSync
+
 export default {
   filterByTitle,
   getCachedCurrentLives,
@@ -171,4 +173,5 @@ export default {
   setLocale,
   setIsPopupFirstRun,
   toggleShouldSyncSettings,
+  downloadSettings,
 }

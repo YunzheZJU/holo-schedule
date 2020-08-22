@@ -29,50 +29,65 @@ const createStore = () => {
     port.onDisconnect.addListener(() => pull(ports, port))
   }
 
+  const uploadToSync = async () => {
+    if (data[SHOULD_SYNC_SETTINGS]) {
+      await storage.sync.set({ store: dataToSync })
+    }
+  }
+
+  const set = async (obj, toStorage = { local: false, sync: false }) => {
+    Object.entries(obj).forEach(([key, value]) => {
+      console.log(`[store]${key} has been stored/updated successfully.`)
+
+      const oldValue = data[key]
+      data[key] = value
+
+      callbacks.forEach(callback => callback(key, value, oldValue))
+
+      ports.forEach(port => {
+        port.postMessage({ key, value })
+      })
+    })
+    if (toStorage.local) {
+      await storage.local.set({
+        store: { ...await getStorage('local'), ...obj },
+      })
+    }
+    if (toStorage.sync) {
+      Object.assign(dataToSync, obj)
+
+      await uploadToSync()
+    }
+  }
+
+  const downloadFromSync = async () => {
+    Object.assign(dataToSync, await getStorage('sync'))
+    if (data[SHOULD_SYNC_SETTINGS]) {
+      await set(dataToSync)
+    }
+  }
+
   return {
     data,
     dataToSync,
     callbacks,
     ports,
+    downloadFromSync,
+    uploadToSync,
+    set,
     async init() {
-      await this.set(await getStorage('local'))
+      await set(await getStorage('local'))
 
-      Object.assign(dataToSync, await getStorage('sync'))
-      if (data[SHOULD_SYNC_SETTINGS]) {
-        await this.set(dataToSync)
-      }
+      await downloadFromSync()
+
+      this.subscribe(SHOULD_SYNC_SETTINGS, async () => {
+        await uploadToSync()
+      })
 
       browser.runtime.onConnect.addListener(onConnect)
     },
     get(key) {
       return cloneDeep(data[key])
-    },
-    async set(obj, toStorage = { local: false, sync: false }) {
-      Object.entries(obj).forEach(([key, value]) => {
-        console.log(`[store]${key} has been stored/updated successfully.`)
-
-        const oldValue = data[key]
-        data[key] = value
-
-        callbacks.forEach(callback => callback(key, value, oldValue))
-
-        ports.forEach(port => {
-          port.postMessage({ key, value })
-        })
-      })
-      if (toStorage.local) {
-        await storage.local.set({
-          store: { ...await getStorage('local'), ...obj },
-        })
-      }
-      if (toStorage.sync) {
-        console.log('add to syncData', obj)
-        Object.assign(dataToSync, obj)
-      }
-      if (data[SHOULD_SYNC_SETTINGS]) {
-        console.log('sync settings', dataToSync)
-        await storage.sync.set({ store: dataToSync })
-      }
     },
     subscribe(key = '', callback = () => null) {
       callbacks.push(($key, ...args) => {

@@ -12,6 +12,7 @@ import {
   CURRENT_LIVES,
   ENDED_LIVES,
   IS_NTF_ENABLED,
+  IS_POPUP_FIRST_RUN,
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
@@ -324,4 +325,16 @@ test('should set locale', async () => {
   await workflows.setLocale('zh-CN')
 
   expect(store.data[LOCALE]).toEqual('zh-CN')
+})
+
+test('should set isPopupFirstRun', async () => {
+  expect(store.data[IS_POPUP_FIRST_RUN]).toEqual(undefined)
+
+  await workflows.setIsPopupFirstRun(true)
+
+  expect(store.data[IS_POPUP_FIRST_RUN]).toEqual(true)
+
+  await workflows.setIsPopupFirstRun(false)
+
+  expect(store.data[IS_POPUP_FIRST_RUN]).toEqual(false)
 })

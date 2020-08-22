@@ -16,6 +16,7 @@ import {
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
+  SHOULD_SYNC_SETTINGS,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -337,4 +338,16 @@ test('should set isPopupFirstRun', async () => {
   await workflows.setIsPopupFirstRun(false)
 
   expect(store.data[IS_POPUP_FIRST_RUN]).toEqual(false)
+})
+
+test('should toggle shouldSyncSettings', async () => {
+  await store.set({ [SHOULD_SYNC_SETTINGS]: false })
+
+  await workflows.toggleShouldSyncSettings()
+
+  expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(true)
+
+  await workflows.toggleShouldSyncSettings()
+
+  expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(false)
 })

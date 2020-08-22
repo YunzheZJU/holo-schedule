@@ -16,6 +16,13 @@
         // Description for enableNtf
         "description": "突击直播（预定于10分钟内开始的直播）或设置了提醒的直播开始时，通过桌面通知提醒您"
       },
+      // Prompt users to sync settings between different devices with the same browser account logged in
+      shouldSyncSettings: {
+        // Label for shouldSyncSettings
+        label: "同步设置（实验性功能）",
+        // Description for shouldSyncSettings
+        description: "在登录同一浏览器账号的不同设备间共享您的设置",
+      },
       // Prompt users to switch the UI language
       language: {
         // Label for language

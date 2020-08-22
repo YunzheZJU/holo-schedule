@@ -16,6 +16,13 @@
         // Description for enableNtf
         description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set.",
       },
+      // Prompt users to sync settings between different devices with the same browser account logged in
+      shouldSyncSettings: {
+        // Label for shouldSyncSettings
+        label: "Sync settings (Experimental)",
+        // Description for shouldSyncSettings
+        description: "Share settings between different devices with the same browser account logged in",
+      },
       // Prompt users to switch the UI language
       language: {
         // Label for language

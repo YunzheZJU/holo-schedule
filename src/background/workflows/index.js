@@ -16,6 +16,7 @@ import {
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
+  SHOULD_SYNC_SETTINGS,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -145,6 +146,11 @@ const setLocale = locale => store.set(
 
 const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
 
+const toggleShouldSyncSettings = () => store.set(
+  { [SHOULD_SYNC_SETTINGS]: !store.get(SHOULD_SYNC_SETTINGS) },
+  { local: true },
+)
+
 export default {
   filterByTitle,
   getCachedCurrentLives,
@@ -164,4 +170,5 @@ export default {
   getLocale,
   setLocale,
   setIsPopupFirstRun,
+  toggleShouldSyncSettings,
 }

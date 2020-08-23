@@ -21,7 +21,7 @@
         // Label for shouldSyncSettings
         label: "同期設定",
         // Description for shouldSyncSettings
-        description: "TODO:Share settings between different devices with the same browser account logged in.",
+        description: "同じブラウザアカウントでログインしている場合、デバイス間で設定を共有することができます。",
       },
       // Prompt users to switch the UI language
       language: {

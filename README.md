@@ -22,11 +22,11 @@ One browser extension COVERs all scheduled and guerrilla livestreams.
 ## Install from store
 
 You can get this extension from the official download pages on 
-[Mozilla AMO](https://addons.mozilla.org/zh-CN/firefox/addon/holo-schedule/) 
+[Mozilla AMO](https://addons.mozilla.org/firefox/addon/holo-schedule/) 
 or 
 [Chrome Web Store](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad).
 
-[![Mozilla AMO](docs/get-the-add-on.png)](https://addons.mozilla.org/zh-CN/firefox/addon/holo-schedule/)
+[![Mozilla AMO](docs/get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
 [![Chrome Web Store](docs/available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 
 ## Supported Browsers

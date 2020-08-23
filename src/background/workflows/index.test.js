@@ -16,6 +16,7 @@ import {
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
+  SHOULD_SYNC_SETTINGS,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -26,7 +27,10 @@ jest.mock('requests')
 const unixTime = Math.floor(Date.now() / 1000)
 
 beforeEach(() => {
-  store.data = {}
+  // eslint-disable-next-line no-restricted-syntax
+  for (const prop of Object.getOwnPropertyNames(store.data)) {
+    delete store.data[prop]
+  }
 })
 
 test('should filter lives by title', () => {
@@ -337,4 +341,16 @@ test('should set isPopupFirstRun', async () => {
   await workflows.setIsPopupFirstRun(false)
 
   expect(store.data[IS_POPUP_FIRST_RUN]).toEqual(false)
+})
+
+test('should toggle shouldSyncSettings', async () => {
+  await store.set({ [SHOULD_SYNC_SETTINGS]: false })
+
+  await workflows.toggleShouldSyncSettings()
+
+  expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(true)
+
+  await workflows.toggleShouldSyncSettings()
+
+  expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(false)
 })

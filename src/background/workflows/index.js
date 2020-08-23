@@ -11,11 +11,12 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
-  IS_POPUP_FIRST_RUN,
   IS_NTF_ENABLED,
+  IS_POPUP_FIRST_RUN,
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
+  SHOULD_SYNC_SETTINGS,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -89,7 +90,7 @@ const getCachedChannels = () => store.get(CHANNELS)
 const syncChannels = async () => {
   const channels = await getChannels()
 
-  await store.set({ [CHANNELS]: channels }, true)
+  await store.set({ [CHANNELS]: channels }, { local: true })
 
   return getCachedChannels()
 }
@@ -99,7 +100,7 @@ const getCachedMembers = () => store.get(MEMBERS)
 const syncMembers = async () => {
   const members = await getMembers()
 
-  await store.set({ [MEMBERS]: members }, true)
+  await store.set({ [MEMBERS]: members }, { local: true })
 
   return getCachedMembers()
 }
@@ -133,14 +134,24 @@ const getMember = live => {
 
 const toggleIsNtfEnabled = () => store.set(
   { [IS_NTF_ENABLED]: !store.get(IS_NTF_ENABLED) },
-  true,
+  { local: true, sync: true },
 )
 
 const getLocale = () => store.get(LOCALE)
 
-const setLocale = locale => store.set({ [LOCALE]: locale }, true)
+const setLocale = locale => store.set(
+  { [LOCALE]: locale },
+  { local: true, sync: true },
+)
 
 const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
+
+const toggleShouldSyncSettings = () => store.set(
+  { [SHOULD_SYNC_SETTINGS]: !store.get(SHOULD_SYNC_SETTINGS) },
+  { local: true },
+)
+
+const downloadSettings = store.downloadFromSync
 
 export default {
   filterByTitle,
@@ -161,4 +172,6 @@ export default {
   getLocale,
   setLocale,
   setIsPopupFirstRun,
+  toggleShouldSyncSettings,
+  downloadSettings,
 }

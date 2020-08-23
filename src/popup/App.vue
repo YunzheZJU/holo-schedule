@@ -43,6 +43,17 @@
         </div>
         <div class="option">
           <label class="label">
+            <span>{{ $t('app.settings.shouldSyncSettings.label') }}</span>
+            <input
+              type="checkbox"
+              :checked="shouldSyncSettings"
+              @change="onChangeShouldSyncSettings"
+            >
+          </label>
+          <div class="description">{{ $t('app.settings.shouldSyncSettings.description') }}</div>
+        </div>
+        <div class="option">
+          <label class="label">
             <span>{{ $t('app.settings.language.label') }}</span>
             <select :value="locale" @change="onChangeLocale">
               <option v-for="$locale in locales" :key="$locale" :value="$locale">
@@ -89,13 +100,13 @@
   import OpeningAnim from 'components/opening-anim'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
-  import { IS_NTF_ENABLED, LOCALE } from 'shared/store/keys'
+  import { IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
   // eslint-disable-next-line max-len
-  const { workflows: { toggleIsNtfEnabled, setLocale }, bgInitError } = browser.extension.getBackgroundPage()
+  const { workflows: { toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings }, bgInitError } = browser.extension.getBackgroundPage()
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
 
@@ -133,6 +144,7 @@
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
         locale: LOCALE,
+        shouldSyncSettings: SHOULD_SYNC_SETTINGS,
       }),
     },
     mounted() {
@@ -204,6 +216,9 @@
       },
       onChangeIsNtfEnabled() {
         return toggleIsNtfEnabled()
+      },
+      onChangeShouldSyncSettings() {
+        return toggleShouldSyncSettings()
       },
       onChangeLocale(event) {
         return setLocale(event.target.value)

@@ -16,6 +16,13 @@
         // Description for enableNtf
         description: "ゲリラライブ（配信予約から開始まで10分以内のライブ）および予約済みライブの配信開始を通知します。",
       },
+      // Prompt users to sync settings between different devices with the same browser account logged in
+      shouldSyncSettings: {
+        // Label for shouldSyncSettings
+        label: "同期設定",
+        // Description for shouldSyncSettings
+        description: "同じブラウザアカウントでログインしている場合、デバイス間で設定を共有することができます",
+      },
       // Prompt users to switch the UI language
       language: {
         // Label for language

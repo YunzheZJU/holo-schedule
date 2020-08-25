@@ -5,6 +5,7 @@ module.exports = {
   moduleDirectories: [
     'background',
     'popup',
+    'options',
     'src',
     'node_modules',
   ],

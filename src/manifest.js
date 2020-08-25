@@ -24,13 +24,18 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     ],
   },
   browser_action: {
-    browser_style: true,
+    [isChrome ? 'chrome_style' : 'browser_style']: true,
     default_title: '__MSG_browserActionTitle__',
     default_icon: {
       16: 'icons/icon@16.png',
       32: 'icons/icon@32.png',
     },
     default_popup: 'src/popup.html',
+  },
+  options_ui: {
+    [isChrome ? 'chrome_style' : 'browser_style']: true,
+    page: 'src/options.html',
+    open_in_tab: true,
   },
   web_accessible_resources: [
     'assets/*',

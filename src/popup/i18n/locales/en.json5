@@ -79,7 +79,7 @@
       },
       // Lives that are undergoing
       current: {
-        label: "Living",
+        label: "Live",
         loading: "Loading current lives",
       },
       // Lives that are scheduled to perform

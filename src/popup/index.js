@@ -1,4 +1,4 @@
-import 'assets/iconfont'
+import 'shared/assets/iconfont'
 import i18n from 'i18n'
 import 'moment-duration-format'
 import HintPlugin from 'plugins/hint'

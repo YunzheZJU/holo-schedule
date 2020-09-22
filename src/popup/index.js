@@ -8,6 +8,7 @@ import Vue from 'vue'
 import Fragment from 'vue-fragment'
 import browser from 'webextension-polyfill'
 import App from './App.vue'
+import 'shared/global.less'
 import './global.less'
 
 Vue.use(Fragment.Plugin)

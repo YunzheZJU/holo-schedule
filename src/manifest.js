@@ -39,6 +39,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
   },
   web_accessible_resources: [
     'assets/*',
+    'icons/*',
   ],
   ...(isChrome ? {
     minimum_chrome_version: '57.0',

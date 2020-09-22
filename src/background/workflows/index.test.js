@@ -17,6 +17,7 @@ import {
   MEMBERS,
   SCHEDULED_LIVES,
   SHOULD_SYNC_SETTINGS,
+  SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -61,6 +62,33 @@ test('should filter lives by title', () => {
   ]
 
   const filteredLives = workflows.filterByTitle(livesToFilter)
+
+  expect(filteredLives).toEqual(livesExpected)
+})
+
+test('should filter lives by subscription', async () => {
+  const members = [{ id: 1 }, { id: 2 }, { id: 3 }]
+  const channels = [
+    { id: 1, member_id: 1 },
+    { id: 2, member_id: 2 },
+    { id: 3, member_id: 3 },
+  ]
+  const liveOne = { channel_id: 1 }
+  const liveTwo = { channel_id: 2 }
+  const liveThree = { channel_id: 3 }
+  const liveFour = { channel_id: 4 }
+  const subscriptionByMember = { 1: true, 2: false }
+
+  await store.set({
+    [MEMBERS]: members,
+    [CHANNELS]: channels,
+    [SUBSCRIPTION_BY_MEMBER]: subscriptionByMember,
+  })
+
+  const livesToFilter = [liveOne, liveTwo, liveThree, liveFour]
+  const livesExpected = [liveOne, liveThree, liveFour]
+
+  const filteredLives = workflows.filterBySubscription(livesToFilter)
 
   expect(filteredLives).toEqual(livesExpected)
 })
@@ -264,6 +292,47 @@ test('should sync channels', async () => {
   expect(returnValue).toEqual(channels)
 })
 
+test('should get subscriptionByMember', async () => {
+  const subscriptionByMember = { 1: true, 2: false }
+
+  expect(workflows.getSubscriptionByMember()).toEqual(undefined)
+
+  await store.set({ [SUBSCRIPTION_BY_MEMBER]: subscriptionByMember })
+
+  expect(workflows.getSubscriptionByMember()).toEqual(subscriptionByMember)
+})
+
+test('should set subscriptionByMember', async () => {
+  const subscriptionByMemberOne = { 1: true, 2: false }
+  const subscriptionByMemberTwo = { 1: false }
+
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(undefined)
+
+  await workflows.setSubscriptionByMember(subscriptionByMemberOne)
+
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(subscriptionByMemberOne)
+
+  await workflows.setSubscriptionByMember(subscriptionByMemberTwo)
+
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(subscriptionByMemberTwo)
+})
+
+test('should update subscriptionByMember', async () => {
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(undefined)
+
+  await workflows.updateSubscriptionByMember(1, true)
+
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual({ 1: true })
+
+  await workflows.updateSubscriptionByMember(1, false)
+
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual({ 1: false })
+
+  await workflows.updateSubscriptionByMember(2, true)
+
+  expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual({ 1: false, 2: true })
+})
+
 test('should get cached members', async () => {
   const members = [{ id: 1 }, { id: 2 }]
 
@@ -279,15 +348,18 @@ test('should sync members', async () => {
 
   getMembers.mockResolvedValue(members)
 
+  expect(workflows.getSubscriptionByMember()).toEqual(undefined)
+
   const returnValue = await workflows.syncMembers()
 
   expect(store.data[MEMBERS]).toEqual(members)
   expect(returnValue).toEqual(members)
+  expect(workflows.getSubscriptionByMember()).toEqual({ 1: true, 2: true })
 })
 
 test('should get member info', async () => {
   const members = [{ id: 1, name: 'Member' }]
-  const channels = [{ id: 1, member_id: 1 }, { id: 1, member_id: 1 }]
+  const channels = [{ id: 1, member_id: 1 }, { id: 2, member_id: 1 }]
   const liveOne = { channel_id: 1 }
   const liveTwo = { channel_id: 2 }
   const liveThree = { channel_id: 3 }
@@ -295,7 +367,7 @@ test('should get member info', async () => {
   await store.set({ [MEMBERS]: members, [CHANNELS]: channels })
 
   expect(workflows.getMember(liveOne)).toEqual(members[0])
-  expect(workflows.getMember(liveTwo)).toEqual({})
+  expect(workflows.getMember(liveTwo)).toEqual(members[0])
   expect(workflows.getMember(liveThree)).toEqual({})
 })
 

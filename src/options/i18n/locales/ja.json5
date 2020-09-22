@@ -4,19 +4,19 @@
     // Advanced settings
     advancedSettings: {
       // Label for advancedSettings
-      label: "Advanced Settings",
+      label: "TODO:Advanced Settings",
       // Prompt users to configure the list of members to subscribe
       members: {
         // Label for members
-        label: "Members",
+        label: "TODO:Members",
         // Description for members
-        description: "Configure the list of members to subscribe"
+        description: "TODO:Configure the list of members to subscribe"
       }
     }
   },
   // Component MemberGroup
   memberGroup: {
     // Indicate that no member data can be found for this group
-    noData: "No Member Data",
+    noData: "TODO:No Member Data",
   }
 }

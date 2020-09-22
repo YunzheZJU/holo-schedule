@@ -22,12 +22,12 @@
       <main class="main">
         <div class="title">
           <img class="logo" :src="getAssets('icons/icon@32.png')" alt="Logo">
-          <div class="text">Advanced Settings</div>
+          <div class="text">{{ $t('app.advancedSettings.label') }}</div>
         </div>
         <section class="section">
           <div class="section-title">
-            <div class="name">Members</div>
-            <div class="desc">Configure the list of members to subscribe</div>
+            <div class="name">{{ $t('app.advancedSettings.members.label') }}</div>
+            <div class="desc">{{ $t('app.advancedSettings.members.description') }}</div>
           </div>
           <ul class="content">
             <li v-for="(group, index) in groups" :key="index" class="group">

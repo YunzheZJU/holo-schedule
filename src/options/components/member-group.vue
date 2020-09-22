@@ -12,7 +12,7 @@
         />
       </li>
     </ol>
-    <div v-else class="empty">No Member Data</div>
+    <div v-else class="empty">{{ $t('memberGroup.noData') }}</div>
   </Fragment>
 </template>
 

@@ -71,6 +71,7 @@
       flex-grow: 1;
       font-weight: 700;
       font-size: 16px;
+      text-align: center;
     }
 
     &.unsubscribed {

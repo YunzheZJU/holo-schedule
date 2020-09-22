@@ -31,17 +31,7 @@
           </div>
           <ul class="content">
             <li v-for="(group, index) in groups" :key="index" class="group">
-              <div class="group-title">{{ group.name }}</div>
-              <ol v-if="group.members" class="group-content">
-                <li v-for="member in group.members" :key="member['id']" class="member-container">
-                  <SubscriptionForm
-                    :member="member"
-                    :subscribed="subscriptionByMember[member['id']]"
-                    class="member"
-                  />
-                </li>
-              </ol>
-              <div v-else class="group-empty">No Member Data</div>
+              <MemberGroup v-bind="group" />
             </li>
           </ul>
         </section>
@@ -51,31 +41,19 @@
 </template>
 
 <script>
-  import SubscriptionForm from 'components/subscription-form'
-  import { compact, range } from 'lodash'
-  import { MEMBERS, SUBSCRIPTION_BY_MEMBER } from 'shared/store/keys'
-  import { mapState } from 'vuex'
+  import MemberGroup from 'components/member-group'
+  import { range } from 'lodash'
   import browser from 'webextension-polyfill'
 
   export default {
     name: 'App',
-    components: { SubscriptionForm },
+    components: { MemberGroup },
     computed: {
       groups() {
-        return ([
-          {
-            name: 'Hololive',
-            members: range(1, 34),
-          },
-        ].map(group => ({
-          ...group,
-          members: compact(group.members.map(id => this.members.find(({ id: _id }) => id === _id))),
-        })))
+        return [
+          { name: 'Hololive', memberIds: range(1, 34) },
+        ]
       },
-      ...mapState({
-        members: MEMBERS,
-        subscriptionByMember: SUBSCRIPTION_BY_MEMBER,
-      }),
     },
     methods: {
       getAssets: browser.runtime.getURL,
@@ -174,6 +152,7 @@
       .section {
         .section-title {
           display: grid;
+          align-items: center;
           justify-content: center;
           justify-items: center;
           margin: 0 auto;
@@ -184,7 +163,7 @@
             position: absolute;
             width: 0;
             height: 0;
-            border: 12px solid transparent;
+            border: 16px solid transparent;
           }
 
           &:before {
@@ -215,50 +194,6 @@
         .content {
           .group {
             margin: 8px;
-            text-align: center;
-
-            .group-title {
-              display: inline-grid;
-              grid-template-columns: auto auto auto;
-              justify-content: center;
-              padding: 4px;
-              border-bottom: 1px solid;
-              color: black;
-              font-size: 20px;
-            }
-
-            .group-content {
-              display: grid;
-              grid-template-columns: repeat(auto-fit, 192px);
-              gap: 24px;
-              align-items: center;
-              justify-content: center;
-              justify-items: center;
-              padding: 16px;
-
-              .member-container {
-                width: 100%;
-                filter: drop-shadow(4px 4px 0 black);
-                transition: filter .1s, transform .1s;
-
-                &:hover {
-                  filter: drop-shadow(4px 9px 0 black);
-                  transform: translate(0px, -3px);
-                }
-
-                .member {
-                  width: 100%;
-                }
-              }
-            }
-
-            .group-empty {
-              margin: 16px 0;
-              color: var(--color-text-light);
-              font-weight: 300;
-              font-style: italic;
-              font-size: 16px;
-            }
           }
         }
       }

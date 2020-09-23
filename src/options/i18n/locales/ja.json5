@@ -17,6 +17,6 @@
   // Component MemberGroup
   memberGroup: {
     // Indicate that no member data can be found for this group
-    noData: "TODO:No Member Data",
+    noData: "メンバーのデータがありません",
   }
 }

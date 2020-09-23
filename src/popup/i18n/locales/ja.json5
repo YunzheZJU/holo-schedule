@@ -37,7 +37,7 @@
         },
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "詳細設定",
       // Display the current version
       version: "バージョン: v{version}",
       // Describe the backend engine of this project

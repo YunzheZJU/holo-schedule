@@ -74,7 +74,7 @@ const syncCurrentLives = async () => {
   console.log(`[syncLives]Badge text has been set to ${lives.length}`)
 
   // Subscription is simplified cause here is the only mutation of currentLives
-  const endedLives = [...(getCachedEndedLives() ?? [])]
+  const endedLives = getCachedEndedLives() ?? []
   const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), lives, 'id').map(live => ({
     ...live,
     duration: moment().diff(moment(live['start_at']), 'seconds'),

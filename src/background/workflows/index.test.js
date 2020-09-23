@@ -172,78 +172,120 @@ test('should get cached current lives', async () => {
 
 test('should sync current lives', async () => {
   Date.now = jest.fn(() => unixTime * 1000)
+
   // First run
   const currentLivesOne = [
     {
       id: 1,
       start_at: moment().subtract(3, 'hours').toISOString(),
-      duration: 0,
+      duration: null,
     },
     {
       id: 2,
+      start_at: moment().subtract(3, 'hours').toISOString(),
+      duration: null,
+    },
+    {
+      id: 3,
       start_at: moment().subtract(2, 'hours').toISOString(),
-      duration: 0,
+      duration: null,
     },
   ]
+  const endedLivesOne = []
+
   getCurrentLives.mockResolvedValueOnce(currentLivesOne)
 
   const returnValueOne = await workflows.syncCurrentLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
-  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesOne)
-  expect(store.data[ENDED_LIVES]).toEqual(undefined)
+  expect(store.data[ENDED_LIVES]).toEqual(endedLivesOne)
   expect(returnValueOne).toEqual(currentLivesOne)
-  // Second run
+
   getCurrentLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
+
+  // Second run
   const currentLivesTwo = [
     currentLivesOne[1],
+    currentLivesOne[2],
     {
-      id: 3,
+      id: 4,
       start_at: moment().subtract(1, 'hours').toISOString(),
-      duration: 0,
+      duration: null,
     },
   ]
+  const endedLivesTwo = [
+    {
+      ...currentLivesOne[0],
+      duration: moment.duration(3, 'hours').as('seconds'),
+    },
+  ]
+
   getCurrentLives.mockResolvedValueOnce(currentLivesTwo)
 
   const returnValueTwo = await workflows.syncCurrentLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
-  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
-  expect(store.data[ENDED_LIVES]).toEqual([
-    {
-      ...currentLivesOne[0],
-      duration: moment.duration(3, 'hours').as('seconds'),
-    },
-  ])
+  expect(store.data[ENDED_LIVES]).toEqual(endedLivesTwo)
   expect(returnValueTwo).toEqual(currentLivesTwo)
-  // Third run
+
   getCurrentLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
-  const currentLivesThree = []
+
+  // Third run
+  const currentLivesThree = [
+    currentLivesTwo[0],
+    currentLivesTwo[2],
+  ]
+  const endedLivesThree = [
+    endedLivesTwo[0],
+    {
+      ...currentLivesOne[2],
+      duration: moment.duration(2, 'hours').as('seconds'),
+    },
+  ]
+
   getCurrentLives.mockResolvedValueOnce(currentLivesThree)
 
   const returnValueThree = await workflows.syncCurrentLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
-  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '0' })
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesThree)
-  expect(store.data[ENDED_LIVES]).toEqual([
+  expect(store.data[ENDED_LIVES]).toEqual(endedLivesThree)
+  expect(returnValueThree).toEqual(currentLivesThree)
+
+  getCurrentLives.mockClear()
+  browser.browserAction.setBadgeText.mockClear()
+
+  // Fourth run
+  const currentLivesFour = []
+  const endedLivesFour = [
+    endedLivesThree[0],
     {
-      ...currentLivesOne[0],
+      ...currentLivesThree[0],
       duration: moment.duration(3, 'hours').as('seconds'),
     },
+    endedLivesThree[1],
     {
-      ...currentLivesOne[1],
-      duration: moment.duration(2, 'hours').as('seconds'),
-    }, {
-      ...currentLivesTwo[1],
+      ...currentLivesThree[1],
       duration: moment.duration(1, 'hours').as('seconds'),
     },
-  ])
-  expect(returnValueThree).toEqual(currentLivesThree)
+  ]
+
+  getCurrentLives.mockResolvedValueOnce(currentLivesFour)
+
+  const returnValueFour = await workflows.syncCurrentLives()
+
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '0' })
+  expect(store.data[CURRENT_LIVES]).toEqual(currentLivesFour)
+  expect(store.data[ENDED_LIVES]).toEqual(endedLivesFour)
+  expect(returnValueFour).toEqual(currentLivesFour)
 })
 
 test('should get cached scheduled lives', async () => {

@@ -1,4 +1,4 @@
-import { differenceBy, filter, reverse, uniqBy } from 'lodash'
+import { differenceBy, filter, reverse, uniqBy, findLastIndex } from 'lodash'
 import moment from 'moment'
 import {
   getChannels,
@@ -74,17 +74,20 @@ const syncCurrentLives = async () => {
   console.log(`[syncLives]Badge text has been set to ${lives.length}`)
 
   // Subscription is simplified cause here is the only mutation of currentLives
+  const endedLives = [...(getCachedEndedLives() ?? [])]
   const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), lives, 'id').map(live => ({
     ...live,
     duration: moment().diff(moment(live['start_at']), 'seconds'),
   }))
-  if (newEndedLives.length > 0) {
-    await store.set({
-      [ENDED_LIVES]: [...(getCachedEndedLives() ?? []), ...newEndedLives],
-    })
-  }
+  newEndedLives.forEach(live => {
+    const index = findLastIndex(
+      endedLives,
+      ({ start_at: startAt }) => startAt <= live['start_at'],
+    )
+    endedLives.splice(index + 1, 0, live)
+  })
 
-  await store.set({ [CURRENT_LIVES]: lives })
+  await store.set({ [CURRENT_LIVES]: lives, [ENDED_LIVES]: endedLives })
 
   return getCachedCurrentLives()
 }

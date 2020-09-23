@@ -4,7 +4,7 @@
     // Advanced settings
     advancedSettings: {
       // Label for advancedSettings
-      label: "TODO:Advanced Settings",
+      label: "詳細設定",
       // Prompt users to configure the list of members to subscribe
       members: {
         // Label for members

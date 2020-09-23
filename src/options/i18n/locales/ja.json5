@@ -8,7 +8,7 @@
       // Prompt users to configure the list of members to subscribe
       members: {
         // Label for members
-        label: "TODO:Members",
+        label: "メンバー一覧",
         // Description for members
         description: "登録するメンバーを設定してください"
       }

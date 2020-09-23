@@ -47,8 +47,13 @@
       this.savedScrollTop = this.parentElement.scrollTop
     },
     updated() {
-      const newScrollTop = this.savedScrollTop
-        + (this.parentElement.scrollHeight - this.savedScrollHeight)
+      const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
+
+      if (scrollHeightDiff === 0) {
+        return
+      }
+
+      const newScrollTop = this.savedScrollTop + scrollHeightDiff
       this.parentElement.scrollTop = newScrollTop
       setTimeout(() => {
         this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })

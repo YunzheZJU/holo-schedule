@@ -1,0 +1,22 @@
+{
+  // Component App
+  app: {
+    // Advanced settings
+    advancedSettings: {
+      // Label for advancedSettings
+      label: "詳細設定",
+      // Prompt users to configure the list of members to subscribe
+      members: {
+        // Label for members
+        label: "メンバー一覧",
+        // Description for members
+        description: "登録するメンバーを設定してください"
+      }
+    }
+  },
+  // Component MemberGroup
+  memberGroup: {
+    // Indicate that no member data can be found for this group
+    noData: "メンバーのデータがありません",
+  }
+}

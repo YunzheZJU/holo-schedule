@@ -1,4 +1,4 @@
-import 'assets/iconfont'
+import 'shared/assets/iconfont'
 import i18n from 'i18n'
 import 'moment-duration-format'
 import HintPlugin from 'plugins/hint'
@@ -8,6 +8,7 @@ import Vue from 'vue'
 import Fragment from 'vue-fragment'
 import browser from 'webextension-polyfill'
 import App from './App.vue'
+import 'shared/global.less'
 import './global.less'
 
 Vue.use(Fragment.Plugin)

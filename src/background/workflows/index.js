@@ -17,6 +17,7 @@ import {
   MEMBERS,
   SCHEDULED_LIVES,
   SHOULD_SYNC_SETTINGS,
+  SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -27,6 +28,21 @@ const filterByTitle = lives => filter(
   ({ platform, title }) => platform !== 'bilibili' || /B.*限/i.test(title),
 )
 
+const filterBySubscription = lives => {
+  // eslint-disable-next-line no-use-before-define
+  const subscriptionByMember = getSubscriptionByMember() ?? {}
+  return filter(
+    lives,
+    // eslint-disable-next-line no-use-before-define
+    live => subscriptionByMember[getMember(live)['id']] ?? true,
+  )
+}
+
+const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
+  (prev, next) => next(prev),
+  lives,
+)
+
 const getCachedEndedLives = () => store.get(ENDED_LIVES)
 
 const syncEndedLives = async () => {
@@ -35,7 +51,7 @@ const syncEndedLives = async () => {
     ...cashedLives.map(({ start_at: startAt }) => getUnix(startAt)),
   ) + 1 : getUnix()
 
-  const lives = filterByTitle(await getEndedLives({
+  const lives = filterLives(await getEndedLives({
     startAfter: getUnixBeforeDays(3),
     startBefore,
     limit: 18,
@@ -51,7 +67,7 @@ const syncEndedLives = async () => {
 const getCachedCurrentLives = () => store.get(CURRENT_LIVES)
 
 const syncCurrentLives = async () => {
-  const lives = filterByTitle(await getCurrentLives())
+  const lives = filterLives(await getCurrentLives())
 
   await browser.browserAction.setBadgeText({ text: lives.length.toString() })
 
@@ -76,7 +92,7 @@ const syncCurrentLives = async () => {
 const getCachedScheduledLives = () => store.get(SCHEDULED_LIVES)
 
 const syncScheduledLives = async () => {
-  const lives = filterByTitle(await getScheduledLives({
+  const lives = filterLives(await getScheduledLives({
     startBefore: getUnixAfterDays(7),
   }))
 
@@ -95,12 +111,30 @@ const syncChannels = async () => {
   return getCachedChannels()
 }
 
+const getSubscriptionByMember = () => store.get(SUBSCRIPTION_BY_MEMBER)
+
+const setSubscriptionByMember = subscriptionByMember => store.set(
+  { [SUBSCRIPTION_BY_MEMBER]: subscriptionByMember },
+  { local: true, sync: true },
+)
+
+const updateSubscriptionByMember = (memberId, subscribed) => setSubscriptionByMember({
+  ...getSubscriptionByMember(),
+  [memberId]: subscribed,
+})
+
 const getCachedMembers = () => store.get(MEMBERS)
 
 const syncMembers = async () => {
   const members = await getMembers()
+  const subscriptionByMember = await getSubscriptionByMember() ?? {}
 
   await store.set({ [MEMBERS]: members }, { local: true })
+
+  await setSubscriptionByMember({
+    ...Object.fromEntries(members.map(({ id }) => ([id, true]))),
+    ...subscriptionByMember,
+  })
 
   return getCachedMembers()
 }
@@ -155,6 +189,7 @@ const downloadSettings = store.downloadFromSync
 
 export default {
   filterByTitle,
+  filterBySubscription,
   getCachedCurrentLives,
   syncCurrentLives,
   getCachedEndedLives,
@@ -174,4 +209,7 @@ export default {
   setIsPopupFirstRun,
   toggleShouldSyncSettings,
   downloadSettings,
+  getSubscriptionByMember,
+  setSubscriptionByMember,
+  updateSubscriptionByMember,
 }

@@ -36,6 +36,8 @@
           "zh-CN": "简体中文",
         },
       },
+      // Prompt users to change advanced settings
+      advanced: "詳細設定",
       // Display the current version
       version: "バージョン: v{version}",
       // Describe the backend engine of this project

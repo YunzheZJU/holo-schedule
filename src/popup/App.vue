@@ -4,8 +4,8 @@
       <template v-if="route === 'main'">
         <div class="main">
           <img class="logo" :src="popupLogo" alt="logo">
-          <button type="button">
-            <HIcon class="icon" name="settings" @click="onClickSettings" />
+          <button type="button" @click="onClickSettings">
+            <HIcon class="icon" name="settings" />
           </button>
         </div>
       </template>
@@ -63,6 +63,7 @@
           </label>
           <div class="description">{{ $t('app.settings.language.description') }}</div>
         </div>
+        <button class="advanced" @click="onClickAdvanced">{{ $t('app.settings.advanced') }}</button>
         <hr>
         <div class="info">
           <div class="version">
@@ -223,6 +224,9 @@
       onChangeLocale(event) {
         return setLocale(event.target.value)
       },
+      onClickAdvanced() {
+        return browser.runtime.openOptionsPage()
+      },
     },
   }
 </script>
@@ -374,6 +378,14 @@
           color: var(--color-text-light);
           font-size: 12px;
         }
+      }
+
+      .advanced {
+        display: inline-block;
+        justify-self: end;
+        width: auto;
+        color: var(--color-theme);
+        font-size: 14px;
       }
 
       hr {

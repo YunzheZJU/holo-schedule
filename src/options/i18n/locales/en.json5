@@ -1,0 +1,22 @@
+{
+  // Component App
+  app: {
+    // Advanced settings
+    advancedSettings: {
+      // Label for advancedSettings
+      label: "Advanced Settings",
+      // Prompt users to configure the list of members to subscribe
+      members: {
+        // Label for members
+        label: "Members",
+        // Description for members
+        description: "Configure the list of members to subscribe"
+      }
+    }
+  },
+  // Component MemberGroup
+  memberGroup: {
+    // Indicate that no member data can be found for this group
+    noData: "No Member Data",
+  }
+}

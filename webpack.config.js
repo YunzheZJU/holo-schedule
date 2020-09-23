@@ -18,6 +18,7 @@ module.exports = (env, argv) => {
     entry: {
       background: path.join(ROOT_PATH, 'src', 'background', 'index.js'),
       popup: path.join(ROOT_PATH, 'src', 'popup', 'index.js'),
+      options: path.join(ROOT_PATH, 'src', 'options', 'index.js'),
     },
     output: {
       filename: 'src/[name].js',
@@ -72,6 +73,11 @@ module.exports = (env, argv) => {
         filename: path.join('src', 'popup.html'),
         template: path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'),
         chunks: ['popup'],
+      }),
+      new HtmlWebpackPlugin({
+        filename: path.join('src', 'options.html'),
+        template: path.join(ROOT_PATH, 'src', 'options', 'index.template.html'),
+        chunks: ['options'],
       }),
       new VueLoaderPlugin(),
       new ResolveEntryModulesPlugin(),

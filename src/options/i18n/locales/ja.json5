@@ -10,7 +10,7 @@
         // Label for members
         label: "TODO:Members",
         // Description for members
-        description: "TODO:Configure the list of members to subscribe"
+        description: "登録するメンバーを設定してください"
       }
     }
   },

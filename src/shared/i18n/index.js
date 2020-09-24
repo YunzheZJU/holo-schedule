@@ -1,4 +1,6 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ja'
+import 'dayjs/locale/zh-cn'
 import { LOCALE } from 'shared/store/keys'
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
@@ -15,12 +17,12 @@ export default (store, messages) => {
     messages,
   })
 
-  moment.locale(locale)
+  dayjs.locale(locale.toLowerCase())
 
   store.subscribe(({ type, payload: $locale }) => {
     if (type === LOCALE) {
       i18n.locale = $locale
-      moment.locale($locale)
+      dayjs.locale($locale.toLowerCase())
     }
   })
 

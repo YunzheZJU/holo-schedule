@@ -1,13 +1,13 @@
 <template>
   <li ref="item">
-    <a class="item" :href="roomURL" target="_blank">
+    <a :href="roomURL" class="item" target="_blank">
       <div class="thumbnail">
         <!-- TODO: Default image -->
-        <img class="cover" :src="live['cover']" :alt="live['title']">
+        <img :alt="live['title']" :src="live['cover']" class="cover">
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
-                type="button"
                 :class="['remind', {active: isScheduled}]"
+                type="button"
                 @click.stop.prevent="handleRemind"
         >
           <span class="text">
@@ -18,19 +18,19 @@
         </button>
       </div>
       <div class="header">
-        <img class="avatar"
-             alt=""
-             :src="member['avatar'] || defaultAvatar"
+        <img :src="member['avatar'] || defaultAvatar"
              :style="{color: member['color_main']}"
+             alt=""
+             class="avatar"
         >
-        <div class="member" :title="member['name']">{{ member['name'] }}</div>
+        <div :title="member['name']" class="member">{{ member['name'] }}</div>
         <div class="separator" />
         <div class="platform">{{ live['platform'] }}</div>
       </div>
-      <div class="content" :title="live['title']">{{ live['title'] }}</div>
+      <div :title="live['title']" class="content">{{ live['title'] }}</div>
       <div class="accessory">
         <div v-if="type === 'current'" class="badge">{{ $t('liveItem.liveNow') }}</div>
-        <div class="start-at" :title="startAtFull">
+        <div :title="startAtFull" class="start-at">
           <template v-if="type === 'ended'">
             {{ startAtSimple }}
             <span class="separator" />
@@ -48,12 +48,20 @@
 
 <script>
   import HIcon from 'components/h-icon'
-  import moment from 'moment'
+  import dayjs from 'dayjs'
+  import advancedFormat from 'dayjs/plugin/advancedFormat'
+  import calendar from 'dayjs/plugin/calendar'
+  import relativeTime from 'dayjs/plugin/relativeTime'
   import { IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
+  import { formatDurationFromSeconds } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
+
+  dayjs.extend(relativeTime)
+  dayjs.extend(calendar)
+  dayjs.extend(advancedFormat)
 
   const { alarm, workflows: { getMember } } = browser.extension.getBackgroundPage()
 
@@ -89,16 +97,16 @@
         return constructRoomUrl(this.live) ?? '#'
       },
       duration() {
-        return moment.duration(this.live['duration'], 'seconds').format('h:mm:ss')
+        return formatDurationFromSeconds(this.live['duration'])
       },
       startAt() {
-        return moment(this.live['start_at'])
+        return dayjs(this.live['start_at'])
       },
       startAtFromNow() {
         return this.startAt.fromNow()
       },
       startAtCalendar() {
-        return this.startAt.calendar({
+        return this.startAt.calendar(null, {
           sameDay: this.$t('liveItem.calendar.sameDay'),
           nextDay: this.$t('liveItem.calendar.nextDay'),
           nextWeek: this.$t('liveItem.calendar.nextWeek'),

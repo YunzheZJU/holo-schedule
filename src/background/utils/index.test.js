@@ -1,8 +1,8 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import {
+  getUnix,
   getUnixAfterDays,
   getUnixBeforeDays,
-  getUnix,
   isGuerrillaLive,
 } from './index'
 
@@ -27,12 +27,12 @@ test('should get unix time before days', () => {
 
 test('should be guerrila live', () => {
   const liveOne = {
-    start_at: moment().add(10, 'minutes').toISOString(),
-    created_at: moment().toISOString(),
+    start_at: dayjs().add(10, 'minute').toISOString(),
+    created_at: dayjs().toISOString(),
   }
   const liveTwo = {
-    start_at: moment().subtract(1, 'second').toISOString(),
-    created_at: moment().toISOString(),
+    start_at: dayjs().subtract(1, 'second').toISOString(),
+    created_at: dayjs().toISOString(),
   }
 
   expect(isGuerrillaLive(liveOne)).toBeTruthy()
@@ -41,8 +41,8 @@ test('should be guerrila live', () => {
 
 test('should not be guerrila live', () => {
   const live = {
-    start_at: moment().add(10, 'minutes').add(1, 'second').toISOString(),
-    created_at: moment().toISOString(),
+    start_at: dayjs().add(10, 'minute').add(1, 'second').toISOString(),
+    created_at: dayjs().toISOString(),
   }
 
   expect(isGuerrillaLive(live)).toBeFalsy()

@@ -19,10 +19,15 @@
 <script>
   // TODO: Merge into live-list
   import LiveItem from 'components/live-item'
-  import moment from 'moment'
+  import dayjs from 'dayjs'
+  import advancedFormat from 'dayjs/plugin/advancedFormat'
+  import calendar from 'dayjs/plugin/calendar'
   import { ENDED_LIVES } from 'shared/store/keys'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
+
+  dayjs.extend(calendar)
+  dayjs.extend(advancedFormat)
 
   const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
 
@@ -80,10 +85,10 @@
         if (index < 0) {
           return undefined
         }
-        return moment(this.lives[index]['start_at']).date()
+        return dayjs(this.lives[index]['start_at']).date()
       },
       formatCalendar(live) {
-        return moment(live['start_at']).calendar({
+        return dayjs(live['start_at']).calendar(null, {
           sameDay: this.$t('liveListEnded.calendar.sameDay'),
           lastDay: this.$t('liveListEnded.calendar.lastDay'),
           lastWeek: this.$t('liveListEnded.calendar.lastWeek'),

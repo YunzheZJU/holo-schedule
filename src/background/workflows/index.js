@@ -1,5 +1,5 @@
-import { differenceBy, filter, reverse, uniqBy, findLastIndex } from 'lodash'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import { differenceBy, filter, findLastIndex, reverse, uniqBy } from 'lodash'
 import {
   getChannels,
   getCurrentLives,
@@ -77,7 +77,7 @@ const syncCurrentLives = async () => {
   const endedLives = getCachedEndedLives() ?? []
   const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), lives, 'id').map(live => ({
     ...live,
-    duration: moment().diff(moment(live['start_at']), 'seconds'),
+    duration: dayjs().diff(dayjs(live['start_at']), 'second'),
   }))
   newEndedLives.forEach(live => {
     const index = findLastIndex(

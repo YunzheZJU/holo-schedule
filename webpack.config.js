@@ -89,7 +89,6 @@ module.exports = (env, argv) => {
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(PACKAGE.version),
       }),
-      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /ja|en|zh-cn/),
     ],
     devtool: isDevelopment ? 'inline-source-map' : undefined,
   }

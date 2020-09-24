@@ -1,13 +1,13 @@
 <template>
   <li ref="item">
-    <a :href="roomURL" class="item" target="_blank">
+    <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail">
         <!-- TODO: Default image -->
-        <img :alt="live['title']" :src="live['cover']" class="cover">
+        <img class="cover" :src="live['cover']" :alt="live['title']">
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
-                :class="['remind', {active: isScheduled}]"
                 type="button"
+                :class="['remind', {active: isScheduled}]"
                 @click.stop.prevent="handleRemind"
         >
           <span class="text">
@@ -18,19 +18,19 @@
         </button>
       </div>
       <div class="header">
-        <img :src="member['avatar'] || defaultAvatar"
-             :style="{color: member['color_main']}"
+        <img class="avatar"
              alt=""
-             class="avatar"
+             :src="member['avatar'] || defaultAvatar"
+             :style="{color: member['color_main']}"
         >
-        <div :title="member['name']" class="member">{{ member['name'] }}</div>
+        <div class="member" :title="member['name']">{{ member['name'] }}</div>
         <div class="separator" />
         <div class="platform">{{ live['platform'] }}</div>
       </div>
-      <div :title="live['title']" class="content">{{ live['title'] }}</div>
+      <div class="content" :title="live['title']">{{ live['title'] }}</div>
       <div class="accessory">
         <div v-if="type === 'current'" class="badge">{{ $t('liveItem.liveNow') }}</div>
-        <div :title="startAtFull" class="start-at">
+        <div class="start-at" :title="startAtFull">
           <template v-if="type === 'ended'">
             {{ startAtSimple }}
             <span class="separator" />

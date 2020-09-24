@@ -70,6 +70,11 @@ module.exports = (env, argv) => {
         ],
       }),
       new HtmlWebpackPlugin({
+        filename: path.join('src', 'background.html'),
+        template: path.join(ROOT_PATH, 'src', 'background', 'index.template.html'),
+        chunks: ['background'],
+      }),
+      new HtmlWebpackPlugin({
         filename: path.join('src', 'popup.html'),
         template: path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'),
         chunks: ['popup'],
@@ -90,6 +95,17 @@ module.exports = (env, argv) => {
         VERSION: JSON.stringify(PACKAGE.version),
       }),
     ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            name: 'commons',
+            chunks: 'initial',
+            minChunks: 2,
+          },
+        },
+      },
+    },
     devtool: isDevelopment ? 'inline-source-map' : undefined,
   }
 }

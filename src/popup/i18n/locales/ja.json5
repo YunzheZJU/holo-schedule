@@ -2,7 +2,7 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "初期化中に致命的なエラーが発生しました。: \"{msg}\". ブラウザを再起動した後もこのメッセージが表示される場合は、 @:app.settings.contact.value まで御連絡ください。",
+    bgInitError: "初期化中に致命的なエラーが発生しました。: \"{msg}\". ブラウザを再起動した後もこのメッセージが表示される場合は、 @:app.settings.contact.value まで御連絡ください",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
@@ -28,7 +28,7 @@
         // Label for language
         label: "言語",
         // Description for language
-        description: "UIの言語を設定します。",
+        description: "UIの言語を設定します",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           en: "English",

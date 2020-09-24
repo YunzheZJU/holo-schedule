@@ -18,7 +18,7 @@
 
 <script>
   import SubscriptionForm from 'components/subscription-form'
-  import { find } from 'lodash'
+  import { compact, find } from 'lodash'
   import { MEMBERS, SUBSCRIPTION_BY_MEMBER } from 'shared/store/keys'
   import { Fragment } from 'vue-fragment'
   import { mapState } from 'vuex'
@@ -42,7 +42,7 @@
       groupMembers() {
         // `this.members` may not come in the same order of ids in this.memberIds
         // So this.members.filter(...) is not preferred here
-        return this.memberIds.map(id => find(this.members, { id }))
+        return compact(this.memberIds.map(id => find((this.members ?? []), { id })))
       },
       ...mapState({
         members: MEMBERS,

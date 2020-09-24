@@ -2,7 +2,7 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "初期化中に致命的なエラーが発生しました。: \"{msg}\". ブラウザを再起動した後もこのメッセージが表示される場合は、 @:app.settings.contact.value まで御連絡ください。",
+    bgInitError: "初期化中に致命的なエラーが発生しました。: \"{msg}\". ブラウザを再起動した後もこのメッセージが表示される場合は、 @:app.settings.contact.value まで御連絡ください",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
@@ -14,27 +14,27 @@
         // Label for enableNtf
         label: "デスクトップ通知の有効化",
         // Description for enableNtf
-        description: "ゲリラライブ（配信予約から開始まで10分以内のライブ）および予約済みライブの配信開始を通知します。",
+        description: "ゲリラライブ（配信予約から開始まで10分以内のライブ）および予約済みライブの配信開始を通知します"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
         label: "同期設定",
         // Description for shouldSyncSettings
-        description: "同じブラウザアカウントでログインしている場合、デバイス間で設定を共有することができます",
+        description: "同じブラウザアカウントでログインしている場合、デバイス間で設定を共有することができます"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
         label: "言語",
         // Description for language
-        description: "UIの言語を設定します。",
+        description: "UIの言語を設定します",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           en: "English",
           ja: "日本語",
-          "zh-CN": "简体中文",
-        },
+          "zh-CN": "简体中文"
+        }
       },
       // Prompt users to change advanced settings
       advanced: "詳細設定",
@@ -47,7 +47,7 @@
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
-        href: "https://github.com/YunzheZJU/non-stop-story",
+        href: "https://github.com/YunzheZJU/non-stop-story"
       },
       // Description prepended to the contact email
       contact: {
@@ -56,8 +56,8 @@
         // Name of the engine. There is no need to translate this key
         value: "help@holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
-        href: "mailto:@:app.settings.contact.value",
-      },
+        href: "mailto:@:app.settings.contact.value"
+      }
     },
     // Pull-to-load
     pullToLoad: {
@@ -68,8 +68,8 @@
       // Indicate that the loading is done successfully
       success: "完了",
       // Indicate that all available data has been loaded
-      finished: "全てのデータを読み込みました",
-    },
+      finished: "全てのデータを読み込みました"
+    }
   },
   // Component LiveList
   liveList: {
@@ -77,31 +77,31 @@
       // Lives that has ended
       ended: {
         label: "配信終了",
-        loading: "終了したライブを読み込み中",
+        loading: "終了したライブを読み込み中"
       },
       // Lives that are undergoing
       current: {
         label: "配信中",
-        loading: "配信中のライブを読み込み中",
+        loading: "配信中のライブを読み込み中"
       },
       // Lives that are scheduled to perform
       scheduled: {
         label: "配信予定",
-        loading: "配信予定のライブを読み込み中",
+        loading: "配信予定のライブを読み込み中"
       }
     }
   },
   // Component LiveListEnded
   liveListEnded: {
-    // Used to customize moment#calendar output
+    // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with moment.js.
+      // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://momentjs.com/docs/#/displaying/format/
+      // See also: https://day.js.org/docs/display/format
       sameDay: "[今日]",
       lastDay: "MMM Do, [昨日]",
       lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do",
+      sameElse: "MMM Do"
     }
   },
   // Component LiveItem
@@ -113,26 +113,26 @@
       // Prompt users to set the reminder for a scheduled live
       set: "通知する",
       // Prompt users to cancel the reminder
-      cancel: "通知をキャンセル",
+      cancel: "通知をキャンセル"
     },
-    // Used to customize moment#calendar output
+    // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with moment.js.
+      // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://momentjs.com/docs/#/displaying/format/
+      // See also: https://day.js.org/docs/display/format
       sameDay: "[今日]A H:mm",
       nextDay: "[明日]A H:mm",
       nextWeek: "dddd A H:mm",
       lastDay: "[昨日]A H:mm",
       lastWeek: "[先週] dddd A H:mm",
-      sameElse: "DD/MM/YYYY A H:mm",
+      sameElse: "DD/MM/YYYY A H:mm"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "A H:mm",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY A H:mm",
+      full: "MMMM D, YYYY A H:mm"
     }
-  },
+  }
 }

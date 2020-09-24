@@ -48,12 +48,20 @@
 
 <script>
   import HIcon from 'components/h-icon'
-  import moment from 'moment'
+  import dayjs from 'dayjs'
+  import advancedFormat from 'dayjs/plugin/advancedFormat'
+  import calendar from 'dayjs/plugin/calendar'
+  import relativeTime from 'dayjs/plugin/relativeTime'
   import { IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
+  import { formatDurationFromSeconds } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
+
+  dayjs.extend(relativeTime)
+  dayjs.extend(calendar)
+  dayjs.extend(advancedFormat)
 
   const { alarm, workflows: { getMember } } = browser.extension.getBackgroundPage()
 
@@ -89,16 +97,16 @@
         return constructRoomUrl(this.live) ?? '#'
       },
       duration() {
-        return moment.duration(this.live['duration'], 'seconds').format('h:mm:ss')
+        return formatDurationFromSeconds(this.live['duration'])
       },
       startAt() {
-        return moment(this.live['start_at'])
+        return dayjs(this.live['start_at'])
       },
       startAtFromNow() {
         return this.startAt.fromNow()
       },
       startAtCalendar() {
-        return this.startAt.calendar({
+        return this.startAt.calendar(null, {
           sameDay: this.$t('liveItem.calendar.sameDay'),
           nextDay: this.$t('liveItem.calendar.nextDay'),
           nextWeek: this.$t('liveItem.calendar.nextWeek'),

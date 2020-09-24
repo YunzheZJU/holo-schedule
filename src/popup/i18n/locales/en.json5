@@ -14,14 +14,14 @@
         // Label for enableNtf
         label: "Enable desktop notification",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set.",
+        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
         label: "Sync settings",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in",
+        description: "Share settings between different devices with the same browser account logged in"
       },
       // Prompt users to switch the UI language
       language: {
@@ -33,8 +33,8 @@
         locales: {
           en: "English",
           ja: "日本語",
-          "zh-CN": "简体中文",
-        },
+          "zh-CN": "简体中文"
+        }
       },
       // Prompt users to change advanced settings
       advanced: "Advanced Settings",
@@ -47,7 +47,7 @@
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
-        href: "https://github.com/YunzheZJU/non-stop-story",
+        href: "https://github.com/YunzheZJU/non-stop-story"
       },
       // Description prepended to the contact email
       contact: {
@@ -56,8 +56,8 @@
         // Name of the engine. There is no need to translate this key
         value: "help@holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
-        href: "mailto:@:app.settings.contact.value",
-      },
+        href: "mailto:@:app.settings.contact.value"
+      }
     },
     // Pull-to-load
     pullToLoad: {
@@ -68,8 +68,8 @@
       // Indicate that the loading is done successfully
       success: "Success",
       // Indicate that all available data has been loaded
-      finished: "That's all",
-    },
+      finished: "That's all"
+    }
   },
   // Component LiveList
   liveList: {
@@ -77,31 +77,31 @@
       // Lives that has ended
       ended: {
         label: "Ended lives",
-        loading: "Loading ended lives",
+        loading: "Loading ended lives"
       },
       // Lives that are undergoing
       current: {
         label: "Live",
-        loading: "Loading current lives",
+        loading: "Loading current lives"
       },
       // Lives that are scheduled to perform
       scheduled: {
         label: "Scheduled lives",
-        loading: "Loading scheduled lives",
+        loading: "Loading scheduled lives"
       }
     }
   },
   // Component LiveListEnded
   liveListEnded: {
-    // Used to customize moment#calendar output
+    // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with moment.js.
+      // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://momentjs.com/docs/#/displaying/format/
+      // See also: https://day.js.org/docs/display/format
       sameDay: "[Today]",
       lastDay: "MMM Do, [Yesterday]",
       lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do",
+      sameElse: "MMM Do"
     }
   },
   // Component LiveItem
@@ -113,26 +113,26 @@
       // Prompt users to set the reminder for a scheduled live
       set: "Remind me",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder",
+      cancel: "Cancel reminder"
     },
-    // Used to customize moment#calendar output
+    // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with moment.js.
+      // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://momentjs.com/docs/#/displaying/format/
+      // See also: https://day.js.org/docs/display/format
       sameDay: "[Today at ]H:mm A",
       nextDay: "[Tomorrow ]H:mm A",
       nextWeek: "dddd[ at ]H:mm A",
       lastDay: "[Yesterday ]H:mm A",
       lastWeek: "[Last] dddd H:mm A",
-      sameElse: "DD/MM/YYYY H:mm A",
+      sameElse: "DD/MM/YYYY H:mm A"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A",
+      full: "MMMM D, YYYY H:mm A"
     }
-  },
+  }
 }

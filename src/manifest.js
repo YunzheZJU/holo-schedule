@@ -19,9 +19,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     'storage',
   ],
   background: {
-    scripts: [
-      'src/background.js',
-    ],
+    page: 'src/background.html',
   },
   browser_action: {
     [isChrome ? 'chrome_style' : 'browser_style']: true,

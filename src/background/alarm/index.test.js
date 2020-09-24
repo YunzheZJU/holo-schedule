@@ -1,6 +1,6 @@
 // TODO: Split tests
+import dayjs from 'dayjs'
 import i18n from 'i18n'
-import moment from 'moment'
 import notification from 'notification'
 import { CHANNELS, IS_NTF_ENABLED, MEMBERS } from 'shared/store/keys'
 import store from 'store'
@@ -38,14 +38,14 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(15, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(15, 'minute').toISOString(),
       },
     ],
   })
@@ -58,16 +58,16 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
   })
@@ -80,22 +80,22 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
   })
@@ -109,16 +109,16 @@ test('should subscribe to store', async () => {
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
   })
@@ -131,22 +131,22 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
   })
@@ -159,22 +159,22 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
   })
@@ -187,20 +187,20 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [],
@@ -214,28 +214,28 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 4,
         title: 'Title 4',
-        created_at: moment().toISOString(),
-        start_at: moment().add(15, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(15, 'minute').toISOString(),
       },
     ],
   })
@@ -248,20 +248,20 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [],
@@ -275,28 +275,28 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
     scheduledLives: [
       {
         id: 4,
         title: 'Title 4',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
     ],
   })
@@ -309,38 +309,38 @@ test('should subscribe to store', async () => {
       {
         id: 1,
         title: 'Title 1',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 3,
         title: 'Title 3',
-        created_at: moment().toISOString(),
-        start_at: moment().toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
       },
       {
         id: 2,
         title: 'Title 2',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
       {
         id: 4,
         title: 'Title 4',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
       {
         id: 5,
         title: 'Title 5',
-        created_at: moment().toISOString(),
-        start_at: moment().add(5, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
       },
       {
         id: 6,
         title: 'Title 6',
-        created_at: moment().toISOString(),
-        start_at: moment().add(15, 'minutes').toISOString(),
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(15, 'minute').toISOString(),
       },
     ],
     scheduledLives: [],
@@ -364,8 +364,8 @@ test('should fire scheduled alarms', async () => {
   const live = {
     id: 0,
     title: 'Title',
-    created_at: moment().toISOString(),
-    start_at: moment().add(15, 'minutes').toISOString(),
+    created_at: dayjs().toISOString(),
+    start_at: dayjs().add(15, 'minute').toISOString(),
   }
   await store.set({
     currentLives: [],
@@ -403,7 +403,7 @@ test('should create notification when firing alarms', async () => {
     title: 'Title 1',
     channel_id: 1,
     room: 'Room 1',
-    start_at: moment().subtract(5, 'minutes').toISOString(),
+    start_at: dayjs().subtract(5, 'minute').toISOString(),
   }
   const liveGuerrilla = {
     id: 2,
@@ -411,7 +411,7 @@ test('should create notification when firing alarms', async () => {
     title: 'Title 2',
     channel_id: 2,
     room: 'Room 2',
-    start_at: moment().add(5, 'minutes').toISOString(),
+    start_at: dayjs().add(5, 'minute').toISOString(),
   }
 
   await store.set({ [MEMBERS]: members, [CHANNELS]: channels })

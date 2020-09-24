@@ -1,5 +1,6 @@
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import { reverse, uniqBy } from 'lodash'
-import moment from 'moment'
 import {
   getChannels,
   getCurrentLives,
@@ -23,6 +24,8 @@ import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
 import browser from 'webextension-polyfill'
 import workflows from './index'
+
+dayjs.extend(duration)
 
 jest.mock('requests')
 const unixTime = Math.floor(Date.now() / 1000)
@@ -107,8 +110,8 @@ test('should sync ended lives', async () => {
   Date.now = jest.fn(() => unixTime * 1000)
   // First run
   const endedLivesOne = [
-    { id: 10, start_at: moment().subtract(3, 'hours').toISOString() },
-    { id: 9, start_at: moment().subtract(4, 'hours').toISOString() },
+    { id: 10, start_at: dayjs().subtract(3, 'hour').toISOString() },
+    { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString() },
   ]
   const returnValueExpectedOne = reverse([...endedLivesOne])
 
@@ -126,8 +129,8 @@ test('should sync ended lives', async () => {
   // Second run
   getEndedLives.mockClear()
   const endedLivesTwo = [
-    { id: 9, start_at: moment().subtract(4, 'hours').toISOString() },
-    { id: 8, start_at: moment().subtract(5, 'hours').toISOString() },
+    { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString() },
+    { id: 8, start_at: dayjs().subtract(5, 'hour').toISOString() },
   ]
   const returnValueExpectedTwo = uniqBy([...reverse([...endedLivesTwo]), ...returnValueExpectedOne], 'id')
 
@@ -177,17 +180,17 @@ test('should sync current lives', async () => {
   const currentLivesOne = [
     {
       id: 1,
-      start_at: moment().subtract(3, 'hours').toISOString(),
+      start_at: dayjs().subtract(3, 'hour').toISOString(),
       duration: null,
     },
     {
       id: 2,
-      start_at: moment().subtract(3, 'hours').toISOString(),
+      start_at: dayjs().subtract(3, 'hour').toISOString(),
       duration: null,
     },
     {
       id: 3,
-      start_at: moment().subtract(2, 'hours').toISOString(),
+      start_at: dayjs().subtract(2, 'hour').toISOString(),
       duration: null,
     },
   ]
@@ -212,14 +215,14 @@ test('should sync current lives', async () => {
     currentLivesOne[2],
     {
       id: 4,
-      start_at: moment().subtract(1, 'hours').toISOString(),
+      start_at: dayjs().subtract(1, 'hour').toISOString(),
       duration: null,
     },
   ]
   const endedLivesTwo = [
     {
       ...currentLivesOne[0],
-      duration: moment.duration(3, 'hours').as('seconds'),
+      duration: dayjs.duration(3, 'hour').as('second'),
     },
   ]
 
@@ -245,7 +248,7 @@ test('should sync current lives', async () => {
     endedLivesTwo[0],
     {
       ...currentLivesOne[2],
-      duration: moment.duration(2, 'hours').as('seconds'),
+      duration: dayjs.duration(2, 'hour').as('second'),
     },
   ]
 
@@ -268,12 +271,12 @@ test('should sync current lives', async () => {
     endedLivesThree[0],
     {
       ...currentLivesThree[0],
-      duration: moment.duration(3, 'hours').as('seconds'),
+      duration: dayjs.duration(3, 'hour').as('second'),
     },
     endedLivesThree[1],
     {
       ...currentLivesThree[1],
-      duration: moment.duration(1, 'hours').as('seconds'),
+      duration: dayjs.duration(1, 'hour').as('second'),
     },
   ]
 

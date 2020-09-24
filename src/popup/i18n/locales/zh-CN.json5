@@ -21,7 +21,7 @@
         // Label for shouldSyncSettings
         label: "同步设置",
         // Description for shouldSyncSettings
-        description: "在登录同一浏览器账号的不同设备间共享您的设置",
+        description: "在登录同一浏览器账号的不同设备间共享您的设置"
       },
       // Prompt users to switch the UI language
       language: {
@@ -33,7 +33,7 @@
         locales: {
           en: "English",
           ja: "日本語",
-          "zh-CN": "简体中文",
+          "zh-CN": "简体中文"
         }
       },
       // Prompt users to change advanced settings
@@ -47,7 +47,7 @@
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
-        href: "https://github.com/YunzheZJU/non-stop-story",
+        href: "https://github.com/YunzheZJU/non-stop-story"
       },
       // Description prepended to the contact email
       contact: {
@@ -56,8 +56,8 @@
         // Name of the engine. There is no need to translate this key
         value: "help@holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
-        href: "mailto:@:app.settings.contact.value",
-      },
+        href: "mailto:@:app.settings.contact.value"
+      }
     },
     // Pull-to-load
     pullToLoad: {
@@ -68,8 +68,8 @@
       // Indicate that the loading is done successfully
       success: "加载成功",
       // Indicate that all available data has been loaded
-      finished: "已加载全部",
-    },
+      finished: "已加载全部"
+    }
   },
   // Component LiveList
   liveList: {
@@ -77,31 +77,31 @@
       // Lives that has ended
       ended: {
         label: "已结束",
-        loading: "正在加载已结束直播",
+        loading: "正在加载已结束直播"
       },
       // Lives that are undergoing
       current: {
         label: "正在直播",
-        loading: "正在加载进行中的直播",
+        loading: "正在加载进行中的直播"
       },
       // Lives that are scheduled to perform
       scheduled: {
         label: "即将进行",
-        loading: "正在加载即将进行的直播",
+        loading: "正在加载即将进行的直播"
       }
     }
   },
   // Component LiveListEnded
   liveListEnded: {
-    // Used to customize moment#calendar output
+    // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with moment.js.
+      // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://momentjs.com/docs/#/displaying/format/
+      // See also: https://day.js.org/docs/display/format
       sameDay: "[今天]",
       lastDay: "MMMDo [昨天]",
       lastWeek: "MMMDo dddd",
-      sameElse: "MMMDo",
+      sameElse: "MMMDo"
     }
   },
   // Component LiveItem
@@ -113,26 +113,26 @@
       // Prompt users to set the reminder for a scheduled live
       set: "设置提醒",
       // Prompt users to cancel the reminder
-      cancel: "取消提醒",
+      cancel: "取消提醒"
     },
-    // Used to customize moment#calendar output
+    // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with moment.js.
+      // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://momentjs.com/docs/#/displaying/format/
+      // See also: https://day.js.org/docs/display/format
       sameDay: "[今天]A H:mm",
       nextDay: "[明天]A H:mm",
       nextWeek: "dddd A H:mm",
       lastDay: "[昨天]A H:mm",
       lastWeek: "[上周] dddd A H:mm",
-      sameElse: "DD/MM/YYYY A H:mm",
+      sameElse: "DD/MM/YYYY A H:mm"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "A H:mm",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY A H:mm",
+      full: "MMMM D, YYYY A H:mm"
     }
-  },
+  }
 }

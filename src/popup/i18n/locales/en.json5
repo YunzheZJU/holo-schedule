@@ -14,7 +14,7 @@
         // Label for enableNtf
         label: "Enable desktop notification",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set."
+        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {

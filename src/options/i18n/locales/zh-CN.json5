@@ -12,6 +12,11 @@
         // Description for members
         description: "更改各成员的直播订阅设置"
       }
+    },
+    // Each key in 'groups' is a group defined at https://www.hololive.tv/member and the according value is the localized name of it
+    groups: {
+      hololive: "Hololive",
+      inonakaMusic: "INoNaKa MUSIC"
     }
   },
   // Component MemberGroup

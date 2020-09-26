@@ -42,7 +42,7 @@
 
 <script>
   import MemberGroup from 'components/member-group'
-  import { range } from 'lodash'
+  import { range, without } from 'lodash'
   import browser from 'webextension-polyfill'
 
   export default {
@@ -51,7 +51,14 @@
     computed: {
       groups() {
         return [
-          { name: 'Hololive', memberIds: range(1, 34) },
+          {
+            name: this.$t('app.groups.hololive'),
+            memberIds: without(range(1, 34), 2),
+          },
+          {
+            name: this.$t('app.groups.inonakaMusic'),
+            memberIds: [2],
+          },
         ]
       },
     },

@@ -56,8 +56,24 @@
             memberIds: without(range(1, 34), 2),
           },
           {
+            name: this.$t('app.groups.holostars'),
+            memberIds: range(34, 45),
+          },
+          {
             name: this.$t('app.groups.inonakaMusic'),
             memberIds: [2],
+          },
+          {
+            name: this.$t('app.groups.hololiveChina'),
+            memberIds: range(45, 51),
+          },
+          {
+            name: this.$t('app.groups.hololiveIndonesia'),
+            memberIds: range(51, 54),
+          },
+          {
+            name: this.$t('app.groups.hololiveEnglish'),
+            memberIds: range(54, 59),
           },
         ]
       },

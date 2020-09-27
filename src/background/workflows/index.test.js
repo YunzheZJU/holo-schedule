@@ -37,32 +37,46 @@ beforeEach(() => {
   }
 })
 
-test('should filter lives by title', () => {
+test('should filter lives by title', async () => {
+  const members = [{ id: 44 }, { id: 45 }, { id: 50 }, { id: 51 }]
+  const channels = [
+    { id: 1, member_id: 44 },
+    { id: 2, member_id: 45 },
+    { id: 3, member_id: 50 },
+    { id: 4, member_id: 51 },
+  ]
   const livesToFilter = [
-    { platform: 'bilibili', title: '标题' },
-    { platform: 'bilibili', title: '【B限】标题' },
-    { platform: 'bilibili', title: '【B站限定】' },
-    { platform: 'bilibili', title: '【Bilibili限定】' },
-    { platform: 'bilibili', title: '【b限】标题' },
-    { platform: 'bilibili', title: '【b站限定】' },
-    { platform: 'bilibili', title: '【bilibili限定】' },
-    { platform: 'youtube', title: '标题' },
-    { platform: 'youtube', title: '【B限】标题' },
-    { platform: 'youtube', title: '【B站限定】' },
-    { platform: 'youtube', title: '【Bilibili限定】' },
+    { platform: 'bilibili', title: '标题', channel_id: 1 },
+    { platform: 'bilibili', title: '【B限】标题', channel_id: 1 },
+    { platform: 'bilibili', title: '【B站限定】', channel_id: 1 },
+    { platform: 'bilibili', title: '【Bilibili限定】', channel_id: 1 },
+    { platform: 'bilibili', title: '【b限】标题', channel_id: 1 },
+    { platform: 'bilibili', title: '【b站限定】', channel_id: 1 },
+    { platform: 'bilibili', title: '【bilibili限定】', channel_id: 1 },
+    { platform: 'youtube', title: '标题', channel_id: 1 },
+    { platform: 'youtube', title: '【B限】标题', channel_id: 1 },
+    { platform: 'youtube', title: '【B站限定】', channel_id: 1 },
+    { platform: 'youtube', title: '【Bilibili限定】', channel_id: 1 },
+    { platform: 'bilibili', title: 'Title', channel_id: 2 },
+    { platform: 'bilibili', title: 'Title', channel_id: 3 },
+    { platform: 'bilibili', title: 'Title', channel_id: 4 },
   ]
   const livesExpected = [
-    { platform: 'bilibili', title: '【B限】标题' },
-    { platform: 'bilibili', title: '【B站限定】' },
-    { platform: 'bilibili', title: '【Bilibili限定】' },
-    { platform: 'bilibili', title: '【b限】标题' },
-    { platform: 'bilibili', title: '【b站限定】' },
-    { platform: 'bilibili', title: '【bilibili限定】' },
-    { platform: 'youtube', title: '标题' },
-    { platform: 'youtube', title: '【B限】标题' },
-    { platform: 'youtube', title: '【B站限定】' },
-    { platform: 'youtube', title: '【Bilibili限定】' },
+    { platform: 'bilibili', title: '【B限】标题', channel_id: 1 },
+    { platform: 'bilibili', title: '【B站限定】', channel_id: 1 },
+    { platform: 'bilibili', title: '【Bilibili限定】', channel_id: 1 },
+    { platform: 'bilibili', title: '【b限】标题', channel_id: 1 },
+    { platform: 'bilibili', title: '【b站限定】', channel_id: 1 },
+    { platform: 'bilibili', title: '【bilibili限定】', channel_id: 1 },
+    { platform: 'youtube', title: '标题', channel_id: 1 },
+    { platform: 'youtube', title: '【B限】标题', channel_id: 1 },
+    { platform: 'youtube', title: '【B站限定】', channel_id: 1 },
+    { platform: 'youtube', title: '【Bilibili限定】', channel_id: 1 },
+    { platform: 'bilibili', title: 'Title', channel_id: 2 },
+    { platform: 'bilibili', title: 'Title', channel_id: 3 },
   ]
+
+  await store.set({ [MEMBERS]: members, [CHANNELS]: channels })
 
   const filteredLives = workflows.filterByTitle(livesToFilter)
 

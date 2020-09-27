@@ -1,5 +1,12 @@
 import dayjs from 'dayjs'
-import { differenceBy, filter, findLastIndex, reverse, uniqBy } from 'lodash'
+import {
+  differenceBy,
+  filter,
+  findLastIndex,
+  range,
+  reverse,
+  uniqBy,
+} from 'lodash'
 import {
   getChannels,
   getCurrentLives,
@@ -25,7 +32,17 @@ import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
   lives,
-  ({ platform, title }) => platform !== 'bilibili' || /B.*限/i.test(title),
+  live => {
+    // Ensure lives of Hololive China members at Bilibili are kept
+    // eslint-disable-next-line no-use-before-define
+    if (range(45, 51).includes(getMember(live)['id'])) {
+      return true
+    }
+
+    const { platform, title } = live
+
+    return platform !== 'bilibili' || /B.*限/i.test(title)
+  },
 )
 
 const filterBySubscription = lives => {

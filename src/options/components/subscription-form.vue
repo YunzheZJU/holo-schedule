@@ -69,7 +69,7 @@
 
     .name {
       flex-grow: 1;
-      padding-right: 4px;
+      padding: 0 4px;
       font-weight: 700;
       font-size: 16px;
       text-align: center;

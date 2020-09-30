@@ -1,6 +1,8 @@
 /* eslint-disable no-await-in-loop */
 import { mapKeys, snakeCase } from 'lodash'
 
+const TARGET = 'https://holo.dev/'
+
 const gatherResponse = async response => {
   if (response.headers.get('content-type').includes('application/json')) {
     return response.json()
@@ -18,7 +20,7 @@ const fetchData = async (...args) => {
   return gatherResponse(response)
 }
 
-async function* liveFetcher(endpoint, params = {}) {
+async function* pagedItemsFetcher(endpoint, params = {}) {
   const safeParams = mapKeys(params, (_, key) => snakeCase(key))
   const { limit = 20 } = safeParams
 
@@ -31,42 +33,43 @@ async function* liveFetcher(endpoint, params = {}) {
     page += 1
     searchParams.set('page', page.toString())
 
-    const { lives } = await fetchData(`https://holo.dev/api/v1/lives/${endpoint}?${searchParams.toString()}`)
+    const { [endpoint.split('/')[0]]: items } = await fetchData(
+      `${TARGET}api/v1/${endpoint}?${searchParams.toString()}`,
+    )
 
-    yield lives
+    yield items
 
-    if (lives.length < limit) {
+    // FIXME: `items.length > limit` is added here as a patch
+    // Remove it after backend removes the previous patch on channels
+    if (items.length < limit || items.length > limit) {
       shouldContinue = false
     }
   } while (shouldContinue)
 }
 
-const fetchLives = async (...args) => {
-  const currentLives = []
+const gatherPagedItems = async (...args) => {
+  const items = []
 
   // eslint-disable-next-line no-restricted-syntax
-  for await (const lives of liveFetcher(...args)) {
-    currentLives.push(lives)
+  for await (const contents of pagedItemsFetcher(...args)) {
+    items.push(contents)
   }
 
-  return currentLives.flat()
+  return items.flat()
 }
 
 const getEndedLives = async params => {
-  const { value } = await liveFetcher('ended', params).next()
+  const { value } = await pagedItemsFetcher('lives/ended', params).next()
   return value
 }
 
-const getCurrentLives = () => fetchLives('current')
+const getCurrentLives = params => gatherPagedItems('lives/current', params)
 
-const getScheduledLives = params => fetchLives('scheduled', params)
+const getScheduledLives = params => gatherPagedItems('lives/scheduled', params)
 
-const getChannels = async () => {
-  const { channels } = await fetchData('https://holo.dev/api/v1/channels?limit=100')
-  return channels
-}
+const getChannels = () => gatherPagedItems('channels', { limit: 100 })
 
-const getMembers = () => fetchData('https://holo.dev/api/v1/members')
+const getMembers = () => fetchData(`${TARGET}api/v1/members`)
 
 export {
   getEndedLives,

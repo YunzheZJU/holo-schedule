@@ -69,7 +69,7 @@
           },
           {
             name: this.$t('app.groups.hololiveIndonesia'),
-            memberIds: range(51, 54),
+            memberIds: [...range(51, 54), ...range(59, 62)],
           },
           {
             name: this.$t('app.groups.hololiveEnglish'),

@@ -5,6 +5,9 @@ const constructRoomUrl = ({ platform, room }) => {
   if (platform === 'bilibili') {
     return `https://live.bilibili.com/${room}`
   }
+  if (platform === 'twitch') {
+    return `https://www.twitch.tv/${room}`
+  }
 
   return undefined
 }

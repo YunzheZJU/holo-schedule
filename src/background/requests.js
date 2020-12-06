@@ -39,9 +39,7 @@ async function* pagedItemsFetcher(endpoint, params = {}) {
 
     yield items
 
-    // FIXME: `items.length > limit` is added here as a patch
-    // Remove it after backend removes the previous patch on channels
-    if (items.length < limit || items.length > limit) {
+    if (items.length < limit) {
       shouldContinue = false
     }
   } while (shouldContinue)

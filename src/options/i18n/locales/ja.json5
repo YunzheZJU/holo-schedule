@@ -20,7 +20,8 @@
       inonakaMusic: "イノナカミュージック",
       hololiveChina: "ホロライブ中国",
       hololiveIndonesia: "ホロライブインドネシア",
-      hololiveEnglish: "ホロライブEnglish"
+      hololiveEnglish: "ホロライブEnglish",
+      others: "その他"
     }
   },
   // Component MemberGroup

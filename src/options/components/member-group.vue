@@ -3,7 +3,7 @@
     <div class="title-container">
       <div class="title">{{ name }}</div>
     </div>
-    <ol v-if="groupMembers" class="content">
+    <ol v-if="groupMembers.length" class="content">
       <li v-for="member in groupMembers" :key="member['id']" class="member-container">
         <SubscriptionForm
           :member="member"
@@ -98,5 +98,6 @@
     font-weight: 300;
     font-style: italic;
     font-size: 16px;
+    text-align: center;
   }
 </style>

@@ -2,6 +2,7 @@
   <label class="subscription-input"
          :class="!subscribed && 'unsubscribed'"
          :style="{background: member['color_main']}"
+         tabindex="0"
   >
     <input :checked="subscribed" class="input" type="checkbox" @change="handleChange">
     <span class="avatar">

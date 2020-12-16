@@ -81,7 +81,7 @@
       filter: drop-shadow(4px 4px 0 black);
       transition: filter .1s, transform .1s;
 
-      &:hover {
+      &:hover, &:focus-within {
         filter: drop-shadow(4px 9px 0 black);
         transform: translate(0px, -3px);
       }

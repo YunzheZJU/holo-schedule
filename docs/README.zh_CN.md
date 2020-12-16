@@ -8,7 +8,7 @@
 
 一枚扩展，掌握所有Hololive预约直播。突击也不在话下！
 
-[English](../README.md) [日本語](./README.ja.md)
+[English](/README.md) [日本語](/docs/README.ja.md)
 
 ### 目次
 
@@ -27,8 +27,8 @@
 [Chrome Web Store](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 安装本扩展。
 
-[![Mozilla AMO](./get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
-[![Chrome Web Store](./available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
+[![Mozilla AMO](/docs/get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
+[![Chrome Web Store](/docs/available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 
 ## 浏览器支持
 

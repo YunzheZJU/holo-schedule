@@ -1,5 +1,9 @@
 <template>
-  <div v-if="isPopupFirstRun" class="opening-anim" @animationend.self="handleAnimationEnd">
+  <div v-if="isPopupFirstRun"
+       class="opening-anim"
+       @animationend.self="handleAnimationEnd"
+       @click="handleAnimationEnd"
+  >
     <div class="background" />
     <div class="container">
       <img class="logo" :src="popupLogo" alt="logo">
@@ -53,6 +57,7 @@
     justify-content: center;
     overflow: hidden;
     background: var(--color-bg-base);
+    cursor: pointer;
     animation: .5s cubic-bezier(0.5, 1, 0.89, 1) 2.5s both fade-out;
   }
 

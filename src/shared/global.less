@@ -28,6 +28,11 @@ button {
   line-height: 1.5;
   text-align: left;
   cursor: pointer;
+
+  // TODO: All buttons should blur from self after click callback
+  &:focus {
+    outline: none;
+  }
 }
 
 ul, ol {

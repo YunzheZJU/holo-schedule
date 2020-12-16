@@ -4,7 +4,7 @@
       <template v-if="route === 'main'">
         <div class="main">
           <img class="logo" :src="popupLogo" alt="logo">
-          <button type="button" @click="onClickSettings">
+          <button type="button" class="to-settings" @click="onClickSettings">
             <HIcon class="icon" name="settings" />
           </button>
         </div>
@@ -21,10 +21,10 @@
     </div>
     <div class="body">
       <div ref="main" class="main">
-        <div ref="loading" class="loading" @click="onClickLoading">
+        <button ref="loading" class="loading" @click="onClickLoading">
           <HIcon class="icon" :name="loadingConfig.icon" />
           <span>{{ loadingConfig.text }}</span>
-        </div>
+        </button>
         <div ref="scroll" class="scroll">
           <LiveListEnded ref="liveListEnded" />
           <LiveList type="current" />
@@ -252,12 +252,14 @@
         height: 32px;
       }
 
-      .icon {
-        font-size: 24px;
-        cursor: pointer;
-
-        &:hover {
+      .to-settings {
+        &:hover, &:focus {
           filter: brightness(0.9);
+        }
+
+        .icon {
+          font-size: 24px;
+          cursor: pointer;
         }
       }
     }
@@ -276,7 +278,7 @@
         justify-content: start;
         cursor: pointer;
 
-        &:hover {
+        &:hover, &:focus {
           filter: brightness(0.9);
         }
 
@@ -316,9 +318,14 @@
       align-items: center;
       justify-content: center;
       padding: 4px 0;
+      background-color: var(--color-bg-base);
       color: var(--color-text-light);
       font-size: 14px;
       cursor: pointer;
+
+      &:hover, &:focus {
+        background-color: var(--color-bg-light);
+      }
 
       .icon {
         font-size: 20px;
@@ -384,8 +391,13 @@
         display: inline-block;
         justify-self: end;
         width: auto;
+        border-bottom: 1px dotted transparent;
         color: var(--color-theme);
         font-size: 14px;
+
+        &:hover, &:focus {
+          border-color: currentColor;
+        }
       }
 
       hr {

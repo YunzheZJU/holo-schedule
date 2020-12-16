@@ -101,7 +101,7 @@
     color: var(--color-theme);
     font-size: 16px;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: var(--color-bg-light);
     }
 

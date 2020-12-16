@@ -99,5 +99,3 @@ yarn run start
 # Or Chrome
 yarn run start:chromium
 ```
-
-*TODO*

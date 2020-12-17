@@ -8,7 +8,7 @@
 
 ホロライブの配信を表示するブラウザ拡張です。
 
-[Eng](/README.md) [中文](docs/README.zh_CN.md)
+[Eng](/README.md) [中文](/docs/README.zh_CN.md)
 
 ### 目次
 
@@ -23,11 +23,11 @@
 
 以下の公式ページでダウンロードできます。
 [Mozilla AMO](https://addons.mozilla.org/firefox/addon/holo-schedule/) 
-または  
+または
 [Chrome Web Store](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 
-[![Mozilla AMO](./get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
-[![Chrome Web Store](./available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
+[![Mozilla AMO](/docs/get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
+[![Chrome Web Store](/docs/available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 
 ## 対応ブラウザ
 
@@ -48,7 +48,7 @@ Holo-scheduleは、Operaや新しいEdgeを含む、Chromiumベースのブラ�
 
 ## ビルド
 
-ソースコードからビルドして、手動でブラウザに入れる方法
+ソースコードからビルドして、手動でブラウザに入れる方法。
 
 *Note: Windowsを使用している場合、'ls'の代わりに'dir'を使用してください。*
 

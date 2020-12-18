@@ -2,7 +2,6 @@
   <label class="subscription-input"
          :class="!subscribed && 'unsubscribed'"
          :style="{background: member['color_main']}"
-         tabindex="0"
   >
     <input :checked="subscribed" class="input" type="checkbox" @change="handleChange">
     <span class="avatar">
@@ -52,7 +51,8 @@
     clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
 
     .input {
-      display: none;
+      position: absolute;
+      clip-path: polygon(0 0, 0 0, 0 0, 0 0);
     }
 
     .avatar {

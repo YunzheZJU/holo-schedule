@@ -51,7 +51,8 @@
     clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
 
     .input {
-      display: none;
+      position: absolute;
+      opacity: 0;
     }
 
     .avatar {

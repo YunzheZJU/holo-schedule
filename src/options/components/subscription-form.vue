@@ -52,7 +52,7 @@
 
     .input {
       position: absolute;
-      clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+      opacity: 0;
     }
 
     .avatar {

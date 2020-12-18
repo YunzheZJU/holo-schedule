@@ -1,4 +1,4 @@
-<p align="center"><img src="./src/icons/icon@128.png" alt="holo-schedule logo"></p>
+<p align="center"><img src="/src/icons/icon@128.png" alt="holo-schedule logo"></p>
 
 # holo-schedule
 
@@ -8,7 +8,7 @@
 
 One browser extension COVERs all scheduled and guerrilla livestreams.
 
-[日本語](docs/README.ja.md) [中文](docs/README.zh_CN.md)
+[日本語](/docs/README.ja.md) [中文](/docs/README.zh_CN.md)
 
 ### Table of contents
 
@@ -26,8 +26,8 @@ You can get this extension from the official download pages on
 or 
 [Chrome Web Store](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad).
 
-[![Mozilla AMO](docs/get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
-[![Chrome Web Store](docs/available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
+[![Mozilla AMO](/docs/get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
+[![Chrome Web Store](/docs/available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 
 ## Supported Browsers
 
@@ -35,7 +35,7 @@ or
 | ------------------------- | -------------------------------------------------------------------------------------------------- |
 | Firefox (>=57.0)          | *Officially Supported* v57 is the minimum version required to support Firefox's modern add-on.     |
 | Chrome (>=57.0)           | *Officially Supported* v57 is the minimum version required to support CSS Grid layout.             |
-| Opera / Edge (>=79.0.309) | *Unofficially Supported* as a Chrome-compatible target                                             |
+| Opera / Edge (>=79.0.309) | *Unofficially Supported* as a Chrome-compatible target.                                            |
 
 **last 3 Firefox and Chrome versions** are recommended to unlock all functionalities of holo-schedule.
 
@@ -50,7 +50,7 @@ Holo-schedule should work on all modern browsers based on chromium, including Op
 
 Build holo-schedule from source code and install it into your browser manually.
 
-*Note: Use 'dir' instead of 'ls' if you are developing on Windows*
+*Note: Use 'dir' instead of 'ls' if you are developing on Windows.*
 
 Run
 ```bash
@@ -83,7 +83,7 @@ yarn run test
 
 ## Develop
 
-Developing holo-schedule on your local machine
+Developing holo-schedule on your local machine.
 
 First please follow [build procedures](#build) to ensure your dependencies are installed properly.
 
@@ -99,5 +99,3 @@ yarn run start
 # Or Chrome
 yarn run start:chromium
 ```
-
-*TODO*

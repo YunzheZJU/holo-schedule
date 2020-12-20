@@ -12,6 +12,7 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
+  IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
   LOCALE,
@@ -484,4 +485,16 @@ test('should toggle shouldSyncSettings', async () => {
   await workflows.toggleShouldSyncSettings()
 
   expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(false)
+})
+
+test('should toggle is30HoursEnabled', async () => {
+  await store.set({ [IS_30_HOURS_ENABLED]: false })
+
+  await workflows.toggleIs30HoursEnabled()
+
+  expect(store.data[IS_30_HOURS_ENABLED]).toEqual(true)
+
+  await workflows.toggleIs30HoursEnabled()
+
+  expect(store.data[IS_30_HOURS_ENABLED]).toEqual(false)
 })

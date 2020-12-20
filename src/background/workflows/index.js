@@ -18,6 +18,7 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
+  IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
   LOCALE,
@@ -207,6 +208,11 @@ const toggleShouldSyncSettings = () => store.set(
 
 const downloadSettings = store.downloadFromSync
 
+const toggleIs30HoursEnabled = () => store.set(
+  { [IS_30_HOURS_ENABLED]: !store.get(IS_30_HOURS_ENABLED) },
+  { local: true, sync: true },
+)
+
 export default {
   filterByTitle,
   filterBySubscription,
@@ -232,4 +238,5 @@ export default {
   getSubscriptionByMember,
   setSubscriptionByMember,
   updateSubscriptionByMember,
+  toggleIs30HoursEnabled,
 }

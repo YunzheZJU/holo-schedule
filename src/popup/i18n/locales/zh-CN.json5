@@ -16,6 +16,13 @@
         // Description for enableNtf
         "description": "突击直播（预定于10分钟内开始的直播）或设置了提醒的直播开始时，通过桌面通知提醒您"
       },
+      // Prompt users to enable 30-hour clock
+      enable30Hours: {
+        // Label for enable30Hours
+        label: "使用30小时制",
+        // Description for enable30Hours
+        description: "一天以早晨6时为始，并将24时（次日0时）起至次日05:59表示为24:00至29:59"
+      },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings

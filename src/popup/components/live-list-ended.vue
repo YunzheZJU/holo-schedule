@@ -22,7 +22,7 @@
   import dayjs from 'dayjs'
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
-  import { ENDED_LIVES } from 'shared/store/keys'
+  import { ENDED_LIVES, IS_30_HOURS_ENABLED } from 'shared/store/keys'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
@@ -40,8 +40,12 @@
       }
     },
     computed: {
+      startHour() {
+        return this.is30HoursEnabled ? 6 : 0
+      },
       ...mapState({
         lives: ENDED_LIVES,
+        is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
     },
     mounted() {
@@ -85,10 +89,10 @@
         if (index < 0) {
           return undefined
         }
-        return dayjs(this.lives[index]['start_at']).date()
+        return dayjs(this.lives[index]['start_at']).startHour(this.startHour).date()
       },
       formatCalendar(live) {
-        return dayjs(live['start_at']).calendar(null, {
+        return dayjs(live['start_at']).startHour(this.startHour).calendar(null, {
           sameDay: this.$t('liveListEnded.calendar.sameDay'),
           lastDay: this.$t('liveListEnded.calendar.lastDay'),
           lastWeek: this.$t('liveListEnded.calendar.lastWeek'),

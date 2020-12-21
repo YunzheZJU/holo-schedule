@@ -99,9 +99,9 @@
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
       sameDay: "[今日]",
-      lastDay: "MMM Do, [昨日]",
-      lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do"
+      lastDay: "MMMDo [昨日]",
+      lastWeek: "MMMDo dddd",
+      sameElse: "MMMDo"
     }
   },
   // Component LiveItem

@@ -43,6 +43,13 @@
         </div>
         <div class="option">
           <label class="label">
+            <span>{{ $t('app.settings.enable30Hours.label') }}</span>
+            <input type="checkbox" :checked="is30HoursEnabled" @change="onChangeIs30HoursEnabled">
+          </label>
+          <div class="description">{{ $t('app.settings.enable30Hours.description') }}</div>
+        </div>
+        <div class="option">
+          <label class="label">
             <span>{{ $t('app.settings.shouldSyncSettings.label') }}</span>
             <input
               type="checkbox"
@@ -101,13 +108,13 @@
   import OpeningAnim from 'components/opening-anim'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
-  import { IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
+  import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
   // eslint-disable-next-line max-len
-  const { workflows: { toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings }, bgInitError } = browser.extension.getBackgroundPage()
+  const { workflows: { toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings, toggleIs30HoursEnabled }, bgInitError } = browser.extension.getBackgroundPage()
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
 
@@ -146,6 +153,7 @@
         isNtfEnabled: IS_NTF_ENABLED,
         locale: LOCALE,
         shouldSyncSettings: SHOULD_SYNC_SETTINGS,
+        is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
     },
     mounted() {
@@ -217,6 +225,9 @@
       },
       onChangeIsNtfEnabled() {
         return toggleIsNtfEnabled()
+      },
+      onChangeIs30HoursEnabled() {
+        return toggleIs30HoursEnabled()
       },
       onChangeShouldSyncSettings() {
         return toggleShouldSyncSettings()

@@ -1,13 +1,14 @@
+import createStore from 'shared/store/create'
 import {
   CURRENT_LIVES,
   ENDED_LIVES,
+  IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
   LOCALE,
   SCHEDULED_LIVES,
   SHOULD_SYNC_SETTINGS,
 } from 'shared/store/keys'
-import createStore from 'shared/store/create'
 
 const store = createStore({
   [ENDED_LIVES]: [],
@@ -17,6 +18,7 @@ const store = createStore({
   [LOCALE]: 'en',
   [IS_POPUP_FIRST_RUN]: true,
   [SHOULD_SYNC_SETTINGS]: false,
+  [IS_30_HOURS_ENABLED]: false,
 })
 
 export default store

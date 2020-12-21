@@ -3069,10 +3069,10 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
-dayjs@^1.8.36:
-  version "1.8.36"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.36.tgz#be36e248467afabf8f5a86bae0de0cdceecced50"
-  integrity sha512-3VmRXEtw7RZKAf+4Tv1Ym9AGeo8r8+CjDi26x+7SYQil1UqtqdaokhzoEJohqlzt0m5kacJSDhJQkG/LWhpRBw==
+"dayjs@npm:@yunzhe35p/dayjs":
+  version "1.8.36-alpha.3"
+  resolved "https://registry.yarnpkg.com/@yunzhe35p/dayjs/-/dayjs-1.8.36-alpha.3.tgz#1cc6a01a66d0c9824fa9484a622694cf0d74658a"
+  integrity sha512-PE+YasWYG46VnDW8FMvRbDM376un2IC7s+Pgt0VfRqKDzVG3zbKhMOXOLqecyp6HHYJMDyti1KleXsM6oPoiOw==
 
 de-indent@^1.0.2:
   version "1.0.2"

@@ -16,6 +16,13 @@
         // Description for enableNtf
         description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
       },
+      // Prompt users to enable 30-hour clock
+      enable30Hours: {
+        // Label for enable30Hours
+        label: "Enable 30-hour clock",
+        // Description for enable30Hours
+        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+      },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings

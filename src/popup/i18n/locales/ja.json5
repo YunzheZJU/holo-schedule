@@ -16,6 +16,13 @@
         // Description for enableNtf
         description: "ゲリラライブ（配信予約から開始まで10分以内のライブ）および予約済みライブの配信開始を通知します"
       },
+      // Prompt users to enable 30-hour clock
+      enable30Hours: {
+        // Label for enable30Hours
+        label: "30時間制の有効化",
+        // Description for enable30Hours
+        description: "24時間制を延長し、日界を午前6時とする"
+      },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings

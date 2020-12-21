@@ -52,7 +52,7 @@
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
   import relativeTime from 'dayjs/plugin/relativeTime'
-  import { IS_NTF_ENABLED } from 'shared/store/keys'
+  import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
   import { formatDurationFromSeconds } from 'utils'
   import { liveTypeValidator } from 'validators'
@@ -100,7 +100,7 @@
         return formatDurationFromSeconds(this.live['duration'])
       },
       startAt() {
-        return dayjs(this.live['start_at'])
+        return dayjs(this.live['start_at']).startHour(this.is30HoursEnabled ? 6 : 0)
       },
       startAtFromNow() {
         return this.startAt.fromNow()
@@ -126,6 +126,7 @@
       },
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
+        is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
     },
     methods: {

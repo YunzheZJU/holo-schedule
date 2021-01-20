@@ -253,6 +253,10 @@
     background: linear-gradient(45deg, #268C89, #65E5B4);
     color: var(--color-text-white);
 
+    @media (prefers-color-scheme: dark) {
+      opacity: .75;
+    }
+
     .main {
       display: grid;
       grid-auto-flow: column;
@@ -366,8 +370,12 @@
 
     .settings {
       @supports (backdrop-filter: blur(10px)) {
-        background: rgba(255, 255, 255, 0.8);
+        background: hsla(0, 0%, 100%, 0.8);
         backdrop-filter: blur(10px);
+
+        @media (prefers-color-scheme: dark) {
+          background: hsla(0, 0%, 12%, 0.8);
+        }
       }
 
       position: absolute;

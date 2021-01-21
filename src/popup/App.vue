@@ -366,13 +366,11 @@
     }
 
     .settings {
-      @supports (backdrop-filter: blur(10px)) {
-        background: hsla(0, 0%, 100%, 0.8);
-        backdrop-filter: blur(10px);
+      --background-opacity: 0.95;
 
-        @media (prefers-color-scheme: dark) {
-          background: hsla(0, 0%, 12%, 0.8);
-        }
+      @supports (backdrop-filter: blur(10px)) {
+        --background-opacity: 0.8;
+        backdrop-filter: blur(10px);
       }
 
       position: absolute;
@@ -385,7 +383,7 @@
       gap: 16px;
       align-content: start;
       padding: 16px;
-      background-color: rgba(255, 255, 255, 0.95);
+      background: hsl(var(--color-bg-base-expand), var(--background-opacity));
 
       .option {
         .label {

@@ -252,6 +252,7 @@
     padding: 12px 16px;
     background: linear-gradient(45deg, #268C89, #65E5B4);
     color: var(--color-text-white);
+    opacity: var(--brightness);
 
     .main {
       display: grid;
@@ -365,8 +366,10 @@
     }
 
     .settings {
+      --background-opacity: 0.95;
+
       @supports (backdrop-filter: blur(10px)) {
-        background: rgba(255, 255, 255, 0.8);
+        --background-opacity: 0.8;
         backdrop-filter: blur(10px);
       }
 
@@ -380,7 +383,7 @@
       gap: 16px;
       align-content: start;
       padding: 16px;
-      background-color: rgba(255, 255, 255, 0.95);
+      background: hsla(var(--color-bg-base-expand), var(--background-opacity));
 
       .option {
         .label {

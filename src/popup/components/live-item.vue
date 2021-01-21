@@ -157,8 +157,14 @@
       background: var(--color-bg-light);
     }
 
-    &:not(:hover) .remind:not(.active) {
-      display: none;
+    &:not(:hover) {
+      .thumbnail, .header .avatar {
+        opacity: var(--brightness);
+      }
+
+      .remind:not(.active) {
+        display: none;
+      }
     }
   }
 
@@ -169,6 +175,7 @@
     align-self: start;
     overflow: hidden;
     height: 90px;
+    transition: opacity .2s ease-in-out;
 
     .cover {
       object-fit: cover;

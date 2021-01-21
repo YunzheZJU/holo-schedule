@@ -42,7 +42,8 @@ ul, ol {
 }
 
 :root {
-  --color-bg-base: hsl(0, 0%, 100%);
+  --color-bg-base-expand: 0, 0%, 100%;
+  --color-bg-base: hsl(var(--color-bg-base-expand));
   --color-bg-light: hsl(0, 0%, 96%);
   --color-bg-normal: hsl(0, 0%, 92%);
   --color-bd: hsl(0, 0%, 80%);
@@ -53,8 +54,20 @@ ul, ol {
   --color-error: hsl(351, 100%, 42%);
   --color-theme: hsl(178, 100%, 26%);
   --color-white: hsl(0, 0%, 100%);
-}
+  --brightness: 1;
 
-[data-theme="dark"] {
-  // TODO: Dark theme
+  @media (prefers-color-scheme: dark) {
+    --color-bg-base-expand: 0, 0%, 15%;
+    --color-bg-light: hsl(0, 0%, 22%);
+    --color-bg-normal: hsl(0, 0%, 30%);
+    --color-bd: hsl(0, 0%, 30%);
+    --color-text-dark: hsl(0, 0%, 75%);
+    --color-text-normal: hsl(0, 0%, 65%);
+    --color-text-light: hsl(0, 0%, 55%);
+    --color-text-white: hsl(0, 0%, 100%);
+    --color-error: hsl(351, 100%, 32%);
+    --color-theme: hsl(178, 100%, 32%);
+    --color-white: hsl(0, 0%, 100%);
+    --brightness: .75;
+  }
 }

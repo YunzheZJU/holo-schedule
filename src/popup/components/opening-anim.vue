@@ -57,6 +57,7 @@
     justify-content: center;
     overflow: hidden;
     background: var(--color-bg-base);
+    filter: brightness(var(--brightness));
     cursor: pointer;
     animation: .5s cubic-bezier(0.5, 1, 0.89, 1) 2.5s both fade-out;
   }

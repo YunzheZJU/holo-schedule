@@ -383,7 +383,7 @@
       gap: 16px;
       align-content: start;
       padding: 16px;
-      background: hsl(var(--color-bg-base-expand), var(--background-opacity));
+      background: hsla(var(--color-bg-base-expand), var(--background-opacity));
 
       .option {
         .label {

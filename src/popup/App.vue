@@ -252,10 +252,7 @@
     padding: 12px 16px;
     background: linear-gradient(45deg, #268C89, #65E5B4);
     color: var(--color-text-white);
-
-    @media (prefers-color-scheme: dark) {
-      opacity: .75;
-    }
+    opacity: var(--brightness);
 
     .main {
       display: grid;

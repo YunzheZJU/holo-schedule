@@ -159,9 +159,7 @@
 
     &:not(:hover) {
       .thumbnail, .header .avatar {
-        @media (prefers-color-scheme: dark) {
-          opacity: .75;
-        }
+        opacity: var(--brightness);
       }
 
       .remind:not(.active) {

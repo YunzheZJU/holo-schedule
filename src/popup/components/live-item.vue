@@ -270,6 +270,7 @@
     font-size: 14px;
     text-overflow: ellipsis;
     word-break: break-all;
+    line-break: anywhere;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }

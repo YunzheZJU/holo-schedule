@@ -102,12 +102,12 @@
 </template>
 
 <script>
-  import HIcon from 'components/h-icon'
   import LiveList from 'components/live-list'
   import LiveListEnded from 'components/live-list-ended'
   import OpeningAnim from 'components/opening-anim'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
+  import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'

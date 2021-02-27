@@ -3,7 +3,7 @@
     <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail">
         <!-- TODO: Default image -->
-        <img class="cover" :src="live['cover']" :alt="live['title']">
+        <img class="cover" loading="lazy" :src="live['cover']" :alt="live['title']">
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
                 type="button"
@@ -20,6 +20,7 @@
       <div class="header">
         <img class="avatar"
              alt=""
+             loading="lazy"
              :src="member['avatar'] || defaultAvatar"
              :style="{color: member['color_main']}"
         >

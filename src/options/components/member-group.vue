@@ -22,7 +22,6 @@
                 </button>
               </span>
             </template>
-            <span v-else class="hidden" />
           </div>
         </transition>
       </div>
@@ -190,22 +189,22 @@
         opacity: 0;
         transform: translateY(-30px);
       }
-    }
 
-    .question {
-      color: black;
-      text-align: center;
+      .question {
+        color: black;
+        text-align: center;
 
-      .icon {
-        vertical-align: -4px;
-        font-size: 20px;
+        .icon {
+          vertical-align: -4px;
+          font-size: 20px;
+        }
       }
-    }
 
-    .hidden:before {
-      @media screen and (min-width: 1200px) {
-        content: '-';
-        opacity: 0;
+      &:empty:before {
+        @media screen and (min-width: 1200px) {
+          content: '-';
+          opacity: 0;
+        }
       }
     }
 

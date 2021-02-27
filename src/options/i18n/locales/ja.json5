@@ -28,5 +28,20 @@
   memberGroup: {
     // Indicate that no member data can be found for this group
     noData: "メンバーのデータがありません",
+    // Help users to perform group operations when detected
+    selectHelper: {
+      // Prompt users to unsubscribe to all members in a group or not, with the question mark
+      mute: "TODO:Mute this group?",
+      // Prompt users to subscribe to all members in a group or not, with the question mark
+      subscribe: "TODO:Subscribe to this group?",
+      // Indicate that the requested group operation has succeeded, with the period
+      success: "TODO:Operations performed.",
+      // Confirm the operation
+      yes: "TODO:Yes",
+      // Cancel the operation
+      no: "TODO:No",
+      // Undo the operation
+      undo: "TODO:Undo"
+    }
   }
 }

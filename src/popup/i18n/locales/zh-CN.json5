@@ -132,7 +132,7 @@
       nextWeek: "dddd A H:mm",
       lastDay: "[昨天]A H:mm",
       lastWeek: "[上周] dddd A H:mm",
-      sameElse: "DD/MM/YYYY A H:mm"
+      sameElse: "MMMDo A H:mm"
     },
     // Display the start time of this live
     startAt: {

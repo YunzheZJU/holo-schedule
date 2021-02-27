@@ -127,12 +127,12 @@
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at ]H:mm A",
-      nextDay: "[Tomorrow ]H:mm A",
-      nextWeek: "dddd[ at ]H:mm A",
-      lastDay: "[Yesterday ]H:mm A",
+      sameDay: "[Today at] H:mm A",
+      nextDay: "[Tomorrow] H:mm A",
+      nextWeek: "dddd [at] H:mm A",
+      lastDay: "[Yesterday] H:mm A",
       lastWeek: "[Last] dddd H:mm A",
-      sameElse: "DD/MM/YYYY H:mm A"
+      sameElse: "MMM Do [at] H:mm A"
     },
     // Display the start time of this live
     startAt: {

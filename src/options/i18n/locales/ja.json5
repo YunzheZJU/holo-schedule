@@ -41,7 +41,7 @@
       // Cancel the operation
       no: "いいえ",
       // Undo the operation
-      undo: "TODO:Undo"
+      undo: "戻る"
     }
   }
 }

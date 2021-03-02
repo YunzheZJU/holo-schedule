@@ -37,7 +37,7 @@
       // Indicate that the requested group operation has succeeded, with the period
       success: "設定しました。",
       // Confirm the operation
-      yes: "TODO:Yes",
+      yes: "はい",
       // Cancel the operation
       no: "TODO:No",
       // Undo the operation

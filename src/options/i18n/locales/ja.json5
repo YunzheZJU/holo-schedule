@@ -39,7 +39,7 @@
       // Confirm the operation
       yes: "はい",
       // Cancel the operation
-      no: "TODO:No",
+      no: "いいえ",
       // Undo the operation
       undo: "TODO:Undo"
     }

@@ -6,23 +6,22 @@ import {
   isGuerrillaLive,
 } from './index'
 
-const unixTime = Math.floor(Date.now() / 1000)
-Date.now = jest.fn(() => unixTime * 1000)
+const getUnixTime = () => Math.floor(Date.now() / 1000)
 
 test('should get current unix time', () => {
-  expect(getUnix()).toBe(unixTime)
+  expect(getUnix()).toBe(getUnixTime())
 })
 
 test('should get unix time after days', () => {
-  expect(getUnixAfterDays(7)).toBe(unixTime + 7 * 24 * 60 * 60)
-  expect(getUnixAfterDays(0)).toBe(unixTime)
-  expect(getUnixAfterDays(-1)).toBe(unixTime - 24 * 60 * 60)
+  expect(getUnixAfterDays(7)).toBe(getUnixTime() + 7 * 24 * 60 * 60)
+  expect(getUnixAfterDays(0)).toBe(getUnixTime())
+  expect(getUnixAfterDays(-1)).toBe(getUnixTime() - 24 * 60 * 60)
 })
 
 test('should get unix time before days', () => {
-  expect(getUnixBeforeDays(3)).toBe(unixTime - 3 * 24 * 60 * 60)
-  expect(getUnixBeforeDays(0)).toBe(unixTime)
-  expect(getUnixBeforeDays(-1)).toBe(unixTime + 24 * 60 * 60)
+  expect(getUnixBeforeDays(3)).toBe(getUnixTime() - 3 * 24 * 60 * 60)
+  expect(getUnixBeforeDays(0)).toBe(getUnixTime())
+  expect(getUnixBeforeDays(-1)).toBe(getUnixTime() + 24 * 60 * 60)
 })
 
 test('should be guerrila live', () => {

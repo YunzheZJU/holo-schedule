@@ -17,12 +17,9 @@
 
 <script>
   import { getContrastColor } from 'utils'
-  import browser from 'webextension-polyfill'
-
-  const { workflows: { updateSubscriptionByMember } } = browser.extension.getBackgroundPage()
 
   export default {
-    name: 'SubscriptionInputForm',
+    name: 'SubscriptionInput',
     props: {
       member: {
         type: Object,
@@ -35,7 +32,7 @@
     },
     methods: {
       handleChange() {
-        updateSubscriptionByMember(this.member['id'], !this.subscribed)
+        this.$emit('input', !this.subscribed)
       },
       getContrastColor,
     },

@@ -28,5 +28,20 @@
   memberGroup: {
     // Indicate that no member data can be found for this group
     noData: "无成员数据",
+    // Help users to perform group operations when detected
+    selectHelper: {
+      // Prompt users to unsubscribe to all members in a group or not
+      mute: "取消关注该组成员？",
+      // Prompt users to subscribe to all members in a group or not
+      subscribe: "订阅该组全部成员？",
+      // Indicate that the requested group operation has succeeded
+      success: "批量操作成功。",
+      // Confirm the operation
+      yes: "是",
+      // Cancel the operation
+      no: "否",
+      // Undo the operation
+      undo: "撤销"
+    }
   }
 }

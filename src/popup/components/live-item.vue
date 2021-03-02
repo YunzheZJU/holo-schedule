@@ -48,11 +48,11 @@
 </template>
 
 <script>
-  import HIcon from 'components/h-icon'
   import dayjs from 'dayjs'
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
   import relativeTime from 'dayjs/plugin/relativeTime'
+  import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
   import { formatDurationFromSeconds } from 'utils'

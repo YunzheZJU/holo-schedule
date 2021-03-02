@@ -17,8 +17,8 @@
 </template>
 
 <script>
-  import HIcon from 'components/h-icon'
   import LiveItem from 'components/live-item'
+  import HIcon from 'shared/components/h-icon'
   import { CURRENT_LIVES, SCHEDULED_LIVES } from 'shared/store/keys'
   import { liveTypeValidator } from 'validators'
   import { Fragment } from 'vue-fragment'

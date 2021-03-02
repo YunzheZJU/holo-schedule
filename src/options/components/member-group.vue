@@ -143,7 +143,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     padding: 4px;
-    color: black;
+    color: var(--color-text-dark);
     font-size: 20px;
 
     &:before, &:after {
@@ -191,7 +191,7 @@
       }
 
       .question {
-        color: black;
+        color: var(--color-text-normal);
         text-align: center;
 
         .icon {
@@ -266,11 +266,11 @@
 
     .member-container {
       width: 100%;
-      filter: drop-shadow(4px 4px 0 black);
+      filter: drop-shadow(4px 4px 0 var(--color-text-dark)) brightness(var(--brightness));
       transition: filter .1s, transform .1s;
 
       &:hover, &:focus-within {
-        filter: drop-shadow(4px 9px 0 black);
+        filter: drop-shadow(4px 9px 0 var(--color-text-dark)) brightness(var(--brightness));
         transform: translate(0px, -3px);
       }
 

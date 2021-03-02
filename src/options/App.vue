@@ -12,7 +12,6 @@
             patternUnits="userSpaceOnUse"
             style="color: var(--color-theme)"
           >
-            <rect x="0" y="0" width="32" height="32" fill="#ddd" />
             <rect x="16" y="0" width="1" height="32" fill="currentColor" />
             <rect x="0" y="16" width="32" height="1" fill="currentColor" />
           </pattern>
@@ -92,6 +91,7 @@
 <style lang="less" scoped>
   .app {
     display: flex;
+    background-color: var(--color-bg-base);
   }
 
   .frame-left, .frame-right {
@@ -108,7 +108,7 @@
       top: 0;
       bottom: 0;
       width: 8px;
-      background: var(--color-white);
+      background-color: var(--color-bg-base);
 
       @media screen and (min-width: 1200px) {
         content: '';
@@ -143,12 +143,12 @@
       right: 0;
       bottom: 0;
       left: 0;
-      z-index: -1;
       width: 100%;
       height: 100%;
     }
 
     .main {
+      position: relative;
       max-width: 1200px;
       min-height: 100vh;
       margin: 32px auto;
@@ -162,7 +162,7 @@
         margin: 0 auto 32px 64px;
         border: 2px solid var(--color-theme);
         background: var(--color-theme);
-        filter: drop-shadow(4px 4px 0 black);
+        filter: drop-shadow(4px 4px 0 var(--color-text-dark)) brightness(var(--brightness));
 
         .logo {
           padding: 8px;

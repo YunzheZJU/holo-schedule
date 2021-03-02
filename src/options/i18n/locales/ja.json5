@@ -31,7 +31,7 @@
     // Help users to perform group operations when detected
     selectHelper: {
       // Prompt users to unsubscribe to all members in a group or not, with the question mark
-      mute: "TODO:Mute this group?",
+      mute: "このグループをミュートしますか？",
       // Prompt users to subscribe to all members in a group or not, with the question mark
       subscribe: "TODO:Subscribe to this group?",
       // Indicate that the requested group operation has succeeded, with the period

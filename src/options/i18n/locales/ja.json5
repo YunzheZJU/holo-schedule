@@ -35,7 +35,7 @@
       // Prompt users to subscribe to all members in a group or not, with the question mark
       subscribe: "このグループを登録しますか？",
       // Indicate that the requested group operation has succeeded, with the period
-      success: "TODO:Operations performed.",
+      success: "設定しました。",
       // Confirm the operation
       yes: "TODO:Yes",
       // Cancel the operation

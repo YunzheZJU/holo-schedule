@@ -33,7 +33,7 @@
       // Prompt users to unsubscribe to all members in a group or not, with the question mark
       mute: "このグループをミュートしますか？",
       // Prompt users to subscribe to all members in a group or not, with the question mark
-      subscribe: "TODO:Subscribe to this group?",
+      subscribe: "このグループを登録しますか？",
       // Indicate that the requested group operation has succeeded, with the period
       success: "TODO:Operations performed.",
       // Confirm the operation

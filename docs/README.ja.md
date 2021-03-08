@@ -6,7 +6,7 @@
 
 —— Keep in touch with Hololive.
 
-ホロライブの配信を表示するブラウザ拡張です。
+ホロライブの配信スケジュールを表示するブラウザ拡張です。ゲリラ配信にも対応しています。
 
 [Eng](/README.md) [中文](/docs/README.zh_CN.md)
 
@@ -21,10 +21,11 @@
 
 ## インストール
 
-以下の公式ページでダウンロードできます。
+このアドオンは
 [Mozilla AMO](https://addons.mozilla.org/firefox/addon/holo-schedule/) 
 または
 [Chrome Web Store](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
+からダウンロードすることが出来ます。
 
 [![Mozilla AMO](/docs/get-the-add-on.png)](https://addons.mozilla.org/firefox/addon/holo-schedule/)
 [![Chrome Web Store](/docs/available-in-the-chrome-web-store.png)](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
@@ -33,11 +34,11 @@
 
 | ブラウザ                   | サポート                                                                                      |
 | ------------------------- | -------------------------------------------------------------------------------------------------- |
-| Firefox (>=57.0)          | *サポートされています。* バージョン57が最低のFirefoxの新しいアドオンに対応しているバージョンです。     |
-| Chrome (>=57.0)           | *サポートされています。* バージョン57が最低のCSSグリッドレイアウトに対応しているバージョンです。             |
-| Opera / Edge (>=79.0.309) | *正式にサポートされていません。* Chrome互換の拡張として利用できます。                                             |
+| Firefox (>=57.0)          | *サポートされています。* バージョン57がFirefoxの新しいアドオン形式に対応している最低バージョンです。     |
+| Chrome (>=57.0)           | *サポートされています。* バージョン57がCSSグリッドレイアウトに対応している最低バージョンです。             |
+| Opera / Edge (>=79.0.309) | *正式なサポートはありません。* Chrome互換の拡張として利用できます。                                             |
 
-**最新以下3のFirefoxまたはChromeのバージョン**がすべての機能を利用するのに推奨されています。
+このアドオンの全ての機能を利用するには**最新および3つ前までのバージョンのFirefoxまたはChrome**を推奨します。
 
 Holo-scheduleは、Operaや新しいEdgeを含む、Chromiumベースのブラウザで動くようになっています。
 

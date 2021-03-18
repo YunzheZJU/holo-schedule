@@ -148,7 +148,9 @@
     }
 
     .main {
-      position: relative;
+      // This resolves occursion of svg on frame in Firefox but introduce another problem
+      // where section-title do not expand
+      //position: relative;
       max-width: 1200px;
       min-height: 100vh;
       margin: 32px auto;

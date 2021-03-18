@@ -17,6 +17,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     'alarms',
     'notifications',
     'storage',
+    'idle',
   ],
   background: {
     page: 'src/background.html',

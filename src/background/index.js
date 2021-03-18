@@ -1,5 +1,6 @@
 import alarm from 'alarm'
 import i18n from 'i18n'
+import idle from 'idle'
 import store from 'store'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
@@ -7,7 +8,12 @@ import workflows from 'workflows'
 const ALARM_NAME = 'fetch-data-alarm'
 
 const {
-  syncChannels, syncCurrentLives, syncScheduledLives, syncMembers, setIsPopupFirstRun,
+  syncChannels,
+  syncCurrentLives,
+  syncScheduledLives,
+  syncMembers,
+  setIsPopupFirstRun,
+  cleanCachedEndedLives,
 } = workflows
 
 const handleAlarm = async ({ name }) => {
@@ -18,6 +24,10 @@ const handleAlarm = async ({ name }) => {
   }
 }
 
+const handleIdleStateChange = async newState => {
+  console.log(newState)
+}
+
 const initOnce = async () => {
   window.workflows = workflows
   window.store = store
@@ -26,11 +36,16 @@ const initOnce = async () => {
   await store.init()
   await alarm.init(store)
   await i18n.init(store)
+  await idle.init()
 
   await setIsPopupFirstRun(true)
+  await idle.subscribe(() => {
+    console.log('my idle')
+    cleanCachedEndedLives()
+  })
 
   browser.alarms.onAlarm.addListener(handleAlarm)
-
+  browser.idle.onStateChanged.addListener(handleIdleStateChange)
   browser.alarms.create(ALARM_NAME, { periodInMinutes: 1 })
 }
 

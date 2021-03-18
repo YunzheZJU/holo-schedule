@@ -3,6 +3,7 @@ import HintPlugin from 'plugins/hint'
 import ToastPlugin from 'plugins/toast'
 import 'shared/assets/iconfont'
 import 'shared/global.less'
+import { APPEARANCE } from 'shared/store/keys'
 import store from 'store'
 import Vue from 'vue'
 import Fragment from 'vue-fragment'
@@ -24,3 +25,10 @@ new Vue({
 
 const { workflows: { downloadSettings } } = browser.extension.getBackgroundPage()
 downloadSettings()
+
+document.documentElement.dataset.theme = getComputedStyle(document.documentElement).getPropertyValue('--prefers-color-scheme').trim()
+store.subscribe(({ type, payload }) => {
+  if (type === APPEARANCE) {
+    document.documentElement.dataset.theme = payload
+  }
+})

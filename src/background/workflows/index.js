@@ -15,6 +15,7 @@ import {
   getScheduledLives,
 } from 'requests'
 import {
+  APPEARANCE,
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
@@ -218,6 +219,11 @@ const toggleIs30HoursEnabled = () => store.set(
   { local: true, sync: true },
 )
 
+const setAppearance = appearance => store.set(
+  { [APPEARANCE]: appearance },
+  { local: true },
+)
+
 export default {
   filterByTitle,
   filterBySubscription,
@@ -245,4 +251,5 @@ export default {
   setSubscriptionByMember,
   updateSubscriptionByMember,
   toggleIs30HoursEnabled,
+  setAppearance,
 }

@@ -43,6 +43,22 @@
           "zh-CN": "简体中文"
         }
       },
+      // Prompt users to switch the appearance
+      appearance: {
+        // Label for appearance
+        label: "TODO:Appearance",
+        // Description for appearance
+        description: "TODO:Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        // Supported appearances
+        appearances: {
+          // The theme follows the current OS setting
+          device: "TODO:Follow device",
+          // Default light theme
+          light: "TODO:Default light",
+          // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
+          dark: "TODO:Dimmed dark"
+        }
+      },
       // Prompt users to change advanced settings
       advanced: "詳細設定",
       // Display the current version

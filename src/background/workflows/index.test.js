@@ -9,6 +9,7 @@ import {
   getScheduledLives,
 } from 'requests'
 import {
+  APPEARANCE,
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
@@ -522,4 +523,12 @@ test('should toggle is30HoursEnabled', async () => {
   await workflows.toggleIs30HoursEnabled()
 
   expect(store.data[IS_30_HOURS_ENABLED]).toEqual(false)
+})
+
+test('should set appearance', async () => {
+  await store.set({ [APPEARANCE]: 'device' })
+
+  await workflows.setAppearance('light')
+
+  expect(store.data[APPEARANCE]).toEqual('light')
 })

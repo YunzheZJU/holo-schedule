@@ -43,6 +43,22 @@
           "zh-CN": "简体中文"
         }
       },
+      // Prompt users to switch the appearance
+      appearance: {
+        // Label for appearance
+        label: "外观",
+        // Description for appearance
+        description: "将外观设置为你偏爱的主题。这项设置仅对当前浏览器生效",
+        // Supported appearances
+        appearances: {
+          // The theme follows the current OS setting
+          device: "跟随系统",
+          // Default light theme which is designed for daily use
+          light: "浅色主题",
+          // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
+          dark: "深色主题"
+        }
+      },
       // Prompt users to change advanced settings
       advanced: "高级设置",
       // Display the current version

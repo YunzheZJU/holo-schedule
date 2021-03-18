@@ -42,6 +42,7 @@ ul, ol {
 }
 
 :root {
+  --prefers-color-scheme: light;
   --color-bg-base-expand: 0, 0%, 100%;
   --color-bg-base: hsl(var(--color-bg-base-expand));
   --color-bg-light: hsl(0, 0%, 96%);
@@ -57,6 +58,17 @@ ul, ol {
   --brightness: 1;
 
   @media (prefers-color-scheme: dark) {
+    --prefers-color-scheme: dark;
+    &[data-theme="device"] {
+      .vars-in-dark();
+    }
+  }
+
+  &[data-theme="dark"] {
+    .vars-in-dark();
+  }
+
+  .vars-in-dark() {
     --color-bg-base-expand: 228, 2%, 23%;
     --color-bg-light: hsl(228, 2%, 25%);
     --color-bg-normal: hsl(228, 2%, 28%);

@@ -21,9 +21,7 @@ module.exports = {
     'dot-notation': 'off',
     'no-console': 'off',
     semi: ['error', 'never'],
-    'object-curly-newline': ['error', {
-      ObjectPattern: { minProperties: 5 },
-    }],
+    'object-curly-newline': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/script-indent': ['error', 2, { baseIndent: 1 }],
     'vue/max-attributes-per-line': ['error', {

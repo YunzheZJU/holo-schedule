@@ -82,9 +82,7 @@ const syncEndedLives = async () => {
   return getCachedEndedLives()
 }
 
-const cleanCachedEndedLives = async () => {
-  await store.set({ [ENDED_LIVES]: [] })
-}
+const clearCachedEndedLives = () => store.set({ [ENDED_LIVES]: [] })
 
 const getCachedCurrentLives = () => store.get(CURRENT_LIVES)
 
@@ -224,7 +222,7 @@ export default {
   syncCurrentLives,
   getCachedEndedLives,
   syncEndedLives,
-  cleanCachedEndedLives,
+  clearCachedEndedLives,
   getCachedScheduledLives,
   syncScheduledLives,
   getCachedChannels,

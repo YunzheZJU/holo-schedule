@@ -121,6 +121,15 @@ test('should get cached ended lives', async () => {
   expect(workflows.getCachedEndedLives()).toEqual(endedLives)
 })
 
+test('should clear cached ended lives', async () => {
+  expect(workflows.getCachedEndedLives()).toEqual(undefined)
+
+  await store.set({ [ENDED_LIVES]: [{ id: 1 }, { id: 2 }] })
+  await workflows.clearCachedEndedLives()
+
+  expect(workflows.getCachedEndedLives()).toEqual([])
+})
+
 test('should sync ended lives', async () => {
   Date.now = jest.fn(() => unixTime * 1000)
   // First run

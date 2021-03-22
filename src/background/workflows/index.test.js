@@ -257,8 +257,24 @@ test('should sync current lives', async () => {
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
-  expect(store.data[ENDED_LIVES]).toEqual(endedLivesTwo)
+  expect(store.data[ENDED_LIVES]).toEqual([])
   expect(returnValueTwo).toEqual(currentLivesTwo)
+
+  getCurrentLives.mockClear()
+  browser.browserAction.setBadgeText.mockClear()
+
+  // Third run
+  await store.set({ [ENDED_LIVES]: endedLivesTwo })
+
+  getCurrentLives.mockResolvedValueOnce(currentLivesTwo)
+
+  const returnValueTwoSecond = await workflows.syncCurrentLives()
+
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
+  expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
+  expect(store.data[ENDED_LIVES]).toEqual(endedLivesTwo)
+  expect(returnValueTwoSecond).toEqual(currentLivesTwo)
 
   getCurrentLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()

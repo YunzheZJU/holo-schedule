@@ -51,7 +51,7 @@
         description: "将外观设置为你偏爱的主题。这项设置仅对当前浏览器生效",
         // Supported appearances
         appearances: {
-          // The theme follows the current OS setting
+          // The theme follows the current OS setting. This is the default selection
           device: "跟随系统",
           // Default light theme which is designed for daily use
           light: "浅色主题",

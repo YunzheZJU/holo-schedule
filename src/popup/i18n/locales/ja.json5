@@ -56,7 +56,7 @@
           // Default light theme which is designed for daily use
           light: "ライトテーマ",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "TODO:Dimmed dark"
+          dark: "ダークテーマ"
         }
       },
       // Prompt users to change advanced settings

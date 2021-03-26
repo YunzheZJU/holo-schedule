@@ -82,6 +82,8 @@ const syncEndedLives = async () => {
   return getCachedEndedLives()
 }
 
+const clearCachedEndedLives = () => store.set({ [ENDED_LIVES]: [] })
+
 const getCachedCurrentLives = () => store.get(CURRENT_LIVES)
 
 const syncCurrentLives = async () => {
@@ -97,13 +99,16 @@ const syncCurrentLives = async () => {
     ...live,
     duration: dayjs().diff(dayjs(live['start_at']), 'second'),
   }))
-  newEndedLives.forEach(live => {
-    const index = findLastIndex(
-      endedLives,
-      ({ start_at: startAt }) => startAt <= live['start_at'],
-    )
-    endedLives.splice(index + 1, 0, live)
-  })
+  // Skip if endedLives is empty
+  if (endedLives.length > 0) {
+    newEndedLives.forEach(live => {
+      const index = findLastIndex(
+        endedLives,
+        ({ start_at: startAt }) => startAt <= live['start_at'],
+      )
+      endedLives.splice(index + 1, 0, live)
+    })
+  }
 
   await store.set({ [CURRENT_LIVES]: lives, [ENDED_LIVES]: endedLives })
 
@@ -220,6 +225,7 @@ export default {
   syncCurrentLives,
   getCachedEndedLives,
   syncEndedLives,
+  clearCachedEndedLives,
   getCachedScheduledLives,
   syncScheduledLives,
   getCachedChannels,

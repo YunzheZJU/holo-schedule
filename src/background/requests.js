@@ -10,12 +10,21 @@ const gatherResponse = async response => {
   return response.text()
 }
 
+const callbacks = []
+const onSuccessRequest = {
+  addEventListener: (callback = () => null) => {
+    callbacks.push(callback)
+  },
+}
+
 const fetchData = async (...args) => {
   const response = await fetch(...args)
 
   if (!response.ok) {
     throw new Error(`Network error: ${response.status}`)
   }
+
+  callbacks.forEach(callback => callback())
 
   return gatherResponse(response)
 }
@@ -75,4 +84,5 @@ export {
   getScheduledLives,
   getChannels,
   getMembers,
+  onSuccessRequest,
 }

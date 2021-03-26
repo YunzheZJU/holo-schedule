@@ -121,6 +121,15 @@ test('should get cached ended lives', async () => {
   expect(workflows.getCachedEndedLives()).toEqual(endedLives)
 })
 
+test('should clear cached ended lives', async () => {
+  expect(workflows.getCachedEndedLives()).toEqual(undefined)
+
+  await store.set({ [ENDED_LIVES]: [{ id: 1 }, { id: 2 }] })
+  await workflows.clearCachedEndedLives()
+
+  expect(workflows.getCachedEndedLives()).toEqual([])
+})
+
 test('should sync ended lives', async () => {
   Date.now = jest.fn(() => unixTime * 1000)
   // First run
@@ -248,8 +257,24 @@ test('should sync current lives', async () => {
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
-  expect(store.data[ENDED_LIVES]).toEqual(endedLivesTwo)
+  expect(store.data[ENDED_LIVES]).toEqual([])
   expect(returnValueTwo).toEqual(currentLivesTwo)
+
+  getCurrentLives.mockClear()
+  browser.browserAction.setBadgeText.mockClear()
+
+  // Third run
+  await store.set({ [ENDED_LIVES]: endedLivesTwo })
+
+  getCurrentLives.mockResolvedValueOnce(currentLivesTwo)
+
+  const returnValueTwoSecond = await workflows.syncCurrentLives()
+
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
+  expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
+  expect(store.data[ENDED_LIVES]).toEqual(endedLivesTwo)
+  expect(returnValueTwoSecond).toEqual(currentLivesTwo)
 
   getCurrentLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()

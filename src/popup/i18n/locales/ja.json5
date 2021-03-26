@@ -48,7 +48,7 @@
         // Label for appearance
         label: "デザイン",
         // Description for appearance
-        description: "TODO:Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "外観を好きなテーマに変更します。変更は現在のブラウザにのみ適用されます",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection

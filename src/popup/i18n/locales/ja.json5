@@ -46,7 +46,7 @@
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "TODO:Appearance",
+        label: "デザイン",
         // Description for appearance
         description: "TODO:Change the appearance to your preferred theme. Changes are only applied to the current browser",
         // Supported appearances

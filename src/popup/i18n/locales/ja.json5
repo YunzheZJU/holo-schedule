@@ -43,6 +43,22 @@
           "zh-CN": "简体中文"
         }
       },
+      // Prompt users to switch the appearance
+      appearance: {
+        // Label for appearance
+        label: "デザイン",
+        // Description for appearance
+        description: "外観を好きなテーマに変更します。変更は現在のブラウザにのみ適用されます",
+        // Supported appearances
+        appearances: {
+          // The theme follows the current OS setting. This is the default selection
+          device: "端末の設定に従う",
+          // Default light theme which is designed for daily use
+          light: "ライトテーマ",
+          // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
+          dark: "ダークテーマ"
+        }
+      },
       // Prompt users to change advanced settings
       advanced: "詳細設定",
       // Display the current version

@@ -1,5 +1,6 @@
 import createStore from 'shared/store/create'
 import {
+  APPEARANCE,
   CURRENT_LIVES,
   ENDED_LIVES,
   IS_30_HOURS_ENABLED,
@@ -19,6 +20,7 @@ const store = createStore({
   [IS_POPUP_FIRST_RUN]: true,
   [SHOULD_SYNC_SETTINGS]: false,
   [IS_30_HOURS_ENABLED]: false,
+  [APPEARANCE]: 'device',
 })
 
 export default store

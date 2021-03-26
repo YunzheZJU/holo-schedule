@@ -70,6 +70,17 @@
           </label>
           <div class="description">{{ $t('app.settings.language.description') }}</div>
         </div>
+        <div class="option">
+          <label class="label">
+            <span>{{ $t('app.settings.appearance.label') }}</span>
+            <select :value="appearance" @change="onChangeAppearance">
+              <option v-for="$appearance in appearances" :key="$appearance" :value="$appearance">
+                {{ $t(`app.settings.appearance.appearances.${$appearance}`) }}
+              </option>
+            </select>
+          </label>
+          <div class="description">{{ $t('app.settings.appearance.description') }}</div>
+        </div>
         <button class="advanced" @click="onClickAdvanced">{{ $t('app.settings.advanced') }}</button>
         <hr>
         <div class="info">
@@ -108,13 +119,17 @@
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
   import HIcon from 'shared/components/h-icon'
-  import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
+  import { APPEARANCE, IS_30_HOURS_ENABLED, IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
-  // eslint-disable-next-line max-len
-  const { workflows: { toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings, toggleIs30HoursEnabled }, bgInitError } = browser.extension.getBackgroundPage()
+  const {
+    bgInitError, workflows: {
+      toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings, toggleIs30HoursEnabled,
+      setAppearance,
+    },
+  } = browser.extension.getBackgroundPage()
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
 
@@ -135,6 +150,9 @@
       locales() {
         return Object.keys(this.$root.$i18n.messages)
       },
+      appearances() {
+        return ['device', 'light', 'dark']
+      },
       popupLogo() {
         return browser.runtime.getURL('assets/popup_logo.svg')
       },
@@ -154,6 +172,7 @@
         locale: LOCALE,
         shouldSyncSettings: SHOULD_SYNC_SETTINGS,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
+        appearance: APPEARANCE,
       }),
     },
     mounted() {
@@ -231,6 +250,9 @@
       },
       onChangeShouldSyncSettings() {
         return toggleShouldSyncSettings()
+      },
+      onChangeAppearance(event) {
+        return setAppearance(event.target.value)
       },
       onChangeLocale(event) {
         return setLocale(event.target.value)

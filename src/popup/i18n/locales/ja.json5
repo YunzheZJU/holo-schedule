@@ -52,7 +52,7 @@
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "TODO:Follow device",
+          device: "端末の設定に従う",
           // Default light theme which is designed for daily use
           light: "TODO:Default light",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use

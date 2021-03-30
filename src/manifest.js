@@ -22,7 +22,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     page: 'src/background.html',
   },
   browser_action: {
-    [isChrome ? 'chrome_style' : 'browser_style']: true,
+    [isChrome ? 'chrome_style' : 'browser_style']: false,
     default_title: '__MSG_browserActionTitle__',
     default_icon: {
       16: 'icons/icon@16.png',
@@ -31,7 +31,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     default_popup: 'src/popup.html',
   },
   options_ui: {
-    [isChrome ? 'chrome_style' : 'browser_style']: true,
+    [isChrome ? 'chrome_style' : 'browser_style']: false,
     page: 'src/options.html',
     open_in_tab: true,
   },

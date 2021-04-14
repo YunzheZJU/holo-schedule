@@ -1,0 +1,47 @@
+{
+  // Component App
+  app: {
+    // Advanced settings
+    advancedSettings: {
+      // Label for advancedSettings
+      label: "Erweiterte Einstellungen",
+      // Prompt users to configure the list of members to subscribe
+      members: {
+        // Label for members
+        label: "Mitglieder",
+        // Description for members
+        description: "Wähle aus, welche Mitglieder du abonnieren willst"
+      }
+    },
+    // Each key in 'groups' is a group defined at https://www.hololive.tv/member and the according value is the localized name of it
+    groups: {
+      hololive: "Hololive",
+      holostars: "Holostars",
+      inonakaMusic: "INoNaKa MUSIC",
+      hololiveChina: "Hololive China",
+      hololiveIndonesia: "Hololive Indonesia",
+      hololiveEnglish: "Hololive English",
+      others: "Andere"
+    }
+  },
+  // Component MemberGroup
+  memberGroup: {
+    // Indicate that no member data can be found for this group
+    noData: "Keine Daten zum Mitglied gefunden",
+    // Help users to perform group operations when detected
+    selectHelper: {
+      // Prompt users to unsubscribe to all members in a group or not, with the question mark
+      mute: "Willst du diese Gruppe stumm schalten?",
+      // Prompt users to subscribe to all members in a group or not, with the question mark
+      subscribe: "Diese Gruppe abonnieren?",
+      // Indicate that the requested group operation has succeeded, with the period
+      success: "Aktion wurde durchgeführt.",
+      // Confirm the operation
+      yes: "Ja",
+      // Cancel the operation
+      no: "Nein",
+      // Undo the operation
+      undo: "Rückgängig machen."
+    }
+  }
+}

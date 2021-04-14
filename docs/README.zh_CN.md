@@ -8,7 +8,7 @@
 
 一枚扩展，掌握所有Hololive预约直播。突击也不在话下！
 
-[English](/README.md) [日本語](/docs/README.ja.md)
+[English](/README.md) [日本語](/docs/README.ja.md) [DE](/docs/README.de.md)
 
 ### 目次
 

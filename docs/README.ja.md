@@ -8,7 +8,7 @@
 
 ホロライブの配信スケジュールを表示するブラウザ拡張です。ゲリラ配信にも対応しています。
 
-[Eng](/README.md) [中文](/docs/README.zh_CN.md)
+[Eng](/README.md) [中文](/docs/README.zh_CN.md) [DE](/docs/README.de.md)
 
 ### 目次
 

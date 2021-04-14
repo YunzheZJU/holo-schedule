@@ -8,7 +8,7 @@
 
 One browser extension COVERs all scheduled and guerrilla livestreams.
 
-[日本語](/docs/README.ja.md) [中文](/docs/README.zh_CN.md)
+[日本語](/docs/README.ja.md) [中文](/docs/README.zh_CN.md) [DE](/docs/README.de.md)
 
 ### Table of contents
 

@@ -8,7 +8,7 @@
 
 Eine browser extension für alle Livestreams
 
-[中文](/docs/README.zh_CN.md) [日本語](/docs/README.ja.md) [Eng](/README.md)
+[Eng](/README.md) [中文](/docs/README.zh_CN.md) [日本語](/docs/README.ja.md)
 
 ### Inhaltsverzeichnis
 
@@ -22,11 +22,11 @@ oder
 
 ## Unterstützte Browser
 
-| Browser                   | Support Level                                                                                      |
-| ------------------------- | -------------------------------------------------------------------------------------------------- |
-| Firefox (>=57.0)          | *Officially Supported* v57 is the minimum version required to support Firefox's modern add-on.     |
-| Chrome (>=57.0)           | *Officially Supported* v57 is the minimum version required to support CSS Grid layout.             |
-| Opera / Edge (>=79.0.309) | *Unofficially Supported* as a Chrome-compatible target.                                            |
+| Browser                   | Support Level                                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------------------------- |
+| Firefox (>=57.0)          | *Offiziell Unterstützt* v57 ist die mindeste Version von Firefox um moderne Erweiterungen zu nutzen |
+| Chrome (>=57.0)           | *Offiziell Unterstützt* v57 ist die mindeste Version von Chrome um CSS Grid Layout zu nutzen        |
+| Opera / Edge (>=79.0.309) | *Unoffiziell Unterstützt* als ein Chrome kompatibles Ziel.                                          |
 
 **Die letzten 3 Firefox und Chrome Versionen** sind zu empfehlen, um alle Funktionen von holo-schedule zu geniessen.
 

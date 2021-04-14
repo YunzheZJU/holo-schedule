@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import 'dayjs/locale/de'
 import 'dayjs/locale/ja'
 import 'dayjs/locale/zh-cn'
 import { LOCALE } from 'shared/store/keys'

@@ -41,7 +41,7 @@
           en: "English",
           ja: "日本語",
           "zh-CN": "简体中文",
-		      de: "Deutsch"
+		  de: "Deutsch"
         }
       },
       // Prompt users to switch the appearance
@@ -123,8 +123,8 @@
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
       sameDay: "[Heute]",
-      lastDay: "MMM Do, [Gestern]",
-      lastWeek: "MMM Do, dddd",
+      lastDay: "MMM Do [Gestern]",
+      lastWeek: "MMM Do dddd",
       sameElse: "MMM Do"
     }
   },

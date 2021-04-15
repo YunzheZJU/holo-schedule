@@ -41,7 +41,7 @@
       // Cancel the operation
       no: "Nein",
       // Undo the operation
-      undo: "Rückgängig machen."
+      undo: "Rückgängig machen"
     }
   }
 }

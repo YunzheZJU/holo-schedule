@@ -214,6 +214,8 @@
       }
 
       .text {
+        // Set line-height of text to the height of the icon to avoid a layout jitter on hover
+        line-height: 16px;
         text-transform: uppercase;
       }
 

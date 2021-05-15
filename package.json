@@ -64,7 +64,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "dayjs": "npm:@yunzhe35p/dayjs",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.1",
     "vue-i18n": "^8.19.0",

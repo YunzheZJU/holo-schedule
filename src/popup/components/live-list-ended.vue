@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="lives.length" ref="root" class="list">
+  <ul v-if="lives.length" class="list">
     <template v-for="(live, index) in lives">
       <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)"
            :key="`anchor-${live['id']}`"

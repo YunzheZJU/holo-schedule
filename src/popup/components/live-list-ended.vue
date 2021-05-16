@@ -67,6 +67,8 @@
       const newScrollTop = this.savedScrollTop + scrollHeightDiff
 
       if (isFirstRun) {
+        // On the first render of LiveListEnded, the other live lists have not been yet rendered.
+        // 540 - 2 * 40 pre-calculates the space in the scroll container and is added to the diff.
         setTimeout(() => {
           this.parentElement.scrollTop = newScrollTop + 540 - 2 * 40
         }, 0)

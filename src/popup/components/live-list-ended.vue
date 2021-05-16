@@ -56,17 +56,33 @@
       this.savedScrollTop = this.parentElement.scrollTop
     },
     updated() {
-      const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
+      if (!this.$SKIP_THE_FIRST_RUN) {
+        this.$SKIP_THE_FIRST_RUN = true
+        const offset = this.savedScrollHeight - 80
+        const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
 
-      if (scrollHeightDiff === 0) {
-        return
+        if (scrollHeightDiff === 0) {
+          return
+        }
+
+        const newScrollTop = this.savedScrollTop + scrollHeightDiff + offset
+        setTimeout(() => {
+          this.parentElement.scrollTop = newScrollTop
+          console.log('setTimeout', newScrollTop)
+        }, 0)
+      } else {
+        const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
+
+        if (scrollHeightDiff === 0) {
+          return
+        }
+
+        const newScrollTop = this.savedScrollTop + scrollHeightDiff
+        this.parentElement.scrollTop = newScrollTop
+        setTimeout(() => {
+          this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
+        }, 0)
       }
-
-      const newScrollTop = this.savedScrollTop + scrollHeightDiff
-      this.parentElement.scrollTop = newScrollTop
-      setTimeout(() => {
-        this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
-      }, 0)
     },
     methods: {
       async load() {

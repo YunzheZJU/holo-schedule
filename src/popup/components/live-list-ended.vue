@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="lives.length" ref="root" class="list">
+  <ul v-if="lives.length" class="list">
     <template v-for="(live, index) in lives">
       <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)"
            :key="`anchor-${live['id']}`"
@@ -56,6 +56,8 @@
       this.savedScrollTop = this.parentElement.scrollTop
     },
     updated() {
+      const isFirstRun = !this.$SKIP_THE_FIRST_RUN
+      this.$SKIP_THE_FIRST_RUN = true
       const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
 
       if (scrollHeightDiff === 0) {
@@ -63,10 +65,19 @@
       }
 
       const newScrollTop = this.savedScrollTop + scrollHeightDiff
-      this.parentElement.scrollTop = newScrollTop
-      setTimeout(() => {
-        this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
-      }, 0)
+
+      if (isFirstRun) {
+        // On the first render of LiveListEnded, the other live lists have not been yet rendered.
+        // 540 - 2 * 40 pre-calculates the space in the scroll container and is added to the diff.
+        setTimeout(() => {
+          this.parentElement.scrollTop = newScrollTop + 540 - 2 * 40
+        }, 0)
+      } else {
+        this.parentElement.scrollTop = newScrollTop
+        setTimeout(() => {
+          this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
+        }, 0)
+      }
     },
     methods: {
       async load() {

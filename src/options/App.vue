@@ -77,7 +77,7 @@
           {
             name: this.$t('app.groups.others'),
             // Dummy ids are specified here to be compatible to new members
-            memberIds: [62, range(63, 73)],
+            memberIds: [62, ...range(63, 73)],
           },
         ]
       },

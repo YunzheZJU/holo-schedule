@@ -17,6 +17,8 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     'alarms',
     'notifications',
     'storage',
+    '<all_urls>',
+    // '*://img.youtube.com/*',
   ],
   background: {
     page: 'src/background.html',

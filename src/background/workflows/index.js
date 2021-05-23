@@ -224,6 +224,25 @@ const setAppearance = appearance => store.set(
   { local: true },
 )
 
+function toDataURL(src, callback, outputFormat, onerror = console.error) {
+  const img = new Image()
+  img.onerror = onerror
+  img.onload = () => {
+    const canvas = document.createElement('CANVAS')
+    const ctx = canvas.getContext('2d')
+    canvas.height = img.naturalHeight
+    canvas.width = img.naturalWidth
+    ctx.drawImage(img, 0, 0)
+    const dataURL = canvas.toDataURL(outputFormat)
+    callback(dataURL)
+  }
+  img.src = src
+  if (img.complete || img.complete === undefined) {
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='
+    img.src = src
+  }
+}
+
 export default {
   filterByTitle,
   filterBySubscription,
@@ -252,4 +271,5 @@ export default {
   updateSubscriptionByMember,
   toggleIs30HoursEnabled,
   setAppearance,
+  toDataURL,
 }

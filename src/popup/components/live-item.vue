@@ -2,8 +2,8 @@
   <li ref="item">
     <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail">
-        <!-- TODO: Default image -->
-        <img class="cover" loading="lazy" :src="live['cover']" :alt="live['title']">
+        <img class="cover" :src="defaultThumbnail" alt="Default thumbnail">
+        <LazyImage class="cover" :src="live['cover']" :alt="live['title']" />
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
                 type="button"
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+  import LazyImage from 'components/lazy-image'
   import dayjs from 'dayjs'
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
@@ -68,7 +69,7 @@
 
   export default {
     name: 'LiveItem',
-    components: { HIcon },
+    components: { LazyImage, HIcon },
     props: {
       type: {
         type: String,
@@ -88,6 +89,9 @@
       }
     },
     computed: {
+      defaultThumbnail() {
+        return browser.runtime.getURL('assets/default_thumbnail.png')
+      },
       defaultAvatar() {
         return browser.runtime.getURL('assets/default_avatar.png')
       },
@@ -171,6 +175,8 @@
 
   .thumbnail {
     position: relative;
+    display: grid;
+    grid: "thumbnail";
     grid-row-start: 1;
     grid-row-end: 4;
     align-self: start;
@@ -179,6 +185,7 @@
     transition: opacity .2s ease-in-out;
 
     .cover {
+      grid-area: thumbnail;
       object-fit: cover;
       width: 100%;
       height: 100%;

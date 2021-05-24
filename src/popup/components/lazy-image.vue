@@ -1,11 +1,5 @@
 <template>
-  <!--suppress RequiredAttributes -->
-  <img ref="image"
-       :class="['lazy-image', {loaded}]"
-       :data-src="src"
-       :alt="alt"
-       @load="handleImgLoad"
-  >
+  <img ref="image" class="lazy-image" :src="transparent" :data-src="src" :alt="alt">
 </template>
 
 <script>
@@ -13,14 +7,24 @@
 
   const ratioThreshold = 0.01
 
+  const transparent = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+
   const onIntersectionChange = entries => {
-    entries.forEach(({ intersectionRatio: ratio, target }) => {
+    entries.forEach(({ intersectionRatio: ratio, target, target: { style, dataset: { src } } }) => {
       if (ratio >= ratioThreshold) {
-        // This delays the sync load of image on popup page's startup to avoid Chrome's hanging
-        setTimeout(() => {
+        const image = new Image()
+        image.onload = () => {
           // eslint-disable-next-line no-param-reassign
-          target.src = target.dataset.src
-        }, 0)
+          style.backgroundImage = `url("${src}")`
+        }
+        // The sync load of image on popup page's startup is delayed to avoid Chrome's hanging
+        setTimeout(() => {
+          image.src = src
+          if (image.complete || image.complete === undefined) {
+            image.src = transparent
+            image.src = src
+          }
+        }, 50)
         observer.unobserve(target)
       }
     })
@@ -31,17 +35,21 @@
     props: {
       src: {
         type: String,
-        default: '',
+        required: true,
       },
       alt: {
         type: String,
         default: '',
       },
+      fallbackSrc: {
+        type: String,
+        default: '',
+      },
     },
-    data() {
-      return {
-        loaded: false,
-      }
+    computed: {
+      transparent() {
+        return transparent
+      },
     },
     mounted() {
       observer = observer || new IntersectionObserver(
@@ -52,21 +60,14 @@
         },
       )
       observer.observe(this.$refs.image)
-    },
-    methods: {
-      handleImgLoad() {
-        this.loaded = true
-      },
+      this.$refs.image.style.backgroundImage = `url("${this.fallbackSrc}")`
     },
   }
 </script>
 
 <style lang="less" scoped>
   .lazy-image {
-    transition: opacity .2s ease-in;
-
-    &:not(.loaded) {
-      opacity: 0;
-    }
+    background-size: cover;
+    transition: background .2s ease-in;
   }
 </style>

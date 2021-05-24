@@ -2,8 +2,11 @@
   <li ref="item">
     <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail">
-        <img class="cover" :src="defaultThumbnail" alt="Default thumbnail">
-        <LazyImage class="cover" :src="live['cover']" :alt="live['title']" />
+        <LazyImage class="cover"
+                   :src="live['cover']"
+                   :alt="live['title']"
+                   :fallback-src="defaultThumbnail"
+        />
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
                 type="button"
@@ -18,12 +21,11 @@
         </button>
       </div>
       <div class="header">
-        <img class="avatar"
-             alt=""
-             loading="lazy"
-             :src="member['avatar'] || defaultAvatar"
-             :style="{color: member['color_main']}"
-        >
+        <LazyImage class="avatar"
+                   :src="member['avatar']"
+                   :fallback-src="defaultAvatar"
+                   :style="{color: member['color_main']}"
+        />
         <div class="member" :title="member['name']">{{ member['name'] }}</div>
         <div class="separator" />
         <div class="platform">{{ live['platform'] }}</div>
@@ -175,8 +177,6 @@
 
   .thumbnail {
     position: relative;
-    display: grid;
-    grid: "thumbnail";
     grid-row-start: 1;
     grid-row-end: 4;
     align-self: start;
@@ -185,8 +185,6 @@
     transition: opacity .2s ease-in-out;
 
     .cover {
-      grid-area: thumbnail;
-      object-fit: cover;
       width: 100%;
       height: 100%;
     }
@@ -245,7 +243,6 @@
     font-size: 14px;
 
     .avatar {
-      object-fit: cover;
       width: 24px;
       height: 24px;
       border: 1px solid;

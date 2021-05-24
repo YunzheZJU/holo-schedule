@@ -9,22 +9,19 @@
 </template>
 
 <script>
-  import browser from 'webextension-polyfill'
-
   let observer
 
   const ratioThreshold = 0.01
 
-  const { workflows: { toDataURL } } = browser.extension.getBackgroundPage()
-
   const onIntersectionChange = entries => {
     entries.forEach(({ intersectionRatio: ratio, target }) => {
       if (ratio >= ratioThreshold) {
-        toDataURL(target.dataset.src, dataURL => {
+        // This delays the sync load of image on popup page's startup to avoid Chrome's hanging
+        setTimeout(() => {
           // eslint-disable-next-line no-param-reassign
-          target.src = dataURL
-          observer.unobserve(target)
-        }, 'png')
+          target.src = target.dataset.src
+        }, 0)
+        observer.unobserve(target)
       }
     })
   }
@@ -50,7 +47,7 @@
       observer = observer || new IntersectionObserver(
         onIntersectionChange, {
           root: document.querySelector('.app .body .main .scroll'),
-          rootMargin: '400px 0px',
+          rootMargin: '500px 0px',
           threshold: ratioThreshold,
         },
       )

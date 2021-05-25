@@ -67,6 +67,7 @@
 
 <style lang="less" scoped>
   .lazy-image {
+    background-position: center;
     background-size: cover;
     transition: background .2s ease-in;
   }

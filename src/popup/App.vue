@@ -192,9 +192,7 @@
       intersectionObserver.observe(this.$refs.loading)
     },
     methods: {
-      async onIntersectionChange(entries) {
-        const ratio = entries[0].intersectionRatio
-
+      async onIntersectionChange([{ intersectionRatio: ratio }]) {
         if (ratio >= ratioThreshold.high) {
           clearInterval(this.interval)
 

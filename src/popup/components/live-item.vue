@@ -7,6 +7,9 @@
                    :alt="live['title']"
                    :fallback-src="defaultThumbnail"
         />
+        <div v-if="type === 'ended'" class="hotness">
+          <!--TODO: Generate graphs-->
+        </div>
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
                 type="button"
@@ -176,17 +179,58 @@
   }
 
   .thumbnail {
+    --duration: 0.2s;
     position: relative;
     grid-row-start: 1;
     grid-row-end: 4;
     align-self: start;
     overflow: hidden;
     height: 90px;
-    transition: opacity .2s ease-in-out;
+    transition: opacity var(--duration) ease-in-out;
 
     .cover {
       width: 100%;
       height: 100%;
+    }
+
+    .hotness {
+      --height: 45px;
+    @property --height2 {
+      initial-value: var(--height);
+      inherits: false;
+      syntax: '<length>';
+    } @property --expandProgress {
+      initial-value: 0%;
+      inherits: false;
+      syntax: '<percentage>';
+    } position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: var(--height2, 0);
+      background: linear-gradient(to top, #000, #0000 var(--expandProgress, 100%));
+      transition: height var(--duration) ease-out;
+      animation: collapse var(--duration) 0s 1 ease-out forwards;
+
+      @keyframes expand {
+        from {
+          --expandProgress: 0%;
+        }
+
+        to {
+          --expandProgress: 100%;
+        }
+      }
+
+      @keyframes collapse {
+        from {
+          --expandProgress: 100%;
+        }
+
+        to {
+          --expandProgress: 0%;
+        }
+      }
     }
 
     .badge, .remind {
@@ -198,6 +242,23 @@
       background: rgba(0, 0, 0, 0.8);
       color: var(--color-text-white);
       font-size: 12px;
+    }
+
+    .badge {
+      transition: bottom var(--duration) ease-out;
+    }
+
+    &:hover {
+      --duration: 0.15s;
+
+      .hotness {
+        height: var(--height2, var(--height));
+        animation-name: expand;
+      }
+
+      .badge {
+        bottom: 68px;
+      }
     }
 
     .remind {

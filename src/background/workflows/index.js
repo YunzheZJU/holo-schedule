@@ -1,19 +1,30 @@
 import dayjs from 'dayjs'
 import {
+  at,
   differenceBy,
   filter,
   findLastIndex,
+  groupBy,
+  keyBy,
+  mapValues,
   partition,
   range,
   reverse,
   uniqBy,
 } from 'lodash'
-import { getChannels, getEndedLives, getMembers, getOpenLives } from 'requests'
+import {
+  getChannels,
+  getOpenLives,
+  getEndedLives,
+  getHotnessesOfLives,
+  getMembers,
+} from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
+  HOTNESSES,
   IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
@@ -24,8 +35,10 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
+import { getUnix, getUnixAfterDays, getUnixBeforeDays, normalize } from 'utils'
 import browser from 'webextension-polyfill'
+
+const { min, max, floor } = Math
 
 const filterByTitle = lives => filter(
   lives,
@@ -61,7 +74,7 @@ const getCachedEndedLives = () => store.get(ENDED_LIVES)
 
 const syncEndedLives = async () => {
   const cashedLives = getCachedEndedLives() ?? []
-  const startBefore = cashedLives.length ? Math.min(
+  const startBefore = cashedLives.length ? min(
     ...cashedLives.map(({ start_at: startAt }) => getUnix(startAt)),
   ) + 1 : getUnix()
 
@@ -117,6 +130,33 @@ const syncOpenLives = async () => {
   })
 
   return [...currentLives, ...scheduledLives]
+}
+
+const SAMPLES_COUNT = 61
+const syncHotnessesOfLives = async lives => {
+  const startAtByLiveId = mapValues(keyBy(lives, 'id'), live => dayjs(live['start_at']))
+
+  const hotnessesByLiveId = mapValues(
+    groupBy(await getHotnessesOfLives(lives, { limit: 1000 }), 'live_id'),
+    (hotnesses, liveId) => normalize(normalize(at(
+      hotnesses, range(
+        hotnesses.length * 0.08, hotnesses.length, max(1, hotnesses.length / SAMPLES_COUNT),
+      ).map(floor),
+    ).map(({ created_at: createdAt, like, watching }, index, records) => ({
+      timestamp: dayjs(createdAt).diff(startAtByLiveId[liveId], 'second'),
+      likeDelta: max((like ?? 0) - (records[max(index - 1, 0)]['like'] ?? 0), 0),
+      watching,
+    })), 'timestamp', 'likeDelta', 'watching').map(
+      ({ timestamp, likeDelta, watching }) => ({
+        timestamp,
+        hotness: likeDelta * watching,
+      }),
+    ), 'hotness').map(({ timestamp, hotness }) => [timestamp, hotness ** 0.33]),
+  )
+
+  // console.log({ hotnessesByLiveId, cachedHotnesses })
+
+  await store.set({ [HOTNESSES]: { ...store.get(HOTNESSES), ...hotnessesByLiveId } })
 }
 
 const getCachedChannels = () => store.get(CHANNELS)
@@ -221,6 +261,7 @@ export default {
   clearCachedEndedLives,
   getCachedScheduledLives,
   syncOpenLives,
+  syncHotnessesOfLives,
   getCachedChannels,
   syncChannels,
   getCachedMembers,

@@ -7,8 +7,17 @@
                    :alt="live['title']"
                    :fallback-src="defaultThumbnail"
         />
-        <div v-if="type === 'ended'" class="hotness">
-          <!--TODO: Generate graphs-->
+        <div v-if="type === 'ended'" class="hotness" :style="{'--pth': `url(#clip-${live['id']})`}">
+          <svg width="0" height="0">
+            <defs>
+              <clipPath :id="`clip-${live['id']}`" clipPathUnits="objectBoundingBox">
+                <path :d="`M0 1 ${hotnessByTimeEntries.map(
+                  ([ timeRatio, hotness ]) => [timeRatio, 0.9 * (1 - hotness)],
+                ).flat().join(' ')} 1 1Z`"
+                />
+              </clipPath>
+            </defs>
+          </svg>
         </div>
         <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
@@ -59,7 +68,7 @@
   import calendar from 'dayjs/plugin/calendar'
   import relativeTime from 'dayjs/plugin/relativeTime'
   import HIcon from 'shared/components/h-icon'
-  import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
+  import { HOTNESSES, IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
   import { formatDurationFromSeconds } from 'utils'
   import { liveTypeValidator } from 'validators'
@@ -103,6 +112,9 @@
       member() {
         return getMember(this.live)
       },
+      hotnessByTimeEntries() {
+        return this.hotnesses[this.live.id] ?? []
+      },
       roomURL() {
         return constructRoomUrl(this.live) ?? '#'
       },
@@ -137,6 +149,7 @@
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
+        hotnesses: HOTNESSES,
       }),
     },
     methods: {
@@ -230,6 +243,17 @@
         to {
           --expandProgress: 0%;
         }
+      }
+
+      &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: -1px;
+        left: 0;
+        height: 66%;
+        background: linear-gradient(to top, #8888, #dddd);
+        clip-path: var(--pth);
       }
     }
 

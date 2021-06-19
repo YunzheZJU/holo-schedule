@@ -29,11 +29,12 @@ const fetchData = async (...args) => {
   return gatherResponse(response)
 }
 
-async function* pagedItemsFetcher(endpoint, params = {}) {
+async function* pagedItemsFetcher(endpoint, params = {}, paramEntries = []) {
   const safeParams = mapKeys(params, (_, key) => snakeCase(key))
   const { limit = 50 } = safeParams
 
   const searchParams = new URLSearchParams({ limit, ...safeParams })
+  paramEntries.forEach(entry => searchParams.append(...entry))
 
   let page = 0
   let shouldContinue = true

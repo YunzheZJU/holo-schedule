@@ -73,6 +73,10 @@ const getEndedLives = async params => {
 
 const getOpenLives = params => gatherPagedItems('lives/open', params)
 
+const getHotnessesOfLives = (lives, params) => (lives.length
+  ? gatherPagedItems('hotnesses', params, lives.map(({ id }) => ['lives[]', id]))
+  : {})
+
 const getChannels = () => gatherPagedItems('channels', { limit: 100 })
 
 const getMembers = () => fetchData(`${TARGET}api/v1/members`)
@@ -80,6 +84,7 @@ const getMembers = () => fetchData(`${TARGET}api/v1/members`)
 export {
   getEndedLives,
   getOpenLives,
+  getHotnessesOfLives,
   getChannels,
   getMembers,
   onSuccessRequest,

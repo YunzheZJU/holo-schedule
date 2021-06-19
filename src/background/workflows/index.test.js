@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import { reverse, uniqBy } from 'lodash'
 import {
   getChannels,
   getCurrentLives,
@@ -138,7 +137,7 @@ test('should sync ended lives', async () => {
     { id: 10, start_at: dayjs().subtract(3, 'hour').toISOString() },
     { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString() },
   ]
-  const returnValueExpectedOne = reverse([...endedLivesOne])
+  const returnValueExpectedOne = [endedLivesOne[1], endedLivesOne[0]]
 
   getEndedLives.mockResolvedValueOnce(endedLivesOne)
 
@@ -157,7 +156,7 @@ test('should sync ended lives', async () => {
     { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString() },
     { id: 8, start_at: dayjs().subtract(5, 'hour').toISOString() },
   ]
-  const returnValueExpectedTwo = uniqBy([...reverse([...endedLivesTwo]), ...returnValueExpectedOne], 'id')
+  const returnValueExpectedTwo = [endedLivesTwo[1], ...returnValueExpectedOne]
 
   getEndedLives.mockResolvedValueOnce(endedLivesTwo)
 

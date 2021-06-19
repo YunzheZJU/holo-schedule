@@ -77,7 +77,7 @@ const syncEndedLives = async () => {
   }))
 
   await store.set({
-    [ENDED_LIVES]: uniqBy([...reverse(lives), ...cashedLives], 'id'),
+    [ENDED_LIVES]: reverse(uniqBy([...reverse(cashedLives), ...lives], 'id')),
   })
 
   return getCachedEndedLives()

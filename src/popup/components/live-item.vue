@@ -1,25 +1,91 @@
 <template>
   <li ref="item">
     <a class="item" :href="roomURL" target="_blank">
-      <div class="thumbnail">
+      <div class="thumbnail" :class="{hotnessAvailable: !!hotnessByTimeEntries.length}">
         <LazyImage class="cover"
                    :src="live['cover']"
                    :alt="live['title']"
                    :fallback-src="defaultThumbnail"
         />
-        <div v-if="type === 'ended'" class="hotness" :style="{'--pth': `url(#clip-${live['id']})`}">
-          <svg width="0" height="0">
+        <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
+        <div v-if="type === 'ended'" class="hotness">
+          <svg :id="`svg_${live['id']}`" viewBox="0 0 1 0.16" preserveAspectRatio="none">
             <defs>
-              <clipPath :id="`clip-${live['id']}`" clipPathUnits="objectBoundingBox">
-                <path :d="`M0 1 ${hotnessByTimeEntries.map(
-                  ([ timeRatio, hotness ]) => [timeRatio, 0.9 * (1 - hotness)],
-                ).flat().join(' ')} 1 1Z`"
-                />
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="50%" style="stop-color:hsl(157, 72%, 65%)" />
+                <stop offset="100%" style="stop-color:hsl(178, 63%, 55%)" />
+              </linearGradient>
+              <clipPath :id="`clip_outer_${live['id']}`" clipPathUnits="objectBoundingBox">
+                <path d="M0 0 0 0 0 1 0 1">
+                  <animate attributeName="d"
+                           to="M0 0 1 0 1 1 0 1"
+                           :begin="`svg_${live['id']}.mouseenter + 0.4s`"
+                           dur="0.2s"
+                           fill="freeze"
+                  />
+                  <animate attributeName="d"
+                           to="M0 0 0 0 0 1 0 1"
+                           :begin="`svg_${live['id']}.mouseleave + 0.1s`"
+                           dur="0.2s"
+                           fill="freeze"
+                  />
+                </path>
+              </clipPath>
+              <clipPath :id="`clip_inner_${live['id']}`" clipPathUnits="objectBoundingBox">
+                <polygon :points="points" />
               </clipPath>
             </defs>
+            <g transform="scale(1, 1)" style="transform-origin: bottom">
+              <animateTransform attributeName="transform"
+                                type="scale"
+                                to="1, 2"
+                                :begin="`rect_${live['id']}.mouseenter`"
+                                dur="0.2s"
+                                fill="freeze"
+              />
+              <animateTransform attributeName="transform"
+                                type="scale"
+                                to="1, 1"
+                                :begin="`rect_${live['id']}.mouseleave`"
+                                dur="0.2s"
+                                fill="freeze"
+              />
+              <g :clip-path="`url(#clip_outer_${live['id']})`">
+                <g :clip-path="`url(#clip_inner_${live['id']})`">
+                  <rect x="0" y="0.08" width="1" height="0.08" fill="url(#gradient)" />
+                  <rect :x="highlight"
+                        y="0.08"
+                        width="0.00625"
+                        height="0.08"
+                        fill="white"
+                        opacity="0"
+                  >
+                    <animate attributeName="opacity"
+                             to="1"
+                             :begin="`rect_${live['id']}.mouseenter`"
+                             dur="0.1s"
+                             fill="freeze"
+                    />
+                    <animate attributeName="opacity"
+                             to="0"
+                             :begin="`rect_${live['id']}.mouseleave`"
+                             dur="0.1s"
+                             fill="freeze"
+                    />
+                  </rect>
+                </g>
+              </g>
+              <rect :id="`rect_${live['id']}`"
+                    x="0"
+                    y="0.08"
+                    width="1"
+                    height="0.08"
+                    fill="transparent"
+                    @mousemove="handleMousemove"
+              />
+            </g>
           </svg>
         </div>
-        <div v-if="type === 'ended'" class="badge">{{ duration }}</div>
         <button v-if="type === 'scheduled' && isNtfEnabled"
                 type="button"
                 :class="['remind', {active: isScheduled}]"
@@ -100,6 +166,7 @@
     data() {
       return {
         alarmCacheFlag: Date.now(),
+        highlight: null,
       }
     },
     computed: {
@@ -113,12 +180,18 @@
         return getMember(this.live)
       },
       hotnessByTimeEntries() {
-        return this.hotnesses[this.live.id] ?? []
+        return this.hotnesses[this.live['id']] ?? []
+      },
+      points() {
+        return this.hotnessByTimeEntries.map(
+          ([timeRatio, hotness]) => [timeRatio, (1 - hotness) * 0.84],
+        ).concat(1, 1, 0, 1).flat().join(' ')
       },
       roomURL() {
         return constructRoomUrl(this.live) ?? '#'
       },
       duration() {
+        // TODO: Prefer this.highlight
         return formatDurationFromSeconds(this.live['duration'])
       },
       startAt() {
@@ -164,6 +237,9 @@
         }
         this.alarmCacheFlag = Date.now()
       },
+      handleMousemove({ offsetX }) {
+        this.highlight = offsetX / 160
+      },
     },
   }
 </script>
@@ -192,68 +268,38 @@
   }
 
   .thumbnail {
-    --duration: 0.2s;
     position: relative;
     grid-row-start: 1;
     grid-row-end: 4;
     align-self: start;
     overflow: hidden;
     height: 90px;
-    transition: opacity var(--duration) ease-in-out;
+    transition: opacity 0.2s ease-in-out;
 
     .cover {
       width: 100%;
       height: 100%;
+      transition: transform 0.3s ease-out, box-shadow 0.2s ease-in;
     }
 
     .hotness {
-      --height: 45px;
-    @property --height2 {
-      initial-value: var(--height);
-      inherits: false;
-      syntax: '<length>';
-    } @property --expandProgress {
-      initial-value: 0%;
-      inherits: false;
-      syntax: '<percentage>';
-    } position: absolute;
+      position: absolute;
+      top: 0;
       right: 0;
       bottom: 0;
       left: 0;
-      height: var(--height2, 0);
-      background: linear-gradient(to top, #000, #0000 var(--expandProgress, 100%));
-      transition: height var(--duration) ease-out;
-      animation: collapse var(--duration) 0s 1 ease-out forwards;
+      outline: 0 solid hsl(157, 72%, 65%);
+      outline-offset: 0;
+      transition: all 0.1s ease-in;
 
-      @keyframes expand {
-        from {
-          --expandProgress: 0%;
-        }
-
-        to {
-          --expandProgress: 100%;
-        }
-      }
-
-      @keyframes collapse {
-        from {
-          --expandProgress: 100%;
-        }
-
-        to {
-          --expandProgress: 0%;
-        }
-      }
-
-      &:before {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: -1px;
-        left: 0;
-        height: 66%;
-        background: linear-gradient(to top, #8888, #dddd);
-        clip-path: var(--pth);
+      svg {
+        --height: 50px;
+        position: relative;
+        box-sizing: content-box;
+        width: 100%;
+        height: var(--height);
+        border-top: 90px solid transparent;
+        transition: border-top-width 0.3s;
       }
     }
 
@@ -268,20 +314,52 @@
       font-size: 12px;
     }
 
-    .badge {
-      transition: bottom var(--duration) ease-out;
+    &:hover .cover {
+      transform: scale(1.05);
     }
 
-    &:hover {
-      --duration: 0.15s;
+    &.hotnessAvailable:hover {
+      .cover {
+        box-shadow: inset 0 0 15px 7px #0006;
+        transition: transform 0.3s ease-out, box-shadow 0.4s ease-in;
+      }
 
       .hotness {
-        height: var(--height2, var(--height));
-        animation-name: expand;
+        outline-width: 4px;
+        outline-offset: -4px;
+        filter: drop-shadow(0px 0px 5px black);
+        transition: all 0.1s 0.4s ease-in;
+
+        svg {
+          border-top-width: calc(90px - var(--height));
+          transition: border-top-width 0s 0.4s;
+        }
       }
 
       .badge {
-        bottom: 68px;
+        animation: badge-out 0.3s 0.1s ease-out, badge-in 0.2s 0.4s ease-in forwards;
+
+        @keyframes badge-out {
+          to {
+            bottom: 4px;
+            opacity: 0;
+            transform: translate(15%, 25%);
+          }
+        }
+        @keyframes badge-in {
+          from {
+            top: 4px;
+            bottom: unset;
+            opacity: 0;
+            transform: translate(15%, -25%);
+          }
+          to {
+            top: 4px;
+            bottom: unset;
+            opacity: 1;
+            transform: translate(0, 0);
+          }
+        }
       }
     }
 

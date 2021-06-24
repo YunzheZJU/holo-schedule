@@ -1,5 +1,5 @@
-const constructRoomUrl = ({ platform, room }) => ({
-  youtube: `https://www.youtube.com/watch?v=${room}`,
+const constructRoomUrl = ({ platform, room, time }) => ({
+  youtube: `https://www.youtube.com/watch?v=${room}${time ? `&t=${time}` : ''}`,
   bilibili: `https://live.bilibili.com/${room}`,
   twitch: `https://www.twitch.tv/${room}`,
   twitcasting: `https://twitcasting.tv/${room}`,

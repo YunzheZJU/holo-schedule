@@ -1,16 +1,9 @@
-const constructRoomUrl = ({ platform, room }) => {
-  if (platform === 'youtube') {
-    return `https://www.youtube.com/watch?v=${room}`
-  }
-  if (platform === 'bilibili') {
-    return `https://live.bilibili.com/${room}`
-  }
-  if (platform === 'twitch') {
-    return `https://www.twitch.tv/${room}`
-  }
-
-  return undefined
-}
+const constructRoomUrl = ({ platform, room }) => ({
+  youtube: `https://www.youtube.com/watch?v=${room}`,
+  bilibili: `https://live.bilibili.com/${room}`,
+  twitch: `https://www.twitch.tv/${room}`,
+  twitcasting: `https://twitcasting.tv/${room}`,
+}[platform])
 
 // eslint-disable-next-line import/prefer-default-export
 export { constructRoomUrl }

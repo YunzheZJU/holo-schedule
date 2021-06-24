@@ -140,7 +140,7 @@ const syncHotnessesOfLives = async lives => {
     groupBy(await getHotnessesOfLives(lives, { limit: 1000 }), 'live_id'),
     (hotnesses, liveId) => normalize(normalize(at(
       hotnesses, range(
-        hotnesses.length * 0.08, hotnesses.length, max(1, hotnesses.length / SAMPLES_COUNT),
+        0, hotnesses.length - 0.1, max(1, hotnesses.length / SAMPLES_COUNT),
       ).map(floor),
     ).map(({ created_at: createdAt, like, watching }, index, records) => ({
       timestamp: dayjs(createdAt).diff(startAtByLiveId[liveId], 'second'),

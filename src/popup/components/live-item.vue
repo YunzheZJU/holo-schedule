@@ -82,6 +82,7 @@
                     height="0.08"
                     fill="transparent"
                     @mousemove="handleMousemove"
+                    @mouseout="handleMouseout"
               />
             </g>
           </svg>
@@ -133,6 +134,7 @@
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
   import relativeTime from 'dayjs/plugin/relativeTime'
+  import { floor, isNull, max, min } from 'lodash'
   import HIcon from 'shared/components/h-icon'
   import { HOTNESSES, IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
@@ -179,20 +181,31 @@
       member() {
         return getMember(this.live)
       },
+      roomURL() {
+        return constructRoomUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'
+      },
       hotnessByTimeEntries() {
         return this.hotnesses[this.live['id']] ?? []
       },
       points() {
         return this.hotnessByTimeEntries.map(
-          ([timeRatio, hotness]) => [timeRatio, (1 - hotness) * 0.84],
+          ([, [timeRatio, hotness]]) => [timeRatio, (1 - hotness ** 0.33) * 0.84],
         ).concat(1, 1, 0, 1).flat().join(' ')
       },
-      roomURL() {
-        return constructRoomUrl(this.live) ?? '#'
+      hotnessDuration() {
+        if (isNull(this.highlight)) {
+          return null
+        }
+
+        const createdAts = this.hotnessByTimeEntries.map(([createdAt]) => createdAt)
+        return floor(this.highlight * dayjs(max(createdAts)).diff(min(createdAts), 'second'))
+          + dayjs(min(createdAts)).diff(this.live['start_at'], 'second')
       },
       duration() {
-        // TODO: Prefer this.highlight
-        return formatDurationFromSeconds(this.live['duration'])
+        const lDur = formatDurationFromSeconds(this.live['duration'])
+        const hDur = formatDurationFromSeconds(this.hotnessDuration)
+
+        return this.hotnessDuration ? (lDur.slice(0, lDur.length - hDur.length).replace(/\d/g, '0') + hDur) : lDur
       },
       startAt() {
         return dayjs(this.live['start_at']).startHour(this.is30HoursEnabled ? 6 : 0)
@@ -239,6 +252,9 @@
       },
       handleMousemove({ offsetX }) {
         this.highlight = offsetX / 160
+      },
+      handleMouseout() {
+        this.highlight = null
       },
     },
   }

@@ -143,15 +143,17 @@ const syncHotnessesOfLives = async lives => {
         0, hotnesses.length - 0.1, max(1, hotnesses.length / SAMPLES_COUNT),
       ).map(floor),
     ).map(({ created_at: createdAt, like, watching }, index, records) => ({
+      createdAt,
       timestamp: dayjs(createdAt).diff(startAtByLiveId[liveId], 'second'),
       likeDelta: max((like ?? 0) - (records[max(index - 1, 0)]['like'] ?? 0), 0),
       watching,
     })), 'timestamp', 'likeDelta', 'watching').map(
-      ({ timestamp, likeDelta, watching }) => ({
-        timestamp,
-        hotness: likeDelta * watching,
+      ({ likeDelta, watching, ...fields }) => ({
+        hotness: likeDelta * watching, ...fields,
       }),
-    ), 'hotness').map(({ timestamp, hotness }) => [timestamp, hotness ** 0.33]),
+    ), 'hotness').map(
+      ({ timestamp, hotness, createdAt }) => [createdAt, [timestamp, hotness]],
+    ),
   )
 
   // console.log({ hotnessesByLiveId, cachedHotnesses })

@@ -1,12 +1,9 @@
 import dayjs from 'dayjs'
 import {
-  at,
   differenceBy,
   filter,
   findLastIndex,
   groupBy,
-  keyBy,
-  mapValues,
   partition,
   range,
   reverse,
@@ -24,7 +21,6 @@ import {
   CHANNELS,
   CURRENT_LIVES,
   ENDED_LIVES,
-  HOTNESSES,
   IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
@@ -35,10 +31,8 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import { getUnix, getUnixAfterDays, getUnixBeforeDays, normalize } from 'utils'
+import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
 import browser from 'webextension-polyfill'
-
-const { min, max, floor } = Math
 
 const filterByTitle = lives => filter(
   lives,
@@ -74,7 +68,7 @@ const getCachedEndedLives = () => store.get(ENDED_LIVES)
 
 const syncEndedLives = async () => {
   const cashedLives = getCachedEndedLives() ?? []
-  const startBefore = cashedLives.length ? min(
+  const startBefore = cashedLives.length ? Math.min(
     ...cashedLives.map(({ start_at: startAt }) => getUnix(startAt)),
   ) + 1 : getUnix()
 
@@ -132,33 +126,24 @@ const syncOpenLives = async () => {
   return [...currentLives, ...scheduledLives]
 }
 
-const SAMPLES_COUNT = 61
-const syncHotnessesOfLives = async lives => {
-  const startAtByLiveId = mapValues(keyBy(lives, 'id'), live => dayjs(live['start_at']))
+const syncHotnesses = async lives => {
+  if (lives.length === 0) {
+    return
+  }
 
-  const hotnessesByLiveId = mapValues(
-    groupBy(await getHotnessesOfLives(lives, { limit: 1000 }), 'live_id'),
-    (hotnesses, liveId) => normalize(normalize(at(
-      hotnesses, range(
-        0, hotnesses.length - 0.1, max(1, hotnesses.length / SAMPLES_COUNT),
-      ).map(floor),
-    ).map(({ created_at: createdAt, like, watching }, index, records) => ({
-      createdAt,
-      timestamp: dayjs(createdAt).diff(startAtByLiveId[liveId], 'second'),
-      likeDelta: max((like ?? 0) - (records[max(index - 1, 0)]['like'] ?? 0), 0),
-      watching,
-    })), 'timestamp', 'likeDelta', 'watching').map(
-      ({ likeDelta, watching, ...fields }) => ({
-        hotness: likeDelta * watching, ...fields,
-      }),
-    ), 'hotness').map(
-      ({ timestamp, hotness, createdAt }) => [createdAt, [timestamp, hotness]],
-    ),
-  )
+  const hotnessesByLiveId = groupBy(await getHotnessesOfLives(lives, { limit: 1000 }), 'live_id')
 
-  // console.log({ hotnessesByLiveId, cachedHotnesses })
+  console.log({ hotnessesByLiveId })
 
-  await store.set({ [HOTNESSES]: { ...store.get(HOTNESSES), ...hotnessesByLiveId } })
+  await store.set({
+    [ENDED_LIVES]: (getCachedEndedLives() ?? []).map(live => {
+      if (live['id'] in hotnessesByLiveId) {
+        return { ...live, hotnesses: hotnessesByLiveId[live['id']] }
+      }
+
+      return live
+    }),
+  })
 }
 
 const getCachedChannels = () => store.get(CHANNELS)
@@ -263,7 +248,7 @@ export default {
   clearCachedEndedLives,
   getCachedScheduledLives,
   syncOpenLives,
-  syncHotnessesOfLives,
+  syncHotnesses,
   getCachedChannels,
   syncChannels,
   getCachedMembers,

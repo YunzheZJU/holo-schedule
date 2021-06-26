@@ -1,7 +1,7 @@
 <template>
   <li ref="item">
     <a class="item" :href="roomURL" target="_blank">
-      <div class="thumbnail" :class="{hotnessAvailable: !!hotnessByTimeEntries.length}">
+      <div class="thumbnail" :data-hotnesses-size="hotnessSamples.length">
         <LazyImage class="cover"
                    :src="live['cover']"
                    :alt="live['title']"
@@ -136,9 +136,9 @@
   import relativeTime from 'dayjs/plugin/relativeTime'
   import { floor, isNull, max, min } from 'lodash'
   import HIcon from 'shared/components/h-icon'
-  import { HOTNESSES, IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
+  import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructRoomUrl } from 'shared/utils'
-  import { formatDurationFromSeconds } from 'utils'
+  import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
@@ -184,11 +184,11 @@
       roomURL() {
         return constructRoomUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'
       },
-      hotnessByTimeEntries() {
-        return this.hotnesses[this.live['id']] ?? []
+      hotnessSamples() {
+        return sampleHotnesses(this.live, 61)
       },
       points() {
-        return this.hotnessByTimeEntries.map(
+        return this.hotnessSamples.map(
           ([, [timeRatio, hotness]]) => [timeRatio, (1 - hotness ** 0.33) * 0.84],
         ).concat(1, 1, 0, 1).flat().join(' ')
       },
@@ -197,7 +197,7 @@
           return null
         }
 
-        const createdAts = this.hotnessByTimeEntries.map(([createdAt]) => createdAt)
+        const createdAts = this.hotnessSamples.map(([createdAt]) => createdAt)
         return floor(this.highlight * dayjs(max(createdAts)).diff(min(createdAts), 'second'))
           + dayjs(min(createdAts)).diff(this.live['start_at'], 'second')
       },
@@ -235,7 +235,6 @@
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
-        hotnesses: HOTNESSES,
       }),
     },
     methods: {
@@ -334,7 +333,7 @@
       transform: scale(1.05);
     }
 
-    &.hotnessAvailable:hover {
+    &:not([data-hotnesses-size="0"]):hover {
       .cover {
         box-shadow: inset 0 0 15px 7px #0006;
         transition: transform 0.3s ease-out, box-shadow 0.4s ease-in;

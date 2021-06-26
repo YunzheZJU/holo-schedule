@@ -1,6 +1,6 @@
 import alarm from 'alarm'
 import i18n from 'i18n'
-import { differenceBy } from 'lodash'
+import { differenceBy, reject } from 'lodash'
 import * as requests from 'requests'
 import { ENDED_LIVES } from 'shared/store/keys'
 import store from 'store'
@@ -44,8 +44,8 @@ const initOnce = async () => {
     lastSuccessRequestTime = timestamp
   })
 
-  store.subscribe(ENDED_LIVES, async (lives, prevLives) => workflows.syncHotnessesOfLives(
-    differenceBy(lives, prevLives, 'id'),
+  store.subscribe(ENDED_LIVES, async (lives, prevLives) => workflows.syncHotnesses(
+    reject(differenceBy(lives, prevLives, 'id'), 'hotnesses'),
   ))
 
   browser.alarms.onAlarm.addListener(handleAlarm)

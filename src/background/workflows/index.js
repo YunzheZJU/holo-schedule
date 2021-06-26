@@ -3,17 +3,12 @@ import {
   differenceBy,
   filter,
   findLastIndex,
+  partition,
   range,
   reverse,
   uniqBy,
 } from 'lodash'
-import {
-  getChannels,
-  getCurrentLives,
-  getEndedLives,
-  getMembers,
-  getScheduledLives,
-} from 'requests'
+import { getChannels, getEndedLives, getMembers, getOpenLives } from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
@@ -87,21 +82,25 @@ const clearCachedEndedLives = () => store.set({ [ENDED_LIVES]: [] })
 
 const getCachedCurrentLives = () => store.get(CURRENT_LIVES)
 
-const syncCurrentLives = async () => {
-  const lives = filterLives(await getCurrentLives())
+const getCachedScheduledLives = () => store.get(SCHEDULED_LIVES)
 
-  await browser.browserAction.setBadgeText({ text: lives.length.toString() })
+const syncOpenLives = async () => {
+  const [currentLives, scheduledLives] = partition(filterLives(await getOpenLives({
+    startBefore: getUnixAfterDays(7),
+  })), ({ start_at: startAt }) => dayjs().isAfter(startAt))
 
-  console.log(`[syncLives]Badge text has been set to ${lives.length}`)
+  await browser.browserAction.setBadgeText({ text: currentLives.length.toString() })
+
+  console.log(`[syncLives]Badge text has been set to ${currentLives.length}`)
 
   // Subscription is simplified cause here is the only mutation of currentLives
   const endedLives = getCachedEndedLives() ?? []
-  const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), lives, 'id').map(live => ({
-    ...live,
-    duration: dayjs().diff(dayjs(live['start_at']), 'second'),
-  }))
   // Skip if endedLives is empty
   if (endedLives.length > 0) {
+    const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), currentLives, 'id').map(live => ({
+      ...live,
+      duration: dayjs().diff(dayjs(live['start_at']), 'second'),
+    }))
     newEndedLives.forEach(live => {
       const index = findLastIndex(
         endedLives,
@@ -111,21 +110,13 @@ const syncCurrentLives = async () => {
     })
   }
 
-  await store.set({ [CURRENT_LIVES]: lives, [ENDED_LIVES]: endedLives })
+  await store.set({
+    [CURRENT_LIVES]: currentLives,
+    [SCHEDULED_LIVES]: scheduledLives,
+    [ENDED_LIVES]: endedLives,
+  })
 
-  return getCachedCurrentLives()
-}
-
-const getCachedScheduledLives = () => store.get(SCHEDULED_LIVES)
-
-const syncScheduledLives = async () => {
-  const lives = filterLives(await getScheduledLives({
-    startBefore: getUnixAfterDays(7),
-  }))
-
-  await store.set({ [SCHEDULED_LIVES]: lives })
-
-  return getCachedScheduledLives()
+  return [...currentLives, ...scheduledLives]
 }
 
 const getCachedChannels = () => store.get(CHANNELS)
@@ -180,10 +171,7 @@ const syncLives = type => {
   if (type === 'ended') {
     return syncEndedLives()
   }
-  if (type === 'current') {
-    return syncCurrentLives()
-  }
-  return syncScheduledLives()
+  return syncOpenLives()
 }
 
 const getMember = live => {
@@ -228,12 +216,11 @@ export default {
   filterByTitle,
   filterBySubscription,
   getCachedCurrentLives,
-  syncCurrentLives,
   getCachedEndedLives,
   syncEndedLives,
   clearCachedEndedLives,
   getCachedScheduledLives,
-  syncScheduledLives,
+  syncOpenLives,
   getCachedChannels,
   syncChannels,
   getCachedMembers,

@@ -70,9 +70,7 @@ const getEndedLives = async params => {
   return value
 }
 
-const getCurrentLives = params => gatherPagedItems('lives/current', params)
-
-const getScheduledLives = params => gatherPagedItems('lives/scheduled', params)
+const getOpenLives = params => gatherPagedItems('lives/open', params)
 
 const getChannels = () => gatherPagedItems('channels', { limit: 100 })
 
@@ -80,8 +78,7 @@ const getMembers = () => fetchData(`${TARGET}api/v1/members`)
 
 export {
   getEndedLives,
-  getCurrentLives,
-  getScheduledLives,
+  getOpenLives,
   getChannels,
   getMembers,
   onSuccessRequest,

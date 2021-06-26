@@ -1,12 +1,6 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import {
-  getChannels,
-  getCurrentLives,
-  getEndedLives,
-  getMembers,
-  getScheduledLives,
-} from 'requests'
+import { getChannels, getEndedLives, getMembers, getOpenLives } from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
@@ -197,6 +191,16 @@ test('should get cached current lives', async () => {
   expect(workflows.getCachedCurrentLives()).toEqual(currentLives)
 })
 
+test('should get cached scheduled lives', async () => {
+  const scheduledLives = [{ id: 1 }, { id: 2 }]
+
+  expect(workflows.getCachedScheduledLives()).toEqual(undefined)
+
+  await store.set({ [SCHEDULED_LIVES]: scheduledLives })
+
+  expect(workflows.getCachedScheduledLives()).toEqual(scheduledLives)
+})
+
 test('should sync current lives', async () => {
   Date.now = jest.fn(() => unixTime * 1000)
 
@@ -218,142 +222,145 @@ test('should sync current lives', async () => {
       duration: null,
     },
   ]
+  const scheduledLivesOne = [
+    {
+      id: 4,
+      start_at: dayjs().add(1, 'hour').toISOString(),
+      duration: null,
+    },
+    {
+      id: 5,
+      start_at: dayjs().add(2, 'hour').toISOString(),
+      duration: null,
+    },
+  ]
+  const openLivesOne = [...currentLivesOne, ...scheduledLivesOne]
   const endedLivesOne = []
 
-  getCurrentLives.mockResolvedValueOnce(currentLivesOne)
+  getOpenLives.mockResolvedValueOnce(openLivesOne)
 
-  const returnValueOne = await workflows.syncCurrentLives()
+  const returnValueOne = await workflows.syncOpenLives()
 
+  expect(getOpenLives).toHaveBeenCalledWith({
+    startBefore: getUnixAfterDays(7),
+  })
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesOne)
+  expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesOne)
   expect(store.data[ENDED_LIVES]).toEqual(endedLivesOne)
-  expect(returnValueOne).toEqual(currentLivesOne)
+  expect(returnValueOne).toEqual(openLivesOne)
 
-  getCurrentLives.mockClear()
+  getOpenLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
 
   // Second run
   const currentLivesTwo = [
-    currentLivesOne[1],
-    currentLivesOne[2],
+    openLivesOne[1],
+    openLivesOne[2],
     {
-      id: 4,
+      ...scheduledLivesOne[0],
       start_at: dayjs().subtract(1, 'hour').toISOString(),
-      duration: null,
     },
   ]
+  const scheduledLivesTwo = [
+    scheduledLivesOne[1],
+  ]
+  const openLivesTwo = [...currentLivesTwo, ...scheduledLivesTwo]
   const endedLivesTwo = [
     {
-      ...currentLivesOne[0],
+      ...openLivesOne[0],
       duration: dayjs.duration(3, 'hour').as('second'),
     },
   ]
 
-  getCurrentLives.mockResolvedValueOnce(currentLivesTwo)
+  getOpenLives.mockResolvedValueOnce(openLivesTwo)
 
-  const returnValueTwo = await workflows.syncCurrentLives()
+  const returnValueTwo = await workflows.syncOpenLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
+  expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesTwo)
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
   expect(store.data[ENDED_LIVES]).toEqual([])
-  expect(returnValueTwo).toEqual(currentLivesTwo)
+  expect(returnValueTwo).toEqual(openLivesTwo)
 
-  getCurrentLives.mockClear()
+  getOpenLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
 
-  // Third run
+  // Second run second
   await store.set({ [ENDED_LIVES]: endedLivesTwo })
 
-  getCurrentLives.mockResolvedValueOnce(currentLivesTwo)
+  getOpenLives.mockResolvedValueOnce(openLivesTwo)
 
-  const returnValueTwoSecond = await workflows.syncCurrentLives()
+  const returnValueTwoSecond = await workflows.syncOpenLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
+  expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesTwo)
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesTwo)
   expect(store.data[ENDED_LIVES]).toEqual(endedLivesTwo)
-  expect(returnValueTwoSecond).toEqual(currentLivesTwo)
+  expect(returnValueTwoSecond).toEqual(openLivesTwo)
 
-  getCurrentLives.mockClear()
+  getOpenLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
 
   // Third run
   const currentLivesThree = [
-    currentLivesTwo[0],
-    currentLivesTwo[2],
+    openLivesTwo[0],
+    openLivesTwo[2],
   ]
+  const scheduledLivesThree = []
+  const openLivesThree = [...currentLivesThree, ...scheduledLivesThree]
   const endedLivesThree = [
     endedLivesTwo[0],
     {
-      ...currentLivesOne[2],
+      ...openLivesOne[2],
       duration: dayjs.duration(2, 'hour').as('second'),
     },
   ]
 
-  getCurrentLives.mockResolvedValueOnce(currentLivesThree)
+  getOpenLives.mockResolvedValueOnce(openLivesThree)
 
-  const returnValueThree = await workflows.syncCurrentLives()
+  const returnValueThree = await workflows.syncOpenLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesThree)
+  expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesThree)
   expect(store.data[ENDED_LIVES]).toEqual(endedLivesThree)
-  expect(returnValueThree).toEqual(currentLivesThree)
+  expect(returnValueThree).toEqual(openLivesThree)
 
-  getCurrentLives.mockClear()
+  getOpenLives.mockClear()
   browser.browserAction.setBadgeText.mockClear()
 
   // Fourth run
   const currentLivesFour = []
+  const scheduledLivesFour = []
+  const openLivesFour = [...currentLivesFour, ...scheduledLivesFour]
   const endedLivesFour = [
     endedLivesThree[0],
     {
-      ...currentLivesThree[0],
+      ...openLivesThree[0],
       duration: dayjs.duration(3, 'hour').as('second'),
     },
     endedLivesThree[1],
     {
-      ...currentLivesThree[1],
+      ...openLivesThree[1],
       duration: dayjs.duration(1, 'hour').as('second'),
     },
   ]
 
-  getCurrentLives.mockResolvedValueOnce(currentLivesFour)
+  getOpenLives.mockResolvedValueOnce(openLivesFour)
 
-  const returnValueFour = await workflows.syncCurrentLives()
+  const returnValueFour = await workflows.syncOpenLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '0' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesFour)
+  expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesFour)
   expect(store.data[ENDED_LIVES]).toEqual(endedLivesFour)
-  expect(returnValueFour).toEqual(currentLivesFour)
-})
-
-test('should get cached scheduled lives', async () => {
-  const scheduledLives = [{ id: 1 }, { id: 2 }]
-
-  expect(workflows.getCachedScheduledLives()).toEqual(undefined)
-
-  await store.set({ [SCHEDULED_LIVES]: scheduledLives })
-
-  expect(workflows.getCachedScheduledLives()).toEqual(scheduledLives)
-})
-
-test('should sync scheduled lives', async () => {
-  Date.now = jest.fn(() => unixTime * 1000)
-  const endedLives = [{ id: 1 }, { id: 2 }]
-
-  getScheduledLives.mockResolvedValueOnce(endedLives)
-
-  const returnValue = await workflows.syncScheduledLives()
-
-  expect(getScheduledLives).toHaveBeenCalledWith({
-    startBefore: getUnixAfterDays(7),
-  })
-  expect(store.data[SCHEDULED_LIVES]).toEqual(endedLives)
-  expect(returnValue).toEqual(endedLives)
+  expect(returnValueFour).toEqual(openLivesFour)
 })
 
 test('should get cached channels', async () => {

@@ -10,8 +10,7 @@ const ALARM_NAME = 'fetch-data-alarm'
 
 const {
   syncChannels,
-  syncCurrentLives,
-  syncScheduledLives,
+  syncOpenLives,
   syncMembers,
   setIsPopupFirstRun,
   clearCachedEndedLives,
@@ -19,9 +18,7 @@ const {
 
 const handleAlarm = async ({ name }) => {
   if (name === ALARM_NAME) {
-    await syncCurrentLives()
-      .then(() => syncScheduledLives())
-      .catch(err => console.error(err))
+    await syncOpenLives().catch(err => console.error(err))
   }
 }
 
@@ -49,7 +46,7 @@ const initOnce = async () => {
   browser.alarms.create(ALARM_NAME, { periodInMinutes: 1 })
 }
 
-const initRetryable = () => Promise.all([syncCurrentLives(), syncChannels(), syncMembers()])
+const initRetryable = () => Promise.all([syncOpenLives(), syncChannels(), syncMembers()])
 
 const init = async () => {
   await initOnce()

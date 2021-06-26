@@ -49,9 +49,11 @@
       }),
     },
     async created() {
-      await this.reloadLives()
+      if (this.type === 'current') {
+        await this.reloadLives()
 
-      this.interval = setInterval(this.reloadLives, 10 * 1000)
+        this.interval = setInterval(this.reloadLives, 10 * 1000)
+      }
     },
     beforeDestroy() {
       clearInterval(this.interval)

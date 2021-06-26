@@ -13,9 +13,4 @@ const isGuerrillaLive = live => dayjs(live['created_at'])
   .add(10, 'minute')
   .isSameOrAfter(dayjs(live['start_at']))
 
-export {
-  getUnixAfterDays,
-  getUnixBeforeDays,
-  getUnix,
-  isGuerrillaLive,
-}
+export { getUnixAfterDays, getUnixBeforeDays, getUnix, isGuerrillaLive }

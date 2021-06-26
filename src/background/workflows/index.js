@@ -11,10 +11,10 @@ import {
 } from 'lodash'
 import {
   getChannels,
-  getOpenLives,
   getEndedLives,
   getHotnessesOfLives,
   getMembers,
+  getOpenLives,
 } from 'requests'
 import {
   APPEARANCE,
@@ -126,14 +126,12 @@ const syncOpenLives = async () => {
   return [...currentLives, ...scheduledLives]
 }
 
-const syncHotnesses = async lives => {
+const syncHotnesses = async (lives = []) => {
   if (lives.length === 0) {
     return
   }
 
   const hotnessesByLiveId = groupBy(await getHotnessesOfLives(lives, { limit: 1000 }), 'live_id')
-
-  console.log({ hotnessesByLiveId })
 
   await store.set({
     [ENDED_LIVES]: (getCachedEndedLives() ?? []).map(live => {

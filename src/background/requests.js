@@ -31,9 +31,9 @@ const fetchData = async (...args) => {
 
 async function* pagedItemsFetcher(endpoint, params = {}) {
   const safeParams = mapKeys(params, (_, key) => snakeCase(key))
-  const { limit = 20 } = safeParams
+  const { limit = 50 } = safeParams
 
-  const searchParams = new URLSearchParams(safeParams)
+  const searchParams = new URLSearchParams({ limit, ...safeParams })
 
   let page = 0
   let shouldContinue = true

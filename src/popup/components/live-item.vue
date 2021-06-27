@@ -59,6 +59,7 @@
                         height="0.08"
                         fill="white"
                         opacity="0"
+                        style="mix-blend-mode: overlay"
                   >
                     <animate attributeName="opacity"
                              to="1"

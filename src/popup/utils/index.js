@@ -19,17 +19,17 @@ const normalize = (arrayOfObjects, ...keys) => keys.reduce((accu, key) => {
   const maxValue = max(...filteredValues)
   return accu.map(object => ({
     ...object,
-    [key]: filteredValues.length
+    [key]: filteredValues.length && minValue !== maxValue
       ? ((clamp(object[key], minValue, maxValue) - minValue) / (maxValue - minValue))
       : 1,
   }))
 }, arrayOfObjects)
 
 const sampleHotnesses = (
-  { hotnesses = [], start_at: startAt = '' }, samplesCount,
+  { hotnesses = [], start_at: startAt = '' }, maxSamplesCount,
 ) => normalize(normalize(at(
   hotnesses, range(
-    0, hotnesses.length - 0.1, max(1, hotnesses.length / samplesCount),
+    0, hotnesses.length - 0.1, max(1, hotnesses.length / maxSamplesCount),
   ).map(floor),
 ).map(({ created_at: createdAt, like, watching }, index, records) => ({
   createdAt,
@@ -44,4 +44,4 @@ const sampleHotnesses = (
   ({ timestamp, hotness, createdAt }) => [createdAt, [timestamp, hotness]],
 )
 
-export { sleep, formatDurationFromSeconds, sampleHotnesses }
+export { sleep, formatDurationFromSeconds, normalize, sampleHotnesses }

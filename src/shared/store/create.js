@@ -1,5 +1,6 @@
 /* eslint no-param-reassign:
 ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }] */
+import { isEmpty, isEqual } from 'lodash'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import connect from './connect'
@@ -12,7 +13,9 @@ export default defaultState => new Vuex.Store({
   mutations: {
     ...Object.fromEntries(Object.keys(defaultState).map(
       key => [key, (state, value) => {
-        state[key] = value
+        if (!isEqual(state[key], value) || isEmpty(value)) {
+          state[key] = value
+        }
       }],
     )),
   },

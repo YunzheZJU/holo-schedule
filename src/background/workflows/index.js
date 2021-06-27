@@ -3,12 +3,19 @@ import {
   differenceBy,
   filter,
   findLastIndex,
+  groupBy,
   partition,
   range,
   reverse,
   uniqBy,
 } from 'lodash'
-import { getChannels, getEndedLives, getMembers, getOpenLives } from 'requests'
+import {
+  getChannels,
+  getEndedLives,
+  getHotnessesOfLives,
+  getMembers,
+  getOpenLives,
+} from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
@@ -119,6 +126,24 @@ const syncOpenLives = async () => {
   return [...currentLives, ...scheduledLives]
 }
 
+const syncHotnesses = async (lives = []) => {
+  if (lives.length === 0) {
+    return
+  }
+
+  const hotnessesByLiveId = groupBy(await getHotnessesOfLives(lives, { limit: 1000 }), 'live_id')
+
+  await store.set({
+    [ENDED_LIVES]: (getCachedEndedLives() ?? []).map(live => {
+      if (live['id'] in hotnessesByLiveId) {
+        return { ...live, hotnesses: hotnessesByLiveId[live['id']] }
+      }
+
+      return live
+    }),
+  })
+}
+
 const getCachedChannels = () => store.get(CHANNELS)
 
 const syncChannels = async () => {
@@ -221,6 +246,7 @@ export default {
   clearCachedEndedLives,
   getCachedScheduledLives,
   syncOpenLives,
+  syncHotnesses,
   getCachedChannels,
   syncChannels,
   getCachedMembers,

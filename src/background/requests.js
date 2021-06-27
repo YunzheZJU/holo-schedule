@@ -29,11 +29,12 @@ const fetchData = async (...args) => {
   return gatherResponse(response)
 }
 
-async function* pagedItemsFetcher(endpoint, params = {}) {
+async function* pagedItemsFetcher(endpoint, params = {}, paramEntries = []) {
   const safeParams = mapKeys(params, (_, key) => snakeCase(key))
   const { limit = 50 } = safeParams
 
   const searchParams = new URLSearchParams({ limit, ...safeParams })
+  paramEntries.forEach(entry => searchParams.append(...entry))
 
   let page = 0
   let shouldContinue = true
@@ -72,6 +73,10 @@ const getEndedLives = async params => {
 
 const getOpenLives = params => gatherPagedItems('lives/open', params)
 
+const getHotnessesOfLives = (lives, params) => (lives.length
+  ? gatherPagedItems('hotnesses', params, lives.map(({ id }) => ['lives[]', id]))
+  : {})
+
 const getChannels = () => gatherPagedItems('channels', { limit: 100 })
 
 const getMembers = () => fetchData(`${TARGET}api/v1/members`)
@@ -79,6 +84,7 @@ const getMembers = () => fetchData(`${TARGET}api/v1/members`)
 export {
   getEndedLives,
   getOpenLives,
+  getHotnessesOfLives,
   getChannels,
   getMembers,
   onSuccessRequest,

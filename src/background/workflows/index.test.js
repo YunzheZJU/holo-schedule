@@ -1,6 +1,12 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import { getChannels, getEndedLives, getMembers, getOpenLives } from 'requests'
+import {
+  getChannels,
+  getEndedLives,
+  getHotnessesOfLives,
+  getMembers,
+  getOpenLives,
+} from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
@@ -201,7 +207,7 @@ test('should get cached scheduled lives', async () => {
   expect(workflows.getCachedScheduledLives()).toEqual(scheduledLives)
 })
 
-test('should sync current lives', async () => {
+test('should sync open lives', async () => {
   Date.now = jest.fn(() => unixTime * 1000)
 
   // First run
@@ -361,6 +367,31 @@ test('should sync current lives', async () => {
   expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesFour)
   expect(store.data[ENDED_LIVES]).toEqual(endedLivesFour)
   expect(returnValueFour).toEqual(openLivesFour)
+})
+
+test('should sync hotnesses', async () => {
+  Date.now = jest.fn(() => unixTime * 1000)
+
+  const endedLivesOne = [
+    { id: 1, hotnesses: [{ watching: 1 }] }, { id: 2 }, { id: 3 },
+  ]
+  const hotnessesOne = [
+    { live_id: 1, watching: 2 },
+    { live_id: 2, watching: 1 },
+    { live_id: 2, watching: 1 },
+    { live_id: 4, watching: 1 },
+  ]
+  await store.set({ [ENDED_LIVES]: endedLivesOne })
+
+  getHotnessesOfLives.mockResolvedValueOnce(hotnessesOne)
+
+  await workflows.syncHotnesses(endedLivesOne)
+
+  expect(store.data[ENDED_LIVES]).toEqual([
+    { id: 1, hotnesses: [hotnessesOne[0]] },
+    { id: 2, hotnesses: [hotnessesOne[1], hotnessesOne[2]] },
+    { id: 3 },
+  ])
 })
 
 test('should get cached channels', async () => {

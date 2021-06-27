@@ -52,7 +52,7 @@
               />
               <g :clip-path="`url(#clip_outer_${live['id']})`">
                 <g :clip-path="`url(#clip_inner_${live['id']})`">
-                  <rect x="0" y="0.08" width="1" height="0.08" fill="url(#gradient)" />
+                  <rect x="0" y="0.08" width="1" height="0.083" fill="url(#gradient)" />
                   <rect :x="highlight"
                         y="0.08"
                         width="0.00625"
@@ -79,7 +79,7 @@
                     x="0"
                     y="0.08"
                     width="1"
-                    height="0.08"
+                    height="0.83"
                     fill="transparent"
                     @mousemove="handleMousemove"
                     @mouseout="handleMouseout"
@@ -188,9 +188,10 @@
         return sampleHotnesses(this.live, 61)
       },
       points() {
+        // Add a slight overflow around 4% to tune the rendering to best on FireFox
         return this.hotnessSamples.map(
           ([, [timeRatio, hotness]]) => [timeRatio, (1 - hotness ** 0.33) * 0.84],
-        ).concat(1, 1, 0, 1).flat().join(' ')
+        ).concat(1, 1.04, 0, 1.04).flat().join(' ')
       },
       hotnessDuration() {
         if (isNull(this.highlight)) {

@@ -4,6 +4,7 @@ import {
   getUnixAfterDays,
   getUnixBeforeDays,
   isGuerrillaLive,
+  uniqRightBy,
 } from './index'
 
 const getUnixTime = () => Math.floor(Date.now() / 1000)
@@ -45,4 +46,21 @@ test('should not be guerrila live', () => {
   }
 
   expect(isGuerrillaLive(live)).toBeFalsy()
+})
+
+test('should uniq from right by id', () => {
+  const array = [
+    { id: 1 },
+    { id: 2 },
+    { id: 3 },
+    { id: 3 },
+    { id: 2 },
+    { id: 1 },
+  ]
+
+  expect(uniqRightBy(array, 'id')).toEqual([
+    { id: 3 },
+    { id: 2 },
+    { id: 1 },
+  ])
 })

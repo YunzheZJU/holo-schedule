@@ -7,7 +7,6 @@ import {
   partition,
   range,
   reverse,
-  uniqBy,
 } from 'lodash'
 import {
   getChannels,
@@ -31,7 +30,12 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
+import {
+  getUnix,
+  getUnixAfterDays,
+  getUnixBeforeDays,
+  uniqRightBy,
+} from 'utils'
 import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
@@ -79,7 +83,7 @@ const syncEndedLives = async () => {
   }))
 
   await store.set({
-    [ENDED_LIVES]: reverse(uniqBy([...reverse(cashedLives), ...lives], 'id')),
+    [ENDED_LIVES]: uniqRightBy([...reverse(lives), ...cashedLives], 'id'),
   })
 
   return getCachedEndedLives()
@@ -120,7 +124,7 @@ const syncOpenLives = async () => {
   await store.set({
     [CURRENT_LIVES]: currentLives,
     [SCHEDULED_LIVES]: scheduledLives,
-    [ENDED_LIVES]: endedLives,
+    [ENDED_LIVES]: uniqRightBy(endedLives, 'id'),
   })
 
   return [...currentLives, ...scheduledLives]

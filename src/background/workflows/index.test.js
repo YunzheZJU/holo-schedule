@@ -313,6 +313,7 @@ test('should sync open lives', async () => {
 
   // Third run
   const currentLivesThree = [
+    { ...endedLivesTwo[0], duration: null },
     openLivesTwo[0],
     openLivesTwo[2],
   ]
@@ -331,7 +332,7 @@ test('should sync open lives', async () => {
   const returnValueThree = await workflows.syncOpenLives()
 
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)
-  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '2' })
+  expect(browser.browserAction.setBadgeText).toHaveBeenCalledWith({ text: '3' })
   expect(store.data[CURRENT_LIVES]).toEqual(currentLivesThree)
   expect(store.data[SCHEDULED_LIVES]).toEqual(scheduledLivesThree)
   expect(store.data[ENDED_LIVES]).toEqual(endedLivesThree)
@@ -347,12 +348,12 @@ test('should sync open lives', async () => {
   const endedLivesFour = [
     endedLivesThree[0],
     {
-      ...openLivesThree[0],
+      ...openLivesThree[1],
       duration: dayjs.duration(3, 'hour').as('second'),
     },
     endedLivesThree[1],
     {
-      ...openLivesThree[1],
+      ...openLivesThree[2],
       duration: dayjs.duration(1, 'hour').as('second'),
     },
   ]

@@ -138,7 +138,7 @@
   import { floor, isNull, max, min } from 'lodash'
   import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
-  import { constructRoomUrl } from 'shared/utils'
+  import { constructUrl } from 'shared/utils'
   import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
@@ -183,7 +183,7 @@
         return getMember(this.live)
       },
       roomURL() {
-        return constructRoomUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'
+        return constructUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'
       },
       hotnessSamples() {
         return sampleHotnesses(this.live, 61)

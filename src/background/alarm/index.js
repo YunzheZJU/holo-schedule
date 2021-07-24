@@ -7,7 +7,7 @@ import {
   IS_NTF_ENABLED,
   SCHEDULED_LIVES,
 } from 'shared/store/keys'
-import { constructRoomUrl } from 'shared/utils'
+import { constructUrl } from 'shared/utils'
 import { isGuerrillaLive } from 'utils'
 import browser from 'webextension-polyfill'
 import workflows from 'workflows'
@@ -46,7 +46,7 @@ const alarm = {
       ),
       iconUrl: member['avatar'] ?? browser.runtime.getURL('assets/default_avatar.png'),
       onClick() {
-        browser.tabs.create({ url: constructRoomUrl(live) }).then(
+        browser.tabs.create({ url: constructUrl(live) }).then(
           () => console.log('Successfully created a tab'),
         )
       },

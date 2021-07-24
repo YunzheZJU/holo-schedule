@@ -1,9 +1,9 @@
-const constructRoomUrl = ({ platform, room, time }) => ({
+const constructUrl = ({ platform, room, video, time }) => ({
   youtube: `https://www.youtube.com/watch?v=${room}${time ? `&t=${time}` : ''}`,
   bilibili: `https://live.bilibili.com/${room}`,
   twitch: `https://www.twitch.tv/${room}`,
-  twitcasting: `https://twitcasting.tv/${room}`,
+  twitcasting: `https://twitcasting.tv/${room}${video ? `/movie/${video}` : ''}`,
 }[platform])
 
 // eslint-disable-next-line import/prefer-default-export
-export { constructRoomUrl }
+export { constructUrl }

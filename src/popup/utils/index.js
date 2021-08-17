@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { at, clamp, range } from 'lodash'
 
-const { floor, min, max } = Math
+const { floor, min, max, round } = Math
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -25,37 +25,41 @@ const normalize = (arrayOfObjects, ...keys) => keys.reduce((accu, key) => {
   }))
 }, arrayOfObjects)
 
-const sampleHotnesses = (
-  { hotnesses = [], start_at: startAt = '' }, maxSamplesCount,
-) => {
-  const a = at(
+const sampleHotnesses = ({ hotnesses = [], start_at: startAt = '' }, maxSamplesCount) => {
+  const samplesToNormalize = at(
     hotnesses, range(
       0, hotnesses.length - 0.1, max(1, hotnesses.length / maxSamplesCount),
     ).map(floor),
   ).reduce(
-    ({ accu, nullCount, lastValid }, { like, ...value }) => {
-      const newLike = like === null ? lastValid : like
+    ({ accu, continuous, prevLike }, { like, ...value }) => {
+      const lk = like === null ? prevLike : like
+      const cnt = like === null ? continuous + 1 : 1
       return {
-        accu: [...accu, { like: newLike, ...value }],
-        nullCount: like === null ? nullCount + 1 : 1,
-        lastValid: newLike,
+        accu: [...accu, { like: lk, continuous: cnt, ...value }], prevLike: lk, continuous: cnt,
       }
-    }, { accu: [], nullCount: 1, lastValid: null },
-  ).accu.reduceRight(
-    ({ accu, lastValid }, { like, nullCount, created_at: createdAt, watching }) => ({
+    }, { accu: [], continuous: 1, prevLike: null },
+  ).accu.reduceRight(({ accu, maxContinuous, currentCounter, nextLike }, {
+    continuous, created_at: createdAt, watching, like,
+  }) => {
+    const isContinuous = continuous !== 1 || currentCounter === 1
+    const mContinuous = isContinuous ? max(maxContinuous, continuous) : continuous
+    return {
       accu: [...accu, {
-        likeDelta: max(((lastValid ?? like) - (like ?? lastValid)) / nullCount, 0),
+        likeDelta: round(max(
+          ((nextLike ?? like) - (like ?? nextLike)) / max(mContinuous, continuous), 0,
+        )),
         timestamp: dayjs(createdAt).diff(startAt, 'second'),
         watching,
         createdAt,
       }],
-      lastValid: nullCount === 1 ? like : lastValid,
-    }), { accu: [], lastValid: null },
-  ).accu.reverse()
-  return normalize(normalize(a, 'timestamp', 'likeDelta', 'watching').map(
-    ({ likeDelta, watching, ...fields }) => ({
-      hotness: likeDelta * watching, ...fields,
-    }),
+      maxContinuous: mContinuous,
+      // eslint-disable-next-line
+      currentCounter: isContinuous ? (currentCounter === 0 ? continuous - 1 : currentCounter - 1) : 0,
+      nextLike: continuous !== 1 ? nextLike : like,
+    }
+  }, { accu: [], maxContinuous: 1, currentCounter: 0, nextLike: null }).accu.reverse()
+  return normalize(normalize(samplesToNormalize, 'timestamp', 'likeDelta', 'watching').map(
+    ({ likeDelta, watching, ...fields }) => ({ hotness: likeDelta * watching, ...fields }),
   ), 'hotness').map(
     ({ timestamp, hotness, createdAt }) => [createdAt, [timestamp, hotness]],
   )

@@ -1,4 +1,4 @@
-import { formatDurationFromSeconds, normalize, sleep } from './index'
+import { formatDurationFromSeconds, normalize, sampleHotnesses, sleep } from './index'
 
 test('should sleep', async () => {
   await sleep(1000)
@@ -27,3 +27,35 @@ test('should normalize', () => {
 })
 
 // Tests for sampleHotnesses are not added for issues with floating number precisions
+test('should work', () => {
+  const liveOne = {
+    start_at: '2021-08-17T02:00:00.000Z',
+    hotnesses: [{
+      watching: 4396,
+      like: 6213,
+      created_at: '2021-08-17T04:10:22.927Z',
+    }, {
+      watching: 4406,
+      like: 6232,
+      created_at: '2021-08-17T04:11:22.940Z',
+    }, {
+      watching: 4406,
+      like: null,
+      created_at: '2021-08-17T04:12:22.816Z',
+    }, {
+      watching: 4392,
+      like: null,
+      created_at: '2021-08-17T04:13:22.913Z',
+    }, {
+      watching: 4432,
+      like: 6291,
+      created_at: '2021-08-17T04:14:23.093Z',
+    }, {
+      watching: 4430,
+      like: 6315,
+      created_at: '2021-08-17T04:15:22.959Z',
+    }],
+  }
+  const resultOne = sampleHotnesses(liveOne, 61)
+  console.log(resultOne)
+})

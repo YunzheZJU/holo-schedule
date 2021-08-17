@@ -27,21 +27,38 @@ const normalize = (arrayOfObjects, ...keys) => keys.reduce((accu, key) => {
 
 const sampleHotnesses = (
   { hotnesses = [], start_at: startAt = '' }, maxSamplesCount,
-) => normalize(normalize(at(
-  hotnesses, range(
-    0, hotnesses.length - 0.1, max(1, hotnesses.length / maxSamplesCount),
-  ).map(floor),
-).map(({ created_at: createdAt, like, watching }, index, records) => ({
-  createdAt,
-  timestamp: dayjs(createdAt).diff(startAt, 'second'),
-  likeDelta: max((like ?? 0) - (records[max(index - 1, 0)]['like'] ?? 0), 0),
-  watching,
-})), 'timestamp', 'likeDelta', 'watching').map(
-  ({ likeDelta, watching, ...fields }) => ({
-    hotness: likeDelta * watching, ...fields,
-  }),
-), 'hotness').map(
-  ({ timestamp, hotness, createdAt }) => [createdAt, [timestamp, hotness]],
-)
+) => {
+  const a = at(
+    hotnesses, range(
+      0, hotnesses.length - 0.1, max(1, hotnesses.length / maxSamplesCount),
+    ).map(floor),
+  ).reduce(
+    ({ accu, nullCount, lastValid }, { like, ...value }) => {
+      const newLike = like === null ? lastValid : like
+      return {
+        accu: [...accu, { like: newLike, ...value }],
+        nullCount: like === null ? nullCount + 1 : 1,
+        lastValid: newLike,
+      }
+    }, { accu: [], nullCount: 1, lastValid: null },
+  ).accu.reduceRight(
+    ({ accu, lastValid }, { like, nullCount, created_at: createdAt, watching }) => ({
+      accu: [...accu, {
+        likeDelta: max(((lastValid ?? like) - (like ?? lastValid)) / nullCount, 0),
+        timestamp: dayjs(createdAt).diff(startAt, 'second'),
+        watching,
+        createdAt,
+      }],
+      lastValid: nullCount === 1 ? like : lastValid,
+    }), { accu: [], lastValid: null },
+  ).accu.reverse()
+  return normalize(normalize(a, 'timestamp', 'likeDelta', 'watching').map(
+    ({ likeDelta, watching, ...fields }) => ({
+      hotness: likeDelta * watching, ...fields,
+    }),
+  ), 'hotness').map(
+    ({ timestamp, hotness, createdAt }) => [createdAt, [timestamp, hotness]],
+  )
+}
 
 export { sleep, formatDurationFromSeconds, normalize, sampleHotnesses }

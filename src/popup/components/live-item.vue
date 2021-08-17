@@ -186,6 +186,9 @@
         return constructUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'
       },
       hotnessSamples() {
+        if (String(this.live.id) === '24909') {
+          console.log(sampleHotnesses(this.live, 61))
+        }
         return sampleHotnesses(this.live, 61)
       },
       points() {

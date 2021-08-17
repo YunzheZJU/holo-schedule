@@ -1,4 +1,4 @@
-import { formatDurationFromSeconds, normalize, sampleHotnesses, sleep } from './index'
+import { formatDurationFromSeconds, normalize, sleep } from './index'
 
 test('should sleep', async () => {
   await sleep(1000)
@@ -25,3 +25,5 @@ test('should normalize', () => {
   expect(normalize([{ a: 1 }, { a: null }], 'a')).toEqual([{ a: 1 }, { a: 1 }])
   expect(normalize([{ a: 0 }, { a: 0 }, { a: null }], 'a')).toEqual([{ a: 1 }, { a: 1 }, { a: 1 }])
 })
+
+// Tests for sampleHotnesses are not added for issues with floating number precisions

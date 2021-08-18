@@ -67,7 +67,7 @@
 
     .name {
       flex-grow: 1;
-      padding: 0 4px;
+      padding-right: 8px;
       font-weight: 700;
       font-size: 16px;
       text-align: center;
@@ -82,6 +82,7 @@
       }
 
       .name {
+        padding-left: 4px;
         text-decoration: line-through;
         // For Firefox
         text-decoration-thickness: 0.1em;

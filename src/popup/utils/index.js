@@ -31,20 +31,20 @@ const sampleHotnesses = ({ hotnesses = [], start_at: startAt = '' }, maxSamplesC
       0, hotnesses.length - 0.1, max(1, hotnesses.length / maxSamplesCount),
     ).map(floor),
   ).reduce(
-    ({ accu, continuous, prevLike }, { like, ...value }) => {
+    ({ arr, continuous, prevLike }, { like, ...value }) => {
       const lk = like === null ? prevLike : like
       const cnt = like === null ? continuous + 1 : 1
       return {
-        accu: [...accu, { like: lk, continuous: cnt, ...value }], prevLike: lk, continuous: cnt,
+        arr: [...arr, { like: lk, continuous: cnt, ...value }], prevLike: lk, continuous: cnt,
       }
-    }, { accu: [], continuous: 1, prevLike: null },
-  ).accu.reduceRight(({ accu, maxContinuous, currentCounter, nextLike }, {
+    }, { arr: [], continuous: 1, prevLike: null },
+  ).arr.reduceRight(({ arr, maxContinuous, currentCounter, nextLike }, {
     continuous, created_at: createdAt, watching, like,
   }) => {
     const isContinuous = continuous !== 1 || currentCounter === 1
     const mContinuous = isContinuous ? max(maxContinuous, continuous) : continuous
     return {
-      accu: [...accu, {
+      arr: [...arr, {
         likeDelta: round(max(
           ((nextLike ?? like) - (like ?? nextLike)) / max(mContinuous, continuous), 0,
         )),
@@ -57,7 +57,7 @@ const sampleHotnesses = ({ hotnesses = [], start_at: startAt = '' }, maxSamplesC
       currentCounter: isContinuous ? (currentCounter === 0 ? continuous - 1 : currentCounter - 1) : 0,
       nextLike: continuous !== 1 ? nextLike : like,
     }
-  }, { accu: [], maxContinuous: 1, currentCounter: 0, nextLike: null }).accu.reverse()
+  }, { arr: [], maxContinuous: 1, currentCounter: 0, nextLike: null }).arr.reverse()
   return normalize(normalize(samplesToNormalize, 'timestamp', 'likeDelta', 'watching').map(
     ({ likeDelta, watching, ...fields }) => ({ hotness: likeDelta * watching, ...fields }),
   ), 'hotness').map(

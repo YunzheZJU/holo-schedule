@@ -1,5 +1,5 @@
 <template>
-  <Fragment>
+  <Fragment v-if="groupMembers.length">
     <div class="header">
       <div class="title"><span>{{ name }}</span></div>
       <div class="select-helper">
@@ -26,7 +26,7 @@
         </transition>
       </div>
     </div>
-    <ol v-if="groupMembers.length" class="content">
+    <ol class="content">
       <li v-for="member in groupMembers" :key="member['id']" class="member-container">
         <SubscriptionInput
           :member="member"
@@ -36,7 +36,6 @@
         />
       </li>
     </ol>
-    <div v-else class="empty">{{ $t('memberGroup.noData') }}</div>
   </Fragment>
 </template>
 
@@ -278,14 +277,5 @@
         width: 100%;
       }
     }
-  }
-
-  .empty {
-    margin: 16px 0;
-    color: var(--color-text-light);
-    font-weight: 300;
-    font-style: italic;
-    font-size: 16px;
-    text-align: center;
   }
 </style>

@@ -15,13 +15,13 @@
     },
     // Each key in 'groups' is a group defined at https://www.hololive.tv/member and the according value is the localized name of it
     groups: {
+      newDebuts: "Neue Debüts!",
       hololive: "Hololive",
       holostars: "Holostars",
       inonakaMusic: "INoNaKa MUSIC",
       hololiveChina: "Hololive China",
       hololiveIndonesia: "Hololive Indonesia",
-      hololiveEnglish: "Hololive English",
-      others: "Andere"
+      hololiveEnglish: "Hololive English"
     }
   },
   // Component MemberGroup

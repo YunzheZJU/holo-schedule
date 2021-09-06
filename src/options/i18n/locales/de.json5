@@ -26,8 +26,6 @@
   },
   // Component MemberGroup
   memberGroup: {
-    // Indicate that no member data can be found for this group
-    noData: "Keine Daten zum Mitglied gefunden",
     // Help users to perform group operations when detected
     selectHelper: {
       // Prompt users to unsubscribe to all members in a group or not, with the question mark

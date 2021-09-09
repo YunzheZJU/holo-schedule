@@ -16,7 +16,7 @@
     // Each key in 'groups' is a group defined at https://www.hololive.tv/member and the according value is the localized name of it
     groups: {
       // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
-      newDebuts: "最近のデビュー！",
+      newDebuts: "新メンバー！",
       hololive: "ホロライブ",
       holostars: "ホロスターズ",
       inonakaMusic: "イノナカミュージック",

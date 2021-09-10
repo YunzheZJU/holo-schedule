@@ -51,12 +51,17 @@
       groups() {
         return [
           {
+            name: this.$t('app.groups.newDebuts'),
+            // Dummy ids are specified here to be compatible to new members
+            memberIds: range(72, 82),
+          },
+          {
             name: this.$t('app.groups.hololive'),
-            memberIds: without(range(1, 34), 2),
+            memberIds: [62, ...without(range(1, 34), 2)],
           },
           {
             name: this.$t('app.groups.holostars'),
-            memberIds: range(34, 45),
+            memberIds: [63, ...range(34, 45)],
           },
           {
             name: this.$t('app.groups.inonakaMusic'),
@@ -68,16 +73,11 @@
           },
           {
             name: this.$t('app.groups.hololiveIndonesia'),
-            memberIds: [...range(51, 54), ...range(59, 62)],
+            memberIds: [64, ...range(51, 54), ...range(59, 62)],
           },
           {
             name: this.$t('app.groups.hololiveEnglish'),
-            memberIds: [...range(54, 59), ...range(66, 72)],
-          },
-          {
-            name: this.$t('app.groups.others'),
-            // Dummy ids are specified here to be compatible to new members
-            memberIds: [...range(62, 66), ...range(72, 82)],
+            memberIds: [65, ...range(54, 59), ...range(66, 72)],
           },
         ]
       },

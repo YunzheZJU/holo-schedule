@@ -15,19 +15,18 @@
     },
     // Each key in 'groups' is a group defined at https://www.hololive.tv/member and the according value is the localized name of it
     groups: {
+      // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
+      newDebuts: "New Debuts!",
       hololive: "Hololive",
       holostars: "Holostars",
       inonakaMusic: "INoNaKa MUSIC",
       hololiveChina: "Hololive China",
       hololiveIndonesia: "Hololive Indonesia",
-      hololiveEnglish: "Hololive English",
-      others: "Others"
+      hololiveEnglish: "Hololive English"
     }
   },
   // Component MemberGroup
   memberGroup: {
-    // Indicate that no member data can be found for this group
-    noData: "No Member Data",
     // Help users to perform group operations when detected
     selectHelper: {
       // Prompt users to unsubscribe to all members in a group or not, with the question mark

@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="lives.length" class="list">
+  <ul v-if="lives.length" ref="root" class="list">
     <template v-for="(live, index) in lives">
       <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)"
            :key="`anchor-${live['id']}`"
@@ -61,6 +61,10 @@
       const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
 
       if (scrollHeightDiff === 0) {
+        setTimeout(() => {
+          this.parentElement.scrollTop = (isFirstRun && this.$refs.root?.clientHeight)
+            || this.parentElement.scrollTop
+        }, 0)
         return
       }
 

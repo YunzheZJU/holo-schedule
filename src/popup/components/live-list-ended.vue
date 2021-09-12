@@ -62,7 +62,8 @@
 
       if (scrollHeightDiff === 0) {
         setTimeout(() => {
-          this.parentElement.scrollTop = (isFirstRun && this.$refs.root?.clientHeight) || 0
+          this.parentElement.scrollTop = (isFirstRun && this.$refs.root?.clientHeight)
+            || this.parentElement.scrollTop
         }, 0)
         return
       }

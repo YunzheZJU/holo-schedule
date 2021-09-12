@@ -242,7 +242,7 @@ test('should sync open lives', async () => {
   const returnValueOne = await workflows.syncOpenLives()
 
   expect(getOpenLives).toHaveBeenCalledWith({
-    memberMask: undefined,
+    membersMask: undefined,
     startBefore: getUnixAfterDays(7),
   })
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)

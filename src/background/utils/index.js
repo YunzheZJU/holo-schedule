@@ -16,7 +16,7 @@ const isGuerrillaLive = live => dayjs(live['created_at'])
 
 const uniqRightBy = (array, ...args) => reverse(uniqBy(reverse([...array]), ...args))
 
-const getMemberMask = subscriptionByMember => (subscriptionByMember ? range(
+const getMembersMask = subscriptionByMember => (subscriptionByMember ? range(
   1, min([(max(Object.keys(subscriptionByMember).map(Number)) || 0) + 1, 256]),
 ).map(memberId => Number(subscriptionByMember[memberId] || false)).join('') : undefined)
 
@@ -26,5 +26,5 @@ export {
   getUnix,
   isGuerrillaLive,
   uniqRightBy,
-  getMemberMask,
+  getMembersMask,
 }

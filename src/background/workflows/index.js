@@ -16,7 +16,7 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import { getMemberMask, getUnix, getUnixAfterDays, getUnixBeforeDays, uniqRightBy } from 'utils'
+import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, uniqRightBy } from 'utils'
 import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
@@ -70,7 +70,7 @@ const syncEndedLives = async () => {
   ) + 1 : getUnix()
 
   const lives = filterLives(await getEndedLives({
-    memberMask: getMemberMask(getSubscriptionByMember()),
+    membersMask: getMembersMask(getSubscriptionByMember()),
     startAfter: getUnixBeforeDays(3),
     startBefore,
     limit: 18,
@@ -91,7 +91,7 @@ const getCachedScheduledLives = () => store.get(SCHEDULED_LIVES)
 
 const syncOpenLives = async () => {
   const [currentLives, scheduledLives] = partition(filterLives(await getOpenLives({
-    memberMask: getMemberMask(getSubscriptionByMember()),
+    membersMask: getMembersMask(getSubscriptionByMember()),
     startBefore: getUnixAfterDays(7),
   })), ({ start_at: startAt }) => dayjs().isAfter(startAt))
 

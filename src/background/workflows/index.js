@@ -103,11 +103,9 @@ const syncOpenLives = async () => {
   const endedLives = getCachedEndedLives() ?? []
   // Skip if endedLives is empty
   if (endedLives.length > 0) {
-    const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), currentLives, 'id').map(live => ({
-      ...live,
-      duration: dayjs().diff(dayjs(live['start_at']), 'second'),
-    }))
-    newEndedLives.forEach(live => {
+    differenceBy((getCachedCurrentLives() ?? []), currentLives, 'id').map(live => ({
+      ...live, duration: dayjs().diff(dayjs(live['start_at']), 'second'),
+    })).forEach(live => {
       const index = findLastIndex(
         endedLives,
         ({ start_at: startAt }) => startAt <= live['start_at'],
@@ -119,7 +117,7 @@ const syncOpenLives = async () => {
   await store.set({
     [CURRENT_LIVES]: currentLives,
     [SCHEDULED_LIVES]: scheduledLives,
-    [ENDED_LIVES]: uniqRightBy(endedLives, 'id'),
+    [ENDED_LIVES]: filterLives(uniqRightBy(endedLives, 'id')),
   })
 
   return [...currentLives, ...scheduledLives]

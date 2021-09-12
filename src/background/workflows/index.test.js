@@ -1,12 +1,6 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import {
-  getChannels,
-  getEndedLives,
-  getHotnessesOfLives,
-  getMembers,
-  getOpenLives,
-} from 'requests'
+import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
@@ -248,6 +242,7 @@ test('should sync open lives', async () => {
   const returnValueOne = await workflows.syncOpenLives()
 
   expect(getOpenLives).toHaveBeenCalledWith({
+    memberMask: undefined,
     startBefore: getUnixAfterDays(7),
   })
   expect(browser.browserAction.setBadgeText).toHaveBeenCalledTimes(1)

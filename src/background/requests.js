@@ -66,12 +66,12 @@ const gatherPagedItems = async (...args) => {
   return items.flat()
 }
 
-const getEndedLives = async params => {
-  const { value } = await pagedItemsFetcher('lives/ended', params).next()
+const getEndedLives = async (...params) => {
+  const { value } = await pagedItemsFetcher('lives/ended', ...params).next()
   return value
 }
 
-const getOpenLives = params => gatherPagedItems('lives/open', params)
+const getOpenLives = (...params) => gatherPagedItems('lives/open', ...params)
 
 const getHotnessesOfLives = (lives, params) => (lives.length
   ? gatherPagedItems('hotnesses', params, lives.map(({ id }) => ['lives[]', id]))

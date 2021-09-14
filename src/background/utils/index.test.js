@@ -1,11 +1,5 @@
 import dayjs from 'dayjs'
-import {
-  getUnix,
-  getUnixAfterDays,
-  getUnixBeforeDays,
-  isGuerrillaLive,
-  uniqRightBy,
-} from './index'
+import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, isGuerrillaLive, uniqRightBy } from './index'
 
 const getUnixTime = () => Math.floor(Date.now() / 1000)
 
@@ -63,4 +57,14 @@ test('should uniq from right by id', () => {
     { id: 2 },
     { id: 1 },
   ])
+})
+
+test('should get member mask', () => {
+  expect(getMembersMask()).toEqual(undefined)
+  expect(getMembersMask(null)).toEqual(undefined)
+  expect(getMembersMask({})).toEqual('')
+  expect(getMembersMask({ 1: true })).toEqual('1')
+  expect(getMembersMask({ 1: false, 3: true })).toEqual('001')
+  expect(getMembersMask({ 1: false, 3: true, 8: false })).toEqual('00100000')
+  expect(getMembersMask({ 8: false })).toEqual('00000000')
 })

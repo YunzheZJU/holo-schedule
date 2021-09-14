@@ -1,20 +1,6 @@
 import dayjs from 'dayjs'
-import {
-  differenceBy,
-  filter,
-  findLastIndex,
-  groupBy,
-  partition,
-  range,
-  reverse,
-} from 'lodash'
-import {
-  getChannels,
-  getEndedLives,
-  getHotnessesOfLives,
-  getMembers,
-  getOpenLives,
-} from 'requests'
+import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse } from 'lodash'
+import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
 import {
   APPEARANCE,
   CHANNELS,
@@ -30,12 +16,7 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import {
-  getUnix,
-  getUnixAfterDays,
-  getUnixBeforeDays,
-  uniqRightBy,
-} from 'utils'
+import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, uniqRightBy } from 'utils'
 import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
@@ -68,6 +49,18 @@ const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
   lives,
 )
 
+const getSubscriptionByMember = () => store.get(SUBSCRIPTION_BY_MEMBER)
+
+const setSubscriptionByMember = subscriptionByMember => store.set(
+  { [SUBSCRIPTION_BY_MEMBER]: subscriptionByMember },
+  { local: true, sync: true },
+)
+
+const updateSubscriptionByMember = (memberId, subscribed) => setSubscriptionByMember({
+  ...getSubscriptionByMember(),
+  [memberId]: subscribed,
+})
+
 const getCachedEndedLives = () => store.get(ENDED_LIVES)
 
 const syncEndedLives = async () => {
@@ -77,6 +70,7 @@ const syncEndedLives = async () => {
   ) + 1 : getUnix()
 
   const lives = filterLives(await getEndedLives({
+    membersMask: getMembersMask(getSubscriptionByMember()),
     startAfter: getUnixBeforeDays(3),
     startBefore,
     limit: 18,
@@ -97,6 +91,7 @@ const getCachedScheduledLives = () => store.get(SCHEDULED_LIVES)
 
 const syncOpenLives = async () => {
   const [currentLives, scheduledLives] = partition(filterLives(await getOpenLives({
+    membersMask: getMembersMask(getSubscriptionByMember()),
     startBefore: getUnixAfterDays(7),
   })), ({ start_at: startAt }) => dayjs().isAfter(startAt))
 
@@ -108,11 +103,9 @@ const syncOpenLives = async () => {
   const endedLives = getCachedEndedLives() ?? []
   // Skip if endedLives is empty
   if (endedLives.length > 0) {
-    const newEndedLives = differenceBy((getCachedCurrentLives() ?? []), currentLives, 'id').map(live => ({
-      ...live,
-      duration: dayjs().diff(dayjs(live['start_at']), 'second'),
-    }))
-    newEndedLives.forEach(live => {
+    differenceBy((getCachedCurrentLives() ?? []), currentLives, 'id').map(live => ({
+      ...live, duration: dayjs().diff(dayjs(live['start_at']), 'second'),
+    })).forEach(live => {
       const index = findLastIndex(
         endedLives,
         ({ start_at: startAt }) => startAt <= live['start_at'],
@@ -124,7 +117,7 @@ const syncOpenLives = async () => {
   await store.set({
     [CURRENT_LIVES]: currentLives,
     [SCHEDULED_LIVES]: scheduledLives,
-    [ENDED_LIVES]: uniqRightBy(endedLives, 'id'),
+    [ENDED_LIVES]: filterLives(uniqRightBy(endedLives, 'id')),
   })
 
   return [...currentLives, ...scheduledLives]
@@ -157,18 +150,6 @@ const syncChannels = async () => {
 
   return getCachedChannels()
 }
-
-const getSubscriptionByMember = () => store.get(SUBSCRIPTION_BY_MEMBER)
-
-const setSubscriptionByMember = subscriptionByMember => store.set(
-  { [SUBSCRIPTION_BY_MEMBER]: subscriptionByMember },
-  { local: true, sync: true },
-)
-
-const updateSubscriptionByMember = (memberId, subscribed) => setSubscriptionByMember({
-  ...getSubscriptionByMember(),
-  [memberId]: subscribed,
-})
 
 const getCachedMembers = () => store.get(MEMBERS)
 

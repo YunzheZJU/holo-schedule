@@ -3,7 +3,7 @@
     <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail" :data-hotnesses-size="hotnessSamples.length">
         <LazyImage class="cover"
-                   :src="live['cover']"
+                   :src="fakeimage"
                    :alt="live['title']"
                    :fallback-src="defaultThumbnail"
         />
@@ -238,6 +238,28 @@
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
+      fakeimage() {
+        // eslint-disable-next-line quotes
+        return `data:image/svg+xml;utf8,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' preserveAspectRatio='none'>
+<defs>
+<linearGradient id='gradient' gradientTransform='rotate(-20)'>
+<stop offset='-15.05%' stop-color='rgb(45, 66, 255)'/>
+<stop offset='104.96%' stop-color='rgb(156, 99, 250)'/>
+</linearGradient>
+<clipPath id='clip-path'>
+<path d='M14.46.25h.14a1,1,0,0,1,1,1V3.67L13.73,3.2ZM13.32,3.1,14,.25H2.1L2,.27Zm.31.5-1.2,4.81H14.6a1,1,0,0,0,1-1V4.1ZM12,8.41,13.22,3.5,1.39.55a1,1,0,0,0-.29.7V6.66a1,1,0,0,1,.3-.06A1.14,1.14,0,0,1,2.55,7.75a1.17,1.17,0,0,1-.23.66Z'/>
+</clipPath>
+</defs>
+<g clip-path='url(%23clip-path)'>
+<rect fill='url(%23gradient)' x='0' y='0' width='16' height='9'/>
+</g>
+<circle r='1' cx='1.4' cy='7.75' fill='url(%23gradient)' />
+<svg viewBox='0 0 24 24' x='0.75' y='7.1' width='1.3' height='1.3'>
+<path fill='white' d='M14.5 4.51C14.5 5.88 13.382 7 12 7c-1.373 0-2.5-1.118-2.5-2.49C9.5 3.126 10.627 2 12 2c1.382 0 2.5 1.127 2.5 2.51zm0 15c0 1.37-1.118 2.49-2.5 2.49-1.373 0-2.5-1.118-2.5-2.49C9.5 18.126 10.627 17 12 17c1.382 0 2.5 1.127 2.5 2.51zm8.5-7.5c0 2.058-1.682 3.74-3.75 3.74s-3.75-1.682-3.75-3.74c0-2.078 1.682-3.76 3.75-3.76S23 9.932 23 12.01zm-14.5 0c0 2.058-1.682 3.74-3.75 3.74S1 14.068 1 12.01c0-2.078 1.682-3.76 3.75-3.76S8.5 9.932 8.5 12.01z'/>
+</svg>
+</svg>`.replace(/\n/g, '').replace(/"/g, '\'')
+      },
     },
     methods: {
       scrollIntoView(...args) {

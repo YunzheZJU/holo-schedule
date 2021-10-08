@@ -182,6 +182,9 @@
       member() {
         return getMember(this.live)
       },
+      cover() {
+        return this.live['platform'] === 'twitter' ? browser.runtime.getURL('assets/twitter_thumbnail.svg') : this.live['cover']
+      },
       roomURL() {
         return constructUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'
       },
@@ -238,22 +241,6 @@
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
-      cover() {
-        return this.live['platform'] === 'twitter' ? `data:image/svg+xml;utf8,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' preserveAspectRatio='none'>
-<defs>
-<linearGradient id='gradient' gradientTransform='rotate(-20)'>
-<stop offset='-15.05%' stop-color='rgb(45, 66, 255)'/>
-<stop offset='104.96%' stop-color='rgb(156, 99, 250)'/>
-</linearGradient>
-</defs>
-<path fill='url(%23gradient)' d="M15.6,3.75l-2-.57a.36.36,0,0,1-.25-.44L14.07.25h.53a1,1,0,0,1,1,1ZM12.88,2.61,13.55.25H3.29l9.15,2.6A.35.35,0,0,0,12.88,2.61Zm-1.65,5.8,1.32-4.64a.36.36,0,0,0-.24-.44L1.46.25H1.4a1,1,0,0,0-1,1V7.13a1.18,1.18,0,0,1,1-.58,1.2,1.2,0,0,1,1.2,1.2,1.16,1.16,0,0,1-.22.66ZM13,3.91l-1.28,4.5H14.6a1,1,0,0,0,1-1V4.27l-2.13-.61A.36.36,0,0,0,13,3.91Z"/>
-<circle r='1' cx='1.4' cy='7.75' fill='url(%23gradient)' />
-<svg viewBox='0 0 24 24' x='0.75' y='7.1' width='1.3' height='1.3'>
-<path fill='white' d='M14.5 4.51C14.5 5.88 13.382 7 12 7c-1.373 0-2.5-1.118-2.5-2.49C9.5 3.126 10.627 2 12 2c1.382 0 2.5 1.127 2.5 2.51zm0 15c0 1.37-1.118 2.49-2.5 2.49-1.373 0-2.5-1.118-2.5-2.49C9.5 18.126 10.627 17 12 17c1.382 0 2.5 1.127 2.5 2.51zm8.5-7.5c0 2.058-1.682 3.74-3.75 3.74s-3.75-1.682-3.75-3.74c0-2.078 1.682-3.76 3.75-3.76S23 9.932 23 12.01zm-14.5 0c0 2.058-1.682 3.74-3.75 3.74S1 14.068 1 12.01c0-2.078 1.682-3.76 3.75-3.76S8.5 9.932 8.5 12.01z'/>
-</svg>
-</svg>`.replace(/\n/g, '').replace(/"/g, '\'') : this.live['cover']
-      },
     },
     methods: {
       scrollIntoView(...args) {

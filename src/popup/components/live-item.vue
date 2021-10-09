@@ -3,7 +3,7 @@
     <a class="item" :href="roomURL" target="_blank">
       <div class="thumbnail" :data-hotnesses-size="hotnessSamples.length">
         <LazyImage class="cover"
-                   :src="live['cover']"
+                   :src="cover"
                    :alt="live['title']"
                    :fallback-src="defaultThumbnail"
         />
@@ -181,6 +181,9 @@
       },
       member() {
         return getMember(this.live)
+      },
+      cover() {
+        return this.live['platform'] === 'twitter' ? browser.runtime.getURL('assets/twitter_thumbnail.svg') : this.live['cover']
       },
       roomURL() {
         return constructUrl({ ...this.live, time: this.hotnessDuration }) ?? '#'

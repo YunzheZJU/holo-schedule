@@ -53,11 +53,11 @@
           {
             name: this.$t('app.groups.newDebuts'),
             // Dummy ids are specified here to be compatible to new members
-            memberIds: range(72, 82),
+            memberIds: range(77, 87),
           },
           {
             name: this.$t('app.groups.hololive'),
-            memberIds: [62, ...without(range(1, 34), 2)],
+            memberIds: [62, ...without(range(1, 34), 2), ...range(72, 77)],
           },
           {
             name: this.$t('app.groups.holostars'),

@@ -15,6 +15,7 @@ module.exports = (env, argv) => {
 
   return {
     context: ROOT_PATH,
+    mode: isDevelopment ? 'development' : 'production',
     entry: {
       background: path.join(ROOT_PATH, 'src', 'background', 'index.js'),
       popup: path.join(ROOT_PATH, 'src', 'popup', 'index.js'),

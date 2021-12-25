@@ -22,15 +22,12 @@ module.exports = {
     'no-console': 'off',
     semi: ['error', 'never'],
     'object-curly-newline': 'off',
+    'function-paren-newline': ['error', 'consistent'],
+    'import/extensions': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/script-indent': ['error', 2, { baseIndent: 1 }],
-    'vue/max-attributes-per-line': ['error', {
-      singleline: 10,
-      multiline: {
-        max: 1,
-        allowFirstLine: true,
-      },
-    }],
+    'vue/max-attributes-per-line': ['error', { singleline: 10 }],
+    'vue/first-attribute-linebreak': ['error', { multiline: 'beside' }],
   },
   overrides: [
     {

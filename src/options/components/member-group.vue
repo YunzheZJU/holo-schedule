@@ -28,11 +28,10 @@
     </div>
     <ol class="content">
       <li v-for="member in groupMembers" :key="member['id']" class="member-container">
-        <SubscriptionInput
-          :member="member"
-          :subscribed="subscriptionByMember[member['id']]"
-          class="member"
-          @input="(subscribed) => setSubscription(member['id'], subscribed)"
+        <SubscriptionInput :member="member"
+                           :subscribed="subscriptionByMember[member['id']]"
+                           class="member"
+                           @input="(subscribed) => setSubscription(member['id'], subscribed)"
         />
       </li>
     </ol>

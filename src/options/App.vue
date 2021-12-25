@@ -5,12 +5,11 @@
     <div class="container">
       <svg class="bg">
         <defs>
-          <pattern
-            id="ptn_bg"
-            width="32"
-            height="32"
-            patternUnits="userSpaceOnUse"
-            style="color: var(--color-theme)"
+          <pattern id="ptn_bg"
+                   width="32"
+                   height="32"
+                   patternUnits="userSpaceOnUse"
+                   style="color: var(--color-theme)"
           >
             <rect x="16" y="0" width="1" height="32" fill="currentColor" />
             <rect x="0" y="16" width="32" height="1" fill="currentColor" />

@@ -122,7 +122,7 @@
             {{ startAtCalendar }}
             <span class="separator" />
           </template>
-          <template>{{ startAtFromNow }}</template>
+          {{ startAtFromNow }}
         </div>
       </div>
     </a>

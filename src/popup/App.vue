@@ -89,7 +89,7 @@
           </div>
           <div class="engine">
             <i18n path="app.settings.engine.label" :tag="false">
-              <template v-slot:link>
+              <template #link>
                 <a :href="$t('app.settings.engine.href')" target="_blank">
                   {{ $t('app.settings.engine.value') }}
                 </a>
@@ -98,7 +98,7 @@
           </div>
           <div class="contact">
             <i18n path="app.settings.contact.label" :tag="false">
-              <template v-slot:link>
+              <template #link>
                 <a :href="$t('app.settings.contact.href')" target="_blank">
                   {{ $t('app.settings.contact.value') }}
                 </a>

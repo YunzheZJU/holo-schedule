@@ -42,7 +42,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-import-resolver-webpack": "^0.12.2",
     "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-vue": "^8.2.0",
+    "eslint-plugin-vue": "^7.20.0",
     "generate-json-from-js-webpack-plugin": "^0.1.1",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^26.1.0",

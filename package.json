@@ -14,9 +14,9 @@
   ],
   "scripts": {
     "dev": "webpack --mode development --watch",
-    "dev:chrome": "webpack --mode development --chrome --watch",
+    "dev:chrome": "webpack --mode development --env chrome --watch",
     "build": "webpack --mode production",
-    "build:chrome": "webpack --mode production --chrome",
+    "build:chrome": "webpack --mode production --env chrome",
     "web-ext": "web-ext run -s dist",
     "web-ext:build": "yarn run build && web-ext build -s dist -o",
     "web-ext:build:chrome": "yarn run build:chrome && web-ext build -s dist -o",
@@ -59,7 +59,7 @@
     "vue-template-compiler": "^2.6.11",
     "web-ext": "^5.0.0",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^4.9.1"
   },
   "dependencies": {
     "core-js": "^3.6.5",

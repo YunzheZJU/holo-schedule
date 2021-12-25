@@ -22,6 +22,7 @@ module.exports = {
     'no-console': 'off',
     semi: ['error', 'never'],
     'object-curly-newline': 'off',
+    'import/extensions': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/script-indent': ['error', 2, { baseIndent: 1 }],
     'vue/max-attributes-per-line': ['error', {

@@ -51,10 +51,9 @@
         <div class="option">
           <label class="label">
             <span>{{ $t('app.settings.shouldSyncSettings.label') }}</span>
-            <input
-              type="checkbox"
-              :checked="shouldSyncSettings"
-              @change="onChangeShouldSyncSettings"
+            <input type="checkbox"
+                   :checked="shouldSyncSettings"
+                   @change="onChangeShouldSyncSettings"
             >
           </label>
           <div class="description">{{ $t('app.settings.shouldSyncSettings.description') }}</div>

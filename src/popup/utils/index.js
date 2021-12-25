@@ -3,7 +3,9 @@ import { at, clamp, range } from 'lodash'
 
 const { floor, min, max, round } = Math
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = ms => new Promise(resolve => {
+  setTimeout(resolve, ms)
+})
 
 const formatDurationFromSeconds = (input = '0') => {
   const duration = +input

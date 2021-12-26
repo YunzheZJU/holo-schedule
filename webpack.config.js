@@ -33,13 +33,6 @@ module.exports = (env, argv) => {
         {
           test: /\.vue$/,
           loader: 'vue-loader',
-          options: {
-            compilerOptions: {
-              compatConfig: {
-                MODE: 2,
-              },
-            },
-          },
         },
         {
           test: /\.css$/,
@@ -79,7 +72,6 @@ module.exports = (env, argv) => {
       extensions: ['.js', '.json', '.vue'],
       modules: [path.join(ROOT_PATH, 'src'), 'node_modules'],
       alias: {
-        vue: '@vue/compat',
         'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',
       },
     },

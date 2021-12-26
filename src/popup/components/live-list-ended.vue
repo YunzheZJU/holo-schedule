@@ -1,17 +1,10 @@
 <template>
   <ul v-if="lives.length" ref="root" class="list">
-    <template v-for="(live, index) in lives">
-      <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)"
-           :key="`anchor-${live['id']}`"
-           class="anchor"
-      >
+    <template v-for="(live, index) in lives" :key="`item-${live['id']}`">
+      <div v-if="getDateOfLive(index) !== getDateOfLive(index - 1)" class="anchor">
         <span class="date">{{ formatCalendar(lives[index]) }}</span>
       </div>
-      <LiveItem ref="items"
-                :key="`item-${live['id']}`"
-                type="ended"
-                :live="live"
-      />
+      <LiveItem ref="items" type="ended" :live="live" />
     </template>
   </ul>
 </template>

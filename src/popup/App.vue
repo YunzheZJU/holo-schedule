@@ -87,22 +87,22 @@
             {{ $t('app.settings.version', { version }) }}
           </div>
           <div class="engine">
-            <i18n path="app.settings.engine.label" :tag="false">
+            <i18n-t keypath="app.settings.engine.label">
               <template #link>
                 <a :href="$t('app.settings.engine.href')" target="_blank">
                   {{ $t('app.settings.engine.value') }}
                 </a>
               </template>
-            </i18n>
+            </i18n-t>
           </div>
           <div class="contact">
-            <i18n path="app.settings.contact.label" :tag="false">
+            <i18n-t keypath="app.settings.contact.label">
               <template #link>
                 <a :href="$t('app.settings.contact.href')" target="_blank">
                   {{ $t('app.settings.contact.value') }}
                 </a>
               </template>
-            </i18n>
+            </i18n-t>
           </div>
         </div>
       </div>

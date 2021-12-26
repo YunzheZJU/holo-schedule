@@ -1,7 +1,8 @@
 import { uniqueId } from 'lodash'
+import { reactive } from 'vue'
 
 const createEnhancedArray = () => {
-  const enhancedArray = []
+  const enhancedArray = reactive([])
 
   Object.defineProperty(enhancedArray, 'any', {
     get() {

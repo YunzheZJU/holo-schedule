@@ -41,7 +41,7 @@
           en: "English",
           ja: "日本語",
           "zh-CN": "简体中文",
-          de: "Deutsch"		  
+          de: "Deutsch"
         }
       },
       // Prompt users to switch the appearance
@@ -78,7 +78,7 @@
         // Template used to construct the description for the engine
         label: "Bei Fragen, kontaktieren Sie {link}",
         // Name of the engine. There is no need to translate this key
-        value: "help@holo.dev",
+        value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
         href: "mailto:@:app.settings.contact.value"
       }

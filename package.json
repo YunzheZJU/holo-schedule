@@ -10,7 +10,7 @@
   },
   "browserslist": [
     "Firefox >= 57",
-    "Chrome >= 57"
+    "Chrome >= 88"
   ],
   "scripts": {
     "dev": "webpack --mode development --watch",

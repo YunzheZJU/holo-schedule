@@ -167,7 +167,7 @@
       align-items: center;
       justify-content: center;
 
-      &.v-enter {
+      &.v-enter-from {
         max-height: 0;
         opacity: 0;
         transform: translateY(16px);
@@ -177,7 +177,7 @@
         transition: all .4s ease;
       }
 
-      &.v-enter-to, &.v-leave {
+      &.v-enter-to, &.v-leave-from {
         max-height: 50px;
         opacity: 1;
       }

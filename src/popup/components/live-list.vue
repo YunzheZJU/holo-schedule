@@ -55,7 +55,7 @@
         this.interval = setInterval(this.reloadLives, 10 * 1000)
       }
     },
-    beforeDestroy() {
+    beforeUnmount() {
       clearInterval(this.interval)
     },
     methods: {

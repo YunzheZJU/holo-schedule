@@ -1,7 +1,7 @@
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader')
 const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin')
 const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
 const webpack = require('webpack')
@@ -20,6 +20,9 @@ module.exports = (env, argv) => {
       background: path.join(ROOT_PATH, 'src', 'background', 'index.js'),
       popup: path.join(ROOT_PATH, 'src', 'popup', 'index.js'),
       options: path.join(ROOT_PATH, 'src', 'options', 'index.js'),
+    },
+    stats: {
+      errorDetails: true,
     },
     output: {
       filename: 'src/[name].js',
@@ -55,12 +58,22 @@ module.exports = (env, argv) => {
           test: /\.json5$/i,
           loader: 'json5-loader',
           type: 'javascript/auto',
+          include: path.resolve(__dirname, 'src/background/i18n/locales'),
+        },
+        {
+          test: /\.json5$/i,
+          loader: '@intlify/vue-i18n-loader',
+          type: 'javascript/auto',
+          exclude: path.resolve(__dirname, 'src/background/i18n/locales'),
         },
       ],
     },
     resolve: {
       extensions: ['.js', '.json', '.vue'],
       modules: [path.join(ROOT_PATH, 'src'), 'node_modules'],
+      alias: {
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',
+      },
     },
     plugins: [
       new CopyPlugin({
@@ -94,6 +107,12 @@ module.exports = (env, argv) => {
       }),
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(PACKAGE.version),
+        __VUE_OPTIONS_API__: true,
+        __VUE_PROD_DEVTOOLS__: false,
+        __VUE_I18N_FULL_INSTALL__: true,
+        __VUE_I18N_LEGACY_API__: true,
+        __VUE_I18N_PROD_DEVTOOLS__: false,
+        __INTLIFY_PROD_DEVTOOLS__: false,
       }),
     ],
     optimization: {

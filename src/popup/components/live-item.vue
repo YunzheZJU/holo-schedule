@@ -213,7 +213,7 @@
         return this.hotnessDuration ? (lDur.slice(0, lDur.length - hDur.length).replace(/\d/g, '0') + hDur) : lDur
       },
       startAt() {
-        return dayjs(this.live['start_at']).startHour(this.is30HoursEnabled ? 6 : 0)
+        return this.$i18n.locale && dayjs(this.live['start_at']).startHour(this.is30HoursEnabled ? 6 : 0)
       },
       startAtFromNow() {
         return this.startAt.fromNow()

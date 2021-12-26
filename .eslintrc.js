@@ -28,6 +28,7 @@ module.exports = {
     'vue/script-indent': ['error', 2, { baseIndent: 1 }],
     'vue/max-attributes-per-line': ['error', { singleline: 10 }],
     'vue/first-attribute-linebreak': ['error', { multiline: 'beside' }],
+    'vue/no-v-for-template-key': 'off',
   },
   overrides: [
     {

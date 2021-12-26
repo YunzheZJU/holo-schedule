@@ -5,9 +5,9 @@ const hints = createEnhancedArray()
 // hints.add({ id: 999, text: 'Default hint' })
 
 const HintPlugin = {
-  install(Vue) {
+  install(app) {
     // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$hints = hints
+    app.config.globalProperties.$hints = hints
   },
 }
 

@@ -2,13 +2,14 @@ import i18n from 'i18n'
 import 'shared/assets/iconfont'
 import 'shared/global.less'
 import store from 'store'
-import Vue from 'vue'
+import { createApp, h } from 'vue'
+import Fragment from 'vue-fragment'
 import App from './App.vue'
 
-// eslint-disable-next-line no-new
-new Vue({
-  el: '#app',
-  i18n,
-  store,
-  render: h => h(App),
-})
+const app = createApp(App)
+
+app.use(store)
+app.use(i18n)
+app.use(Fragment.Plugin, { h })
+
+app.mount('#app')

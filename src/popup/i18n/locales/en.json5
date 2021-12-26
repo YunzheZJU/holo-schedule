@@ -78,7 +78,7 @@
         // Template used to construct the description for the engine
         label: "If you have any question, please contact {link}",
         // Name of the engine. There is no need to translate this key
-        value: "help@holo.dev",
+        value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
         href: "mailto:@:app.settings.contact.value"
       }

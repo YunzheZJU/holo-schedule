@@ -30,6 +30,7 @@
         default: true,
       },
     },
+    emits: ['input'],
     methods: {
       handleChange() {
         this.$emit('input', !this.subscribed)

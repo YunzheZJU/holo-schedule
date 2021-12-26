@@ -7,9 +7,9 @@ const toasts = createEnhancedArray()
 // toasts.add({ id: 1001, type: 'info', text: 'Default info toast' })
 
 const toastPlugin = {
-  install(Vue) {
+  install(app) {
     // eslint-disable-next-line no-param-reassign
-    Vue.prototype.$toasts = toasts
+    app.config.globalProperties.$toasts = toasts
   },
 }
 

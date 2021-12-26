@@ -11,7 +11,7 @@ const ROOT_PATH = __dirname
 
 module.exports = (env, argv) => {
   const isDevelopment = argv?.mode === 'development'
-  const isChrome = Boolean(argv?.chrome)
+  const isChrome = Boolean(env?.chrome)
 
   return {
     context: ROOT_PATH,

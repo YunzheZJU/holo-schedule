@@ -4,10 +4,10 @@ import ToastPlugin from 'plugins/toast'
 import 'shared/assets/iconfont'
 import 'shared/global.less'
 import { APPEARANCE } from 'shared/store/keys'
+import workflows from 'shared/workflows'
 import store from 'store'
 import { createApp } from 'vue'
 import Fragment from 'vue-fragment'
-import browser from 'webextension-polyfill'
 import App from './App.vue'
 import './global.less'
 
@@ -21,8 +21,7 @@ app.use(ToastPlugin)
 
 app.mount('#app')
 
-const { workflows: { downloadSettings } } = browser.extension.getBackgroundPage()
-downloadSettings()
+workflows.downloadSettings()
 
 document.documentElement.dataset.theme = getComputedStyle(document.documentElement).getPropertyValue('--prefers-color-scheme').trim()
 store.subscribe(({ type, payload }) => {

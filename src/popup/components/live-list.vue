@@ -20,12 +20,12 @@
   import LiveItem from 'components/live-item'
   import HIcon from 'shared/components/h-icon'
   import { CURRENT_LIVES, SCHEDULED_LIVES } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { liveTypeValidator } from 'validators'
   import { Fragment } from 'vue-fragment'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
-  const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
+  const { syncLives } = workflows
 
   export default {
     name: 'LiveList',
@@ -52,7 +52,7 @@
       if (this.type === 'current') {
         await this.reloadLives()
 
-        this.interval = setInterval(this.reloadLives, 10 * 1000)
+        this.interval = setInterval(this.reloadLives, 60 * 1000)
       }
     },
     beforeUnmount() {

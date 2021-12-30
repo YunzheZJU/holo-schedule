@@ -26,7 +26,7 @@
           <span>{{ loadingConfig.text }}</span>
         </button>
         <div ref="scroll" class="scroll">
-          <LiveListEnded ref="liveListEnded" />
+          <LiveListEnded ref="liveListEnded" @ended="onEndLiveList" />
           <LiveList type="current" />
           <LiveList type="scheduled" />
         </div>
@@ -118,17 +118,22 @@
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
   import HIcon from 'shared/components/h-icon'
-  import { APPEARANCE, IS_30_HOURS_ENABLED, IS_NTF_ENABLED, LOCALE, SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
+  import {
+    APPEARANCE,
+    BG_INIT_ERROR,
+    IS_30_HOURS_ENABLED,
+    IS_NTF_ENABLED,
+    LOCALE,
+    SHOULD_SYNC_SETTINGS,
+  } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
   const {
-    bgInitError, workflows: {
-      toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings, toggleIs30HoursEnabled,
-      setAppearance,
-    },
-  } = browser.extension.getBackgroundPage()
+    toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings, toggleIs30HoursEnabled, setAppearance,
+  } = workflows
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
 
@@ -172,13 +177,15 @@
         shouldSyncSettings: SHOULD_SYNC_SETTINGS,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
         appearance: APPEARANCE,
+        bgInitError: BG_INIT_ERROR,
       }),
     },
     mounted() {
-      if (bgInitError) {
+      // Through store
+      if (this.bgInitError) {
         this.$toasts.add({
           type: 'error',
-          text: this.$t('app.bgInitError', { msg: bgInitError.message }),
+          text: this.$t('app.bgInitError', { msg: this.bgInitError }),
         })
       }
 
@@ -222,9 +229,9 @@
         }
         this.loadingStatus = 'loading'
 
-        const ended = await this.$refs.liveListEnded.load()
+        await this.$refs.liveListEnded.load()
 
-        this.loadingStatus = ended ? 'ended' : 'success'
+        this.loadingStatus = this.loadingStatus === 'ended' ? 'ended' : 'success'
       },
       hidePullHint() {
         this.$refs.main.scrollTo({ top: 30, behavior: 'smooth' })
@@ -256,6 +263,9 @@
       },
       onClickAdvanced() {
         return browser.runtime.openOptionsPage()
+      },
+      onEndLiveList() {
+        this.loadingStatus = 'ended'
       },
     },
   }

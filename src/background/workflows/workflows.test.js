@@ -18,7 +18,7 @@ import {
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
 import browser from 'webextension-polyfill'
-import workflows from './index'
+import workflows from './workflows'
 
 dayjs.extend(duration)
 

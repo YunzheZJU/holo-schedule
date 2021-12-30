@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin')
 const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
+const WebExtension = require('webpack-target-webextension')
 const webpack = require('webpack')
 const PACKAGE = require('./package.json')
 
@@ -83,27 +84,33 @@ module.exports = (env, argv) => {
           { from: 'src/_locales', to: '_locales' },
         ],
       }),
-      new HtmlWebpackPlugin({
-        filename: path.join('src', 'background.html'),
-        template: path.join(ROOT_PATH, 'src', 'background', 'index.template.html'),
-        chunks: ['background'],
-      }),
-      new HtmlWebpackPlugin({
-        filename: path.join('src', 'popup.html'),
-        template: path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'),
-        chunks: ['popup'],
-      }),
-      new HtmlWebpackPlugin({
-        filename: path.join('src', 'options.html'),
-        template: path.join(ROOT_PATH, 'src', 'options', 'index.template.html'),
-        chunks: ['options'],
-      }),
+      // new HtmlWebpackPlugin({
+      //   filename: path.join('src', 'background.html'),
+      //   template: path.join(ROOT_PATH, 'src', 'background', 'index.template.html'),
+      //   chunks: ['background'],
+      // }),
+      // new HtmlWebpackPlugin({
+      //   filename: path.join('src', 'popup.html'),
+      //   template: path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'),
+      //   chunks: ['popup'],
+      // }),
+      // new HtmlWebpackPlugin({
+      //   filename: path.join('src', 'options.html'),
+      //   template: path.join(ROOT_PATH, 'src', 'options', 'index.template.html'),
+      //   chunks: ['options'],
+      // }),
       new VueLoaderPlugin(),
       new ResolveEntryModulesPlugin(),
       new GenerateJsonFromJsPlugin({
         path: './src/manifest.js',
         filename: 'manifest.json',
         data: { isChrome, PACKAGE },
+      }),
+      new WebExtension({
+        background: {
+          entry: 'background',
+          manifest: 3,
+        },
       }),
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(PACKAGE.version),

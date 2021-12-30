@@ -25,14 +25,16 @@ const handleAlarm = async ({ name }) => {
 }
 
 const initOnce = async () => {
-  window.workflows = workflows
-  window.store = store
-  window.alarm = alarm
+  global.workflows = workflows
+  global.store = store
+  global.alarm = alarm
 
   await store.init()
+  await workflows.init()
   await alarm.init(store)
   await i18n.init(store)
 
+  // TODO
   await setIsPopupFirstRun(true)
 
   let lastSuccessRequestTime = 0
@@ -64,5 +66,6 @@ const init = async () => {
 
 init().then(() => console.log('[background]Init OK')).catch(err => {
   console.error(err)
-  window.bgInitError = err
+  global.bgInitError = err
+  store.set({ BG_INIT_ERROR: err.message })
 })

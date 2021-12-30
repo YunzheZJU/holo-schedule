@@ -13,10 +13,11 @@
 
 <script>
   import { IS_POPUP_FIRST_RUN } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { mapState } from 'vuex'
   import browser from 'webextension-polyfill'
 
-  const { workflows: { setIsPopupFirstRun } } = browser.extension.getBackgroundPage()
+  const { setIsPopupFirstRun } = workflows
 
   export default {
     name: 'OpeningAnim',

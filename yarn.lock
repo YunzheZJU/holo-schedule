@@ -8186,6 +8186,11 @@ webpack-sources@^3.2.2:
   resolved "https://registry.yarnpkg.com/webpack-sources/-/webpack-sources-3.2.2.tgz#d88e3741833efec57c4c789b6010db9977545260"
   integrity sha512-cp5qdmHnu5T8wRg2G3vZZHoJPN14aqQ89SyQ11NpGH5zEMDCclt49rzo+MaRazk7/UeILhAI+/sEtcM+7Fr0nw==
 
+webpack-target-webextension@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/webpack-target-webextension/-/webpack-target-webextension-1.0.2.tgz#489d95eb18a8c86beaa853e8eb444c786fe05118"
+  integrity sha512-GZnV3eCcO2q6UTYRztUDL7EP8KiXe/mkzNjcqTusKBfr/aY4l/qA5wcJTD4iptLC8zi3WC93xmkaLxPrb6P8ww==
+
 webpack@^5.65.0:
   version "5.65.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.65.0.tgz#ed2891d9145ba1f0d318e4ea4f89c3fa18e6f9be"

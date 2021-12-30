@@ -139,6 +139,7 @@
   import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructUrl } from 'shared/utils'
+  import workflows from 'shared/workflows'
   import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
@@ -148,7 +149,7 @@
   dayjs.extend(calendar)
   dayjs.extend(advancedFormat)
 
-  const { alarm, workflows: { getMember } } = browser.extension.getBackgroundPage()
+  const { getMember, isAlarmScheduled, scheduleAlarm, removeAlarm } = workflows
 
   export default {
     name: 'LiveItem',
@@ -170,6 +171,11 @@
       return {
         alarmCacheFlag: Date.now(),
         highlight: null,
+        member: {
+          name: '',
+          avatar: '',
+          color_main: 'transparent',
+        },
       }
     },
     computed: {
@@ -178,9 +184,6 @@
       },
       defaultAvatar() {
         return browser.runtime.getURL('assets/default_avatar.png')
-      },
-      member() {
-        return getMember(this.live)
       },
       cover() {
         return this.live['platform'] === 'twitter' ? browser.runtime.getURL('assets/twitter_thumbnail.svg') : this.live['cover']
@@ -235,12 +238,15 @@
         return this.startAt.format(this.$t('liveItem.startAt.full'))
       },
       isScheduled() {
-        return this.alarmCacheFlag && alarm.isScheduled(this.live)
+        return this.alarmCacheFlag && isAlarmScheduled(this.live)
       },
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
+    },
+    async mounted() {
+      this.member = await getMember(this.live)
     },
     methods: {
       scrollIntoView(...args) {
@@ -248,9 +254,9 @@
       },
       handleRemind() {
         if (this.isScheduled) {
-          alarm.remove(this.live)
+          removeAlarm(this.live)
         } else {
-          alarm.schedule(this.live)
+          scheduleAlarm(this.live)
         }
         this.alarmCacheFlag = Date.now()
       },

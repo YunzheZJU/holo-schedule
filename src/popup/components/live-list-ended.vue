@@ -16,17 +16,18 @@
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
   import { ENDED_LIVES, IS_30_HOURS_ENABLED } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
   dayjs.extend(calendar)
   dayjs.extend(advancedFormat)
 
-  const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
+  const { syncLives } = workflows
 
   export default {
     name: 'LiveListEnded',
     components: { LiveItem },
+    emits: ['ended'],
     data() {
       return {
         parentElement: null,
@@ -81,9 +82,10 @@
         let hintId
         try {
           hintId = this.$hints.add({ text: `${this.$t('liveList.lives.ended.loading')}...` })
-          const updatedLives = await syncLives('ended')
-          if (updatedLives?.[0]?.['id'] === this.lives?.[0]?.['id']) {
-            return true
+          const savedFirstLiveId = this.lives?.[0]?.['id']
+          await syncLives('ended')
+          if (savedFirstLiveId === this.lives?.[0]?.['id']) {
+            this.$emit('ended')
           }
         } catch (err) {
           console.error(err)

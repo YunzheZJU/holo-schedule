@@ -1,6 +1,7 @@
-import { cloneDeep, pull } from 'lodash'
+import { cloneDeep, noop } from 'lodash'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
 import browser from 'webextension-polyfill'
+import listen from '../ports/listen'
 
 const { storage } = browser
 
@@ -15,19 +16,6 @@ const createStore = () => {
 
   const callbacks = []
   const ports = []
-
-  const onConnect = port => {
-    if (port.name !== 'store') return
-
-    ports.push(port)
-
-    // Set default values
-    Object.entries(data).map(
-      ([key, value]) => port.postMessage({ key, value }),
-    )
-
-    port.onDisconnect.addListener(() => pull(ports, port))
-  }
 
   const uploadToSync = async () => {
     if (data[SHOULD_SYNC_SETTINGS]) {
@@ -84,12 +72,16 @@ const createStore = () => {
         await uploadToSync()
       })
 
-      browser.runtime.onConnect.addListener(onConnect)
+      listen('store', {
+        onConnect: port => Object.entries(data).forEach(([key, value]) => {
+          port.postMessage({ key, value })
+        }),
+      })
     },
     get(key) {
       return cloneDeep(data[key])
     },
-    subscribe(key = '', callback = () => null) {
+    subscribe(key = '', callback = noop) {
       callbacks.push(($key, ...args) => {
         if (key === $key) {
           callback(...args)

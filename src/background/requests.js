@@ -1,5 +1,5 @@
 /* eslint-disable no-await-in-loop */
-import { mapKeys, snakeCase } from 'lodash'
+import { mapKeys, noop, snakeCase } from 'lodash'
 
 const TARGET = 'https://holo.dev/'
 
@@ -12,7 +12,7 @@ const gatherResponse = async response => {
 
 const callbacks = []
 const onSuccessRequest = {
-  addEventListener: (callback = () => null) => {
+  addEventListener: (callback = noop) => {
     callbacks.push(callback)
   },
 }

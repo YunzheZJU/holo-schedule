@@ -1,6 +1,6 @@
 import { get } from 'lodash'
+import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
-import browser from 'webextension-polyfill'
 import workflows from 'workflows/workflows'
 import de from './locales/de.json5'
 import en from './locales/en.json5'
@@ -14,7 +14,7 @@ const i18n = {
   messages,
   locale: supportedLocales[0],
   async init(store) {
-    const localeFromBrowser = browser.i18n.getUILanguage?.() ?? navigator.language
+    const localeFromBrowser = browser.i18n.getUILanguage()
     if (supportedLocales.find(locale => locale.startsWith(localeFromBrowser))) {
       this.locale = localeFromBrowser
     }

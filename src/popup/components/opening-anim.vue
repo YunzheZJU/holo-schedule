@@ -12,10 +12,10 @@
 </template>
 
 <script>
+  import browser from 'shared/browser'
   import { IS_POPUP_FIRST_RUN } from 'shared/store/keys'
   import workflows from 'shared/workflows'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
   const { setIsPopupFirstRun } = workflows
 

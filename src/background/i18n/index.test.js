@@ -1,6 +1,6 @@
+import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
 import store from 'store'
-import browser from 'webextension-polyfill'
 import workflows from 'workflows'
 import i18n from './index'
 
@@ -42,18 +42,6 @@ test('should use browser UI language', async () => {
   browser.i18n = {
     getUILanguage: jest.fn(() => locale),
   }
-
-  await i18n.init(store)
-
-  expect(i18n.locale).toEqual(locale)
-})
-
-test('should use navigator language', async () => {
-  const locale = 'ja'
-  browser.i18n = {
-    getUILanguage: undefined,
-  }
-  global.navigator = { language: locale }
 
   await i18n.init(store)
 

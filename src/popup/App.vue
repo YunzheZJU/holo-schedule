@@ -117,6 +117,7 @@
   import OpeningAnim from 'components/opening-anim'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
+  import browser from 'shared/browser'
   import HIcon from 'shared/components/h-icon'
   import {
     APPEARANCE,
@@ -129,7 +130,6 @@
   import workflows from 'shared/workflows'
   import { sleep } from 'utils'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
   const {
     setIsNtfEnabled, setLocale, setShouldSyncSettings, setIs30HoursEnabled, setAppearance,

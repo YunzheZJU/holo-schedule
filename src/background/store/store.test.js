@@ -1,5 +1,5 @@
+import browser from 'shared/browser'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
-import browser from 'webextension-polyfill'
 import createStore from './store'
 
 const localStorage = browser.storage.local

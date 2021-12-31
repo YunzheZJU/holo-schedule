@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
+import browser from 'shared/browser'
 import {
   APPEARANCE,
   CHANNELS,
@@ -17,7 +18,6 @@ import {
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
-import browser from 'webextension-polyfill'
 import workflows from './workflows'
 
 dayjs.extend(duration)

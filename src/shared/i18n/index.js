@@ -2,15 +2,15 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/de'
 import 'dayjs/locale/ja'
 import 'dayjs/locale/zh-cn'
+import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
 import workflows from 'shared/workflows'
 import { createI18n } from 'vue-i18n'
-import browser from 'webextension-polyfill'
 
 const FALLBACK_LOCALE = 'en'
 
 export default (store, messages) => {
-  const locale = browser.i18n.getUILanguage?.() ?? navigator.language
+  const locale = browser.i18n.getUILanguage()
 
   const i18n = createI18n({
     locale,

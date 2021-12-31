@@ -1,5 +1,5 @@
 import { noop, uniqueId } from 'lodash'
-import browser from 'webextension-polyfill'
+import browser from 'shared/browser'
 
 const TIMEOUT_IN_SECOND = 10
 

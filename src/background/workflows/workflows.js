@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse } from 'lodash'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
+import browser from 'shared/browser'
 import {
   APPEARANCE,
   CHANNELS,
@@ -17,7 +18,6 @@ import {
 } from 'shared/store/keys'
 import store from 'store'
 import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, uniqRightBy } from 'utils'
-import browser from 'webextension-polyfill'
 
 const filterByTitle = lives => filter(
   lives,

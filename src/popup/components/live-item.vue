@@ -136,6 +136,7 @@
   import calendar from 'dayjs/plugin/calendar'
   import relativeTime from 'dayjs/plugin/relativeTime'
   import { floor, isNull, max, min } from 'lodash'
+  import browser from 'shared/browser'
   import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructUrl } from 'shared/utils'
@@ -143,7 +144,6 @@
   import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
   dayjs.extend(relativeTime)
   dayjs.extend(calendar)

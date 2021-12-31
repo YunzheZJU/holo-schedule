@@ -1,7 +1,7 @@
 import { cloneDeep, noop } from 'lodash'
 import listen from 'ports/listen'
+import browser from 'shared/browser'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
-import browser from 'webextension-polyfill'
 
 const { storage } = browser
 

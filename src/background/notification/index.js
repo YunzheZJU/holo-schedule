@@ -1,5 +1,5 @@
 import { noop } from 'lodash'
-import browser from 'webextension-polyfill'
+import browser from 'shared/browser'
 
 const notification = {
   async create(stringId, { title, message, iconUrl, onClick = noop }) {

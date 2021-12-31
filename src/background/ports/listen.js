@@ -1,5 +1,5 @@
 import { noop, pull } from 'lodash'
-import browser from 'webextension-polyfill'
+import browser from 'shared/browser'
 
 const portByName = {}
 

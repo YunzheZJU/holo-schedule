@@ -1,3 +1,4 @@
+const { readFileSync } = require('fs')
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -84,21 +85,21 @@ module.exports = (env, argv) => {
           { from: 'src/_locales', to: '_locales' },
         ],
       }),
-      // new HtmlWebpackPlugin({
-      //   filename: path.join('src', 'background.html'),
-      //   template: path.join(ROOT_PATH, 'src', 'background', 'index.template.html'),
-      //   chunks: ['background'],
-      // }),
-      // new HtmlWebpackPlugin({
-      //   filename: path.join('src', 'popup.html'),
-      //   template: path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'),
-      //   chunks: ['popup'],
-      // }),
-      // new HtmlWebpackPlugin({
-      //   filename: path.join('src', 'options.html'),
-      //   template: path.join(ROOT_PATH, 'src', 'options', 'index.template.html'),
-      //   chunks: ['options'],
-      // }),
+      new HtmlWebpackPlugin({
+        filename: path.join('src', 'background.html'),
+        templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'background', 'index.template.html'), 'utf8'),
+        chunks: ['background'],
+      }),
+      new HtmlWebpackPlugin({
+        filename: path.join('src', 'popup.html'),
+        templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'), 'utf8'),
+        chunks: ['popup'],
+      }),
+      new HtmlWebpackPlugin({
+        filename: path.join('src', 'options.html'),
+        templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'options', 'index.template.html'), 'utf8'),
+        chunks: ['options'],
+      }),
       new VueLoaderPlugin(),
       new ResolveEntryModulesPlugin(),
       new GenerateJsonFromJsPlugin({

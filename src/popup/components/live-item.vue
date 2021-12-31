@@ -169,13 +169,13 @@
     },
     data() {
       return {
-        alarmCacheFlag: Date.now(),
         highlight: null,
         member: {
           name: '',
           avatar: '',
           color_main: 'transparent',
         },
+        isScheduled: false,
       }
     },
     computed: {
@@ -237,9 +237,6 @@
       startAtFull() {
         return this.startAt.format(this.$t('liveItem.startAt.full'))
       },
-      isScheduled() {
-        return this.alarmCacheFlag && isAlarmScheduled(this.live)
-      },
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
@@ -247,18 +244,19 @@
     },
     async mounted() {
       this.member = await getMember(this.live)
+      this.isScheduled = await isAlarmScheduled(this.live)
     },
     methods: {
       scrollIntoView(...args) {
         this.$refs.item.scrollIntoView(...args)
       },
-      handleRemind() {
+      async handleRemind() {
         if (this.isScheduled) {
-          removeAlarm(this.live)
+          await removeAlarm(this.live)
         } else {
-          scheduleAlarm(this.live)
+          await scheduleAlarm(this.live)
         }
-        this.alarmCacheFlag = Date.now()
+        this.isScheduled = await isAlarmScheduled(this.live)
       },
       handleMousemove({ offsetX }) {
         this.highlight = offsetX / 160

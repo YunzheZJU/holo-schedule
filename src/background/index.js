@@ -3,7 +3,7 @@ import i18n from 'i18n'
 import { differenceBy, reject } from 'lodash'
 import * as requests from 'requests'
 import browser from 'shared/browser'
-import { BG_INIT_ERROR, ENDED_LIVES } from 'shared/store/keys'
+import { BG_INIT_ERROR, ENDED_LIVES, LAST_ACTIVE_TIME } from 'shared/store/keys'
 import store from 'store'
 import { getUnix } from 'utils'
 import workflows from 'workflows'
@@ -17,6 +17,17 @@ const {
   setIsPopupFirstRun,
   clearCachedEndedLives,
 } = workflows
+
+// TODO: Test
+const keepActive = async onLongSilence => {
+  const timestamp = getUnix()
+  const lastActiveTime = await store.get(LAST_ACTIVE_TIME)
+
+  await store.set({ [LAST_ACTIVE_TIME]: timestamp })
+  if (timestamp - lastActiveTime > 60 * 5) {
+    await onLongSilence()
+  }
+}
 
 const handleAlarm = async ({ name }) => {
   if (name === ALARM_NAME) {
@@ -34,17 +45,13 @@ const initOnce = async () => {
   await alarm.init(store)
   await i18n.init(store)
 
-  // TODO
-  await setIsPopupFirstRun(true)
-
-  let lastSuccessRequestTime = 0
-  requests.onSuccessRequest.addEventListener(() => {
-    const timestamp = getUnix()
-    if (timestamp - lastSuccessRequestTime > 60 * 5) {
-      clearCachedEndedLives()
-    }
-    lastSuccessRequestTime = timestamp
+  await keepActive(async () => {
+    // Use new state
+    await clearCachedEndedLives()
+    await setIsPopupFirstRun(true)
   })
+
+  requests.onSuccessRequest.addEventListener(() => keepActive(clearCachedEndedLives))
 
   store.subscribe(ENDED_LIVES, async (lives, prevLives) => workflows.syncHotnesses(
     reject(differenceBy(lives, prevLives, 'id'), 'hotnesses'),

@@ -28,7 +28,7 @@ const createStore = () => {
     }
   }
 
-  const set = async (obj, toStorage = { local: false, sync: false }) => {
+  const set = async (obj, toStorage = { local: true, sync: false }) => {
     Object.entries(obj).forEach(([key, value]) => {
       console.log(`[background/store]${key} has been stored/updated successfully.`)
 
@@ -40,8 +40,10 @@ const createStore = () => {
       port.postMessage({ key, value })
     })
     if (toStorage.local) {
+      const s = { ...await getStorage('local'), ...obj }
+      console.log('local store length', JSON.stringify(s).length)
       await storage.local.set({
-        store: { ...await getStorage('local'), ...obj },
+        store: s,
       })
     }
     if (toStorage.sync) {
@@ -54,7 +56,7 @@ const createStore = () => {
   const downloadFromSync = async () => {
     Object.assign(dataToSync, await getStorage('sync'))
     if (data[SHOULD_SYNC_SETTINGS]) {
-      await set(dataToSync)
+      await set(dataToSync, { local: false })
     }
   }
 
@@ -66,7 +68,7 @@ const createStore = () => {
     uploadToSync,
     set,
     async init() {
-      await set(await getStorage('local'))
+      await set(await getStorage('local'), { local: false })
 
       await downloadFromSync()
 

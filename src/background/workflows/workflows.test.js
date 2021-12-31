@@ -440,9 +440,11 @@ test('should set subscriptionByMember', async () => {
 test('should update subscriptionByMember', async () => {
   expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(undefined)
 
+  await store.set({ [ENDED_LIVES]: [1] })
   await workflows.updateSubscriptionByMember(1, true)
 
   expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual({ 1: true })
+  expect(store.data[ENDED_LIVES]).toEqual([])
 
   await workflows.updateSubscriptionByMember(1, false)
 

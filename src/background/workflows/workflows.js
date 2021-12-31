@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse } from 'lodash'
+import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse, slice } from 'lodash'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
 import browser from 'shared/browser'
 import {
@@ -18,6 +18,8 @@ import {
 } from 'shared/store/keys'
 import store from 'store'
 import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, uniqRightBy } from 'utils'
+
+const MAX_LIVES_LENGTH = 100
 
 const filterByTitle = lives => filter(
   lives,
@@ -49,17 +51,15 @@ const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
   lives,
 )
 
+// TODO: Add test
+const trimLives = lives => slice(lives, Math.max(lives.length - MAX_LIVES_LENGTH, 0), lives.length)
+
 const getSubscriptionByMember = () => store.get(SUBSCRIPTION_BY_MEMBER)
 
 const setSubscriptionByMember = subscriptionByMember => store.set(
   { [SUBSCRIPTION_BY_MEMBER]: subscriptionByMember },
-  { local: true, sync: true },
+  { sync: true },
 )
-
-const updateSubscriptionByMember = (memberId, subscribed) => setSubscriptionByMember({
-  ...getSubscriptionByMember(),
-  [memberId]: subscribed,
-})
 
 const getCachedEndedLives = () => store.get(ENDED_LIVES)
 
@@ -77,13 +77,21 @@ const syncEndedLives = async () => {
   }))
 
   await store.set({
-    [ENDED_LIVES]: uniqRightBy([...reverse(lives), ...cashedLives], 'id'),
+    [ENDED_LIVES]: trimLives(uniqRightBy([...reverse(lives), ...cashedLives], 'id')),
   })
 
   return getCachedEndedLives()
 }
 
 const clearCachedEndedLives = () => store.set({ [ENDED_LIVES]: [] })
+
+const updateSubscriptionByMember = async (memberId, subscribed) => {
+  await setSubscriptionByMember({
+    ...getSubscriptionByMember(),
+    [memberId]: subscribed,
+  })
+  await clearCachedEndedLives()
+}
 
 const getCachedCurrentLives = () => store.get(CURRENT_LIVES)
 
@@ -117,8 +125,10 @@ const syncOpenLives = async () => {
   await store.set({
     [CURRENT_LIVES]: currentLives,
     [SCHEDULED_LIVES]: scheduledLives,
-    [ENDED_LIVES]: filterLives(uniqRightBy(endedLives, 'id')),
+    [ENDED_LIVES]: trimLives(filterLives(uniqRightBy(endedLives, 'id'))),
   })
+
+  console.log(await store.get(ENDED_LIVES))
 
   return [...currentLives, ...scheduledLives]
 }
@@ -146,7 +156,7 @@ const getCachedChannels = () => store.get(CHANNELS)
 const syncChannels = async () => {
   const channels = await getChannels()
 
-  await store.set({ [CHANNELS]: channels }, { local: true })
+  await store.set({ [CHANNELS]: channels })
 
   return getCachedChannels()
 }
@@ -157,7 +167,7 @@ const syncMembers = async () => {
   const members = await getMembers()
   const subscriptionByMember = await getSubscriptionByMember() ?? {}
 
-  await store.set({ [MEMBERS]: members }, { local: true })
+  await store.set({ [MEMBERS]: members })
 
   await setSubscriptionByMember({
     ...Object.fromEntries(members.map(({ id }) => ([id, true]))),
@@ -193,33 +203,33 @@ const getMember = live => {
 
 const setIsNtfEnabled = boolean => store.set(
   { [IS_NTF_ENABLED]: boolean },
-  { local: true, sync: true },
+  { sync: true },
 )
 
 const getLocale = () => store.get(LOCALE)
 
 const setLocale = locale => store.set(
   { [LOCALE]: locale },
-  { local: true, sync: true },
+  { sync: true },
 )
 
-const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
+const setIsPopupFirstRun = boolean => store.set(
+  { [IS_POPUP_FIRST_RUN]: boolean },
+)
 
 const setShouldSyncSettings = boolean => store.set(
   { [SHOULD_SYNC_SETTINGS]: boolean },
-  { local: true },
 )
 
 const downloadSettings = store.downloadFromSync
 
 const setIs30HoursEnabled = boolean => store.set(
   { [IS_30_HOURS_ENABLED]: boolean },
-  { local: true, sync: true },
+  { sync: true },
 )
 
 const setAppearance = appearance => store.set(
   { [APPEARANCE]: appearance },
-  { local: true },
 )
 
 export default {

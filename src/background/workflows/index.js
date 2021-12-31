@@ -4,18 +4,19 @@ import workflows from './workflows'
 
 const allWorkflows = {
   ...workflows,
-  isAlarmScheduled: alarm.isScheduled,
-  scheduleAlarm: alarm.schedule,
-  removeAlarm: alarm.remove,
+  isAlarmScheduled: (...args) => alarm.isScheduled(...args),
+  scheduleAlarm: (...args) => alarm.schedule(...args),
+  removeAlarm: (...args) => alarm.remove(...args),
 }
 
 const init = () => {
+  console.log('[background/workflows]listening to workflows')
   listen('workflows', {
     onMessage: async ({ name, args }) => {
       const { [name]: workflow } = allWorkflows
 
       const response = workflow && await workflow(...args)
-      console.log('background workflows on message', name, response)
+      console.log('[background/workflows]workflows on message', name, response)
       return response
     },
   })

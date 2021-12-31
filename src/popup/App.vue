@@ -87,7 +87,7 @@
             {{ $t('app.settings.version', { version }) }}
           </div>
           <div class="engine">
-            <i18n-t keypath="app.settings.engine.label">
+            <i18n-t keypath="app.settings.engine.label" scope="global">
               <template #link>
                 <a :href="$t('app.settings.engine.href')" target="_blank">
                   {{ $t('app.settings.engine.value') }}
@@ -96,7 +96,7 @@
             </i18n-t>
           </div>
           <div class="contact">
-            <i18n-t keypath="app.settings.contact.label">
+            <i18n-t keypath="app.settings.contact.label" scope="global">
               <template #link>
                 <a :href="$t('app.settings.contact.href')" target="_blank">
                   {{ $t('app.settings.contact.value') }}
@@ -132,7 +132,7 @@
   import browser from 'webextension-polyfill'
 
   const {
-    toggleIsNtfEnabled, setLocale, toggleShouldSyncSettings, toggleIs30HoursEnabled, setAppearance,
+    setIsNtfEnabled, setLocale, setShouldSyncSettings, setIs30HoursEnabled, setAppearance,
   } = workflows
 
   const ratioThreshold = { high: 0.99, low: 0.01 }
@@ -246,14 +246,14 @@
       onClickSettings() {
         this.route = this.route === 'settings' ? 'main' : 'settings'
       },
-      onChangeIsNtfEnabled() {
-        return toggleIsNtfEnabled()
+      onChangeIsNtfEnabled(event) {
+        return setIsNtfEnabled(event.target.checked)
       },
-      onChangeIs30HoursEnabled() {
-        return toggleIs30HoursEnabled()
+      onChangeIs30HoursEnabled(event) {
+        return setIs30HoursEnabled(event.target.checked)
       },
-      onChangeShouldSyncSettings() {
-        return toggleShouldSyncSettings()
+      onChangeShouldSyncSettings(event) {
+        return setShouldSyncSettings(event.target.checked)
       },
       onChangeAppearance(event) {
         return setAppearance(event.target.value)

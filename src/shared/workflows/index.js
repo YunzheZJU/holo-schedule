@@ -4,7 +4,7 @@ const port = create('workflows')
 
 const workflows = new Proxy({}, {
   get(target, name, receiver) {
-    console.log('on workflow', name, Date.now())
+    console.log('[shared/ports]on create workflow', name, Date.now())
     if (name in target) {
       return Reflect.get(target, name, receiver)
     }

@@ -19,6 +19,13 @@ jest.mock('./locales/zh-CN.json5', () => ({
   },
 }))
 
+beforeEach(() => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const prop of Object.getOwnPropertyNames(store.data)) {
+    delete store.data[prop]
+  }
+})
+
 test('should use default locale', async () => {
   const locale = 'fr'
   browser.i18n = {
@@ -41,6 +48,18 @@ test('should use browser UI language', async () => {
   expect(i18n.locale).toEqual(locale)
 })
 
+test('should use navigator language', async () => {
+  const locale = 'ja'
+  browser.i18n = {
+    getUILanguage: undefined,
+  }
+  global.navigator = { language: locale }
+
+  await i18n.init(store)
+
+  expect(i18n.locale).toEqual(locale)
+})
+
 test('should use browser UI language with partial match', async () => {
   const locale = 'zh'
   browser.i18n = {
@@ -56,6 +75,7 @@ test('should use locale from store', async () => {
   const locale = 'fr'
   workflows.getLocale = jest.fn(() => locale)
 
+  await store.set({ [LOCALE]: locale })
   await i18n.init(store)
 
   expect(i18n.locale).toEqual(locale)

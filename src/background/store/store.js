@@ -1,7 +1,7 @@
 import { cloneDeep, noop } from 'lodash'
+import listen from 'ports/listen'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
 import browser from 'webextension-polyfill'
-import listen from '../ports/listen'
 
 const { storage } = browser
 
@@ -15,7 +15,12 @@ const createStore = () => {
   const dataToSync = {}
 
   const callbacks = []
-  const ports = []
+  console.log('[background/store]listening to store')
+  const port = listen('store', {
+    onConnect: $port => Object.entries(data).forEach(([key, value]) => {
+      $port.postMessage({ key, value })
+    }),
+  })
 
   const uploadToSync = async () => {
     if (data[SHOULD_SYNC_SETTINGS]) {
@@ -25,16 +30,14 @@ const createStore = () => {
 
   const set = async (obj, toStorage = { local: false, sync: false }) => {
     Object.entries(obj).forEach(([key, value]) => {
-      console.log(`[store]${key} has been stored/updated successfully.`)
+      console.log(`[background/store]${key} has been stored/updated successfully.`)
 
       const oldValue = data[key]
       data[key] = value
 
       callbacks.forEach(callback => callback(key, value, oldValue))
 
-      ports.forEach(port => {
-        port.postMessage({ key, value })
-      })
+      port.postMessage({ key, value })
     })
     if (toStorage.local) {
       await storage.local.set({
@@ -59,7 +62,6 @@ const createStore = () => {
     data,
     dataToSync,
     callbacks,
-    ports,
     downloadFromSync,
     uploadToSync,
     set,
@@ -70,12 +72,6 @@ const createStore = () => {
 
       this.subscribe(SHOULD_SYNC_SETTINGS, async () => {
         await uploadToSync()
-      })
-
-      listen('store', {
-        onConnect: port => Object.entries(data).forEach(([key, value]) => {
-          port.postMessage({ key, value })
-        }),
       })
     },
     get(key) {

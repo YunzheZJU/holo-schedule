@@ -18,11 +18,11 @@ const notification = {
           reader.readAsDataURL(blob)
         }))
         .catch(err => {
-          console.log('Failed to download icon', err.message)
+          console.log('[background/notification]Failed to download icon', err.message)
           return browser.runtime.getURL('assets/default_avatar.png')
         }),
     })
-    console.log('Successfully created a notification')
+    console.log('[background/notification]Successfully created a notification')
 
     const handleClicked = notificationId => {
       if (notificationId !== stringId) return

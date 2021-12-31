@@ -8,7 +8,7 @@ const portByName = {}
 const pendingMessageById = {}
 
 const setPendingMessage = (id, { name, message, res, rej }) => {
-  console.log('setPendingMessage', id)
+  console.log('[shared/ports]setPendingMessage', id)
   pendingMessageById[id] = {
     id,
     name,
@@ -30,49 +30,49 @@ const connectPort = () => {
   }
 
   port = browser.runtime.connect({ name: 'port' })
-  console.log('shared/ports connect port', port, Date.now())
+  console.log('[shared/ports]connect port', port, Date.now())
 
-  port.onMessage.addListener(async ({ isResponse, id, name, data }) => {
+  port.onMessage.addListener(async ({ isResponse, id, name, message }) => {
     if (isResponse) {
       const pendingMessage = pendingMessageById[id]
       if (pendingMessage) {
         clearTimeout(pendingMessage.timer)
-        pendingMessage.res(data)
-        console.log(`clean pendingMessage ${id}`)
+        pendingMessage.res(message)
+        console.log(`[shared/ports]clear pendingMessage ${id}`)
         delete pendingMessageById[id]
       } else {
         console.error(`Fail to find pendingMessage ${id}`, pendingMessageById, Object.keys(pendingMessageById))
       }
     } else {
-      const response = await portByName[name].onMessage(data)
+      const response = await portByName[name].onMessage(message)
       if (!port) {
-        console.log('connectPort @4', Date.now())
+        console.log('[shared/ports]connectPort @4', Date.now())
         connectPort()
       }
-      port.postMessage({ isResponse: true, id, name, data: response })
+      port.postMessage({ isResponse: true, id, name, message: response })
     }
   })
 
   port.onDisconnect.addListener(() => {
-    console.log(`!!!!!!!!!!!!!!!!!shared/ports port ${port} disconnected!`, Date.now())
+    console.log(`[shared/ports]!!!!!!!!!!shared/ports port ${port} disconnected!`, Date.now())
     port = null
   })
 
   Object.values(pendingMessageById).forEach(({ id, name, message, res, rej, timer }) => {
     clearTimeout(timer)
     setPendingMessage(id, { res, rej, name, message })
-    console.log('postMessage @1', Date.now())
+    console.log('[shared/ports]postMessage in migration', Date.now())
     port.postMessage({ isResponse: false, id, name, message })
   })
 }
 
-console.log('connectPort @1', Date.now())
+console.log('[shared/ports]connectPort on init', Date.now())
 connectPort()
 
 browser.runtime.onMessage.addListener((message, _, sendResponse) => {
-  console.log('on message', Date.now())
+  console.log('[shared/ports]on message', Date.now())
   if (message === 'background alive') {
-    console.log('connectPort @2', Date.now())
+    console.log('[shared/ports]connectPort on background message', Date.now())
     connectPort()
     sendResponse('hi from shared/ports')
   }
@@ -85,7 +85,7 @@ const create = (name, { onMessage = noop } = {}) => {
       const id = uniqueId()
       setPendingMessage(id, { res, rej, name, message })
       if (!port) {
-        console.log('connectPort @3', Date.now())
+        console.log('[shared/ports]connectPort before postMessage', Date.now())
         connectPort()
       }
       port.postMessage({ isResponse: false, id, name, message })

@@ -97,7 +97,7 @@ const syncOpenLives = async () => {
 
   await browser.action.setBadgeText({ text: currentLives.length.toString() })
 
-  console.log(`[syncLives]Badge text has been set to ${currentLives.length}`)
+  console.log(`[background/workflow]Badge text has been set to ${currentLives.length}`)
 
   // Subscription is simplified cause here is the only mutation of currentLives
   const endedLives = getCachedEndedLives() ?? []
@@ -191,8 +191,8 @@ const getMember = live => {
   return members.find(({ id }) => id === channel['member_id']) ?? {}
 }
 
-const toggleIsNtfEnabled = () => store.set(
-  { [IS_NTF_ENABLED]: !store.get(IS_NTF_ENABLED) },
+const setIsNtfEnabled = boolean => store.set(
+  { [IS_NTF_ENABLED]: boolean },
   { local: true, sync: true },
 )
 
@@ -205,15 +205,15 @@ const setLocale = locale => store.set(
 
 const setIsPopupFirstRun = boolean => store.set({ [IS_POPUP_FIRST_RUN]: boolean })
 
-const toggleShouldSyncSettings = () => store.set(
-  { [SHOULD_SYNC_SETTINGS]: !store.get(SHOULD_SYNC_SETTINGS) },
+const setShouldSyncSettings = boolean => store.set(
+  { [SHOULD_SYNC_SETTINGS]: boolean },
   { local: true },
 )
 
 const downloadSettings = store.downloadFromSync
 
-const toggleIs30HoursEnabled = () => store.set(
-  { [IS_30_HOURS_ENABLED]: !store.get(IS_30_HOURS_ENABLED) },
+const setIs30HoursEnabled = boolean => store.set(
+  { [IS_30_HOURS_ENABLED]: boolean },
   { local: true, sync: true },
 )
 
@@ -239,15 +239,15 @@ export default {
   getCachedLives,
   syncLives,
   getMember,
-  toggleIsNtfEnabled,
+  setIsNtfEnabled,
   getLocale,
   setLocale,
   setIsPopupFirstRun,
-  toggleShouldSyncSettings,
+  setShouldSyncSettings,
   downloadSettings,
   getSubscriptionByMember,
   setSubscriptionByMember,
   updateSubscriptionByMember,
-  toggleIs30HoursEnabled,
+  setIs30HoursEnabled,
   setAppearance,
 }

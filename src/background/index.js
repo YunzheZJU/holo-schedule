@@ -53,11 +53,11 @@ const initOnce = async () => {
   browser.alarms.onAlarm.addListener(handleAlarm)
   browser.alarms.create(ALARM_NAME, { periodInMinutes: 60 })
 
-  console.log('background send message', Date.now())
+  console.log('[background]send message', Date.now())
   browser.runtime.sendMessage('background alive').then(response => {
-    console.log(`background on message response: ${response}`, Date.now())
+    console.log(`[background]on message response: ${response}`, Date.now())
   }).catch(err => {
-    console.log('background on message error', err, Date.now())
+    console.log('[background]on message error', err, Date.now())
   })
 }
 
@@ -66,7 +66,7 @@ const initRetryable = () => Promise.all([syncOpenLives(), syncChannels(), syncMe
 const init = async () => {
   await initOnce()
   await initRetryable().catch(() => {
-    console.log('Retrying...')
+    console.log('[background]Retrying...')
     return initRetryable()
   })
 }

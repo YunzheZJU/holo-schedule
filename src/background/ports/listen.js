@@ -6,7 +6,7 @@ const portByName = {}
 const ports = []
 
 browser.runtime.onConnect.addListener(port => {
-  console.log('background ports/receive on connect', port.name)
+  console.log('[background/ports]on connect', port.name)
   if (port.name !== 'port') return
 
   ports.push(port)
@@ -15,14 +15,20 @@ browser.runtime.onConnect.addListener(port => {
     $port.onConnect($port)
   })
 
-  port.onMessage.addListener(async ({ isResponse, id, name, data }) => {
+  port.onMessage.addListener(async ({ isResponse, id, name, message }) => {
     if (isResponse) {
       // Not supported
-    } else {
-      const response = await portByName[name].onMessage(data)
-      console.log('background workflows respond message', name, id, response)
-      port.postMessage({ isResponse: true, id, name, data: response })
+      return
     }
+
+    if (!portByName[name]) {
+      console.log(`[background/ports]failed to find port ${name}`)
+      return
+    }
+
+    const response = await portByName[name].onMessage(message)
+    console.log('[background/ports]respond message', name, id, response)
+    port.postMessage({ isResponse: true, id, name, message: response })
   })
 
   port.onDisconnect.addListener(() => pull(ports, port))

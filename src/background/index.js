@@ -3,7 +3,7 @@ import i18n from 'i18n'
 import { differenceBy, reject } from 'lodash'
 import * as requests from 'requests'
 import browser from 'shared/browser'
-import { ENDED_LIVES } from 'shared/store/keys'
+import { BG_INIT_ERROR, ENDED_LIVES } from 'shared/store/keys'
 import store from 'store'
 import { getUnix } from 'utils'
 import workflows from 'workflows'
@@ -74,5 +74,5 @@ const init = async () => {
 init().then(() => console.log('[background]Init OK')).catch(err => {
   console.error(err)
   global.bgInitError = err
-  store.set({ BG_INIT_ERROR: err.message })
+  return store.set({ [BG_INIT_ERROR]: err.message })
 })

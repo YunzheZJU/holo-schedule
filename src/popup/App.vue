@@ -180,15 +180,15 @@
         bgInitError: BG_INIT_ERROR,
       }),
     },
-    mounted() {
-      // Through store
-      if (this.bgInitError) {
+    watch: {
+      bgInitError(msg) {
         this.$toasts.add({
           type: 'error',
-          text: this.$t('app.bgInitError', { msg: this.bgInitError }),
+          text: this.$t('app.bgInitError', { msg }),
         })
-      }
-
+      },
+    },
+    mounted() {
       const intersectionObserver = new IntersectionObserver(
         this.onIntersectionChange, {
           root: this.$refs.main,

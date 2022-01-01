@@ -28,7 +28,7 @@ const createStore = () => {
     }
   }
 
-  const set = async (obj, toStorage = { local: true, sync: false }) => {
+  const set = async (obj, { local = true, sync = false } = { local: true, sync: false }) => {
     Object.entries(obj).forEach(([key, value]) => {
       console.log(`[background/store]${key} has been stored/updated successfully.`)
 
@@ -39,14 +39,14 @@ const createStore = () => {
 
       port.postMessage({ key, value })
     })
-    if (toStorage.local) {
+    if (local) {
       const s = { ...await getStorage('local'), ...obj }
       console.log('local store length', JSON.stringify(s).length)
       await storage.local.set({
         store: s,
       })
     }
-    if (toStorage.sync) {
+    if (sync) {
       Object.assign(dataToSync, obj)
 
       await uploadToSync()

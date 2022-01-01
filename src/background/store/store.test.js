@@ -31,12 +31,13 @@ test('should use storage', async () => {
   expect(localStorage.set).toHaveBeenCalledTimes(1)
   expect(syncStorage.set).toHaveBeenCalledTimes(0)
   await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { sync: true })
-  expect(localStorage.set).toHaveBeenCalledTimes(1)
+  expect(localStorage.set).toHaveBeenCalledTimes(2)
   expect(syncStorage.set).toHaveBeenCalledTimes(0)
   await store.set(
     { a: 'string', b: 1, c: { name: 'object' }, [SHOULD_SYNC_SETTINGS]: true },
     { sync: true },
   )
+  expect(localStorage.set).toHaveBeenCalledTimes(3)
   expect(syncStorage.set).toHaveBeenCalledTimes(1)
 })
 

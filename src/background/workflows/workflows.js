@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse, slice } from 'lodash'
+import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse } from 'lodash'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
 import browser from 'shared/browser'
 import {
@@ -17,9 +17,9 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, uniqRightBy } from 'utils'
+import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, limitRight, uniqRightBy } from 'utils'
 
-const MAX_LIVES_LENGTH = 100
+const MAX_LIVES_LENGTH = 10
 
 const filterByTitle = lives => filter(
   lives,
@@ -51,9 +51,6 @@ const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
   lives,
 )
 
-// TODO: Add test
-const trimLives = lives => slice(lives, Math.max(lives.length - MAX_LIVES_LENGTH, 0), lives.length)
-
 const getSubscriptionByMember = () => store.get(SUBSCRIPTION_BY_MEMBER)
 
 const setSubscriptionByMember = subscriptionByMember => store.set(
@@ -77,7 +74,7 @@ const syncEndedLives = async () => {
   }))
 
   await store.set({
-    [ENDED_LIVES]: trimLives(uniqRightBy([...reverse(lives), ...cashedLives], 'id')),
+    [ENDED_LIVES]: limitRight(uniqRightBy([...reverse(lives), ...cashedLives], 'id'), MAX_LIVES_LENGTH),
   })
 
   return getCachedEndedLives()
@@ -125,7 +122,7 @@ const syncOpenLives = async () => {
   await store.set({
     [CURRENT_LIVES]: currentLives,
     [SCHEDULED_LIVES]: scheduledLives,
-    [ENDED_LIVES]: trimLives(filterLives(uniqRightBy(endedLives, 'id'))),
+    [ENDED_LIVES]: limitRight(filterLives(uniqRightBy(endedLives, 'id')), MAX_LIVES_LENGTH),
   })
 
   console.log(await store.get(ENDED_LIVES))

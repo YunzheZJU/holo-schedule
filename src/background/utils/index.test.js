@@ -1,5 +1,13 @@
 import dayjs from 'dayjs'
-import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, isGuerrillaLive, uniqRightBy } from './index'
+import {
+  getMembersMask,
+  getUnix,
+  getUnixAfterDays,
+  getUnixBeforeDays,
+  isGuerrillaLive,
+  limitRight,
+  uniqRightBy,
+} from './index'
 
 const getUnixTime = () => Math.floor(Date.now() / 1000)
 
@@ -67,4 +75,12 @@ test('should get member mask', () => {
   expect(getMembersMask({ 1: false, 3: true })).toEqual('001')
   expect(getMembersMask({ 1: false, 3: true, 8: false })).toEqual('00100000')
   expect(getMembersMask({ 8: false })).toEqual('00000000')
+})
+
+test('should limit array length from right', () => {
+  const array = [1, 2]
+  expect(limitRight(array, 0)).toEqual([])
+  expect(limitRight(array, 1)).toEqual([2])
+  expect(limitRight(array, 2)).toEqual([1, 2])
+  expect(limitRight(array, 3)).toEqual([1, 2])
 })

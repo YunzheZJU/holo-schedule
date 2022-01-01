@@ -53,6 +53,10 @@
     updated() {
       const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
 
+      if (scrollHeightDiff === 0) {
+        return
+      }
+
       const newScrollTop = this.savedScrollTop + scrollHeightDiff
 
       this.parentElement.scrollTop = newScrollTop

@@ -52,7 +52,7 @@
       if (this.type === 'current') {
         await this.reloadLives()
 
-        this.interval = setInterval(this.reloadLives, 60 * 1000)
+        this.interval = setInterval(this.reloadLives, 10 * 1000)
       }
     },
     beforeUnmount() {

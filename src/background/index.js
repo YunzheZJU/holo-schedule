@@ -57,7 +57,7 @@ const initOnce = async () => {
   ))
 
   browser.alarms.onAlarm.addListener(handleAlarm)
-  browser.alarms.create(ALARM_NAME, { periodInMinutes: 60 })
+  browser.alarms.create(ALARM_NAME, { periodInMinutes: 1 })
 
   console.log('[background]send message')
   browser.runtime.sendMessage('background alive').catch(err => {
@@ -80,6 +80,7 @@ const init = async () => {
 }
 
 browser.runtime.onStartup.addListener(async () => {
+  console.log('[background]on start up')
   shouldCleanState = true
 })
 

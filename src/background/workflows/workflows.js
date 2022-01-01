@@ -19,7 +19,7 @@ import {
 import store from 'store'
 import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, limitRight, uniqRightBy } from 'utils'
 
-const MAX_LIVES_LENGTH = 10
+const MAX_LIVES_LENGTH = 250
 
 const filterByTitle = lives => filter(
   lives,
@@ -124,8 +124,6 @@ const syncOpenLives = async () => {
     [SCHEDULED_LIVES]: scheduledLives,
     [ENDED_LIVES]: limitRight(filterLives(uniqRightBy(endedLives, 'id')), MAX_LIVES_LENGTH),
   })
-
-  console.log(await store.get(ENDED_LIVES))
 
   return [...currentLives, ...scheduledLives]
 }

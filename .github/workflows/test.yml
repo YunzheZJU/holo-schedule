@@ -38,6 +38,6 @@ jobs:
       - name: Lint CSS
         run: yarn run lint:css
 
-      # Test building
-      - name: Test Building
-        run: yarn run build
+      # Lint extension, for Firefox build only
+      - name: Lint extension for Firefox build
+        run: yarn run build && yarn run lint:ext

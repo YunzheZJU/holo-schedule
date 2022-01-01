@@ -7,6 +7,7 @@ const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin'
 const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
 const WebExtension = require('webpack-target-webextension')
 const webpack = require('webpack')
+const { compact } = require('lodash')
 const PACKAGE = require('./package.json')
 
 const ROOT_PATH = __dirname
@@ -77,7 +78,7 @@ module.exports = (env, argv) => {
         'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',
       },
     },
-    plugins: [
+    plugins: compact([
       new CopyPlugin({
         patterns: [
           { from: 'src/icons', to: 'icons' },
@@ -85,7 +86,7 @@ module.exports = (env, argv) => {
           { from: 'src/_locales', to: '_locales' },
         ],
       }),
-      new HtmlWebpackPlugin({
+      isChrome ? undefined : new HtmlWebpackPlugin({
         filename: path.join('src', 'background.html'),
         templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'background', 'index.template.html'), 'utf8'),
         chunks: ['background'],
@@ -107,7 +108,7 @@ module.exports = (env, argv) => {
         filename: 'manifest.json',
         data: { isChrome, PACKAGE },
       }),
-      new WebExtension({
+      isChrome && new WebExtension({
         background: {
           entry: 'background',
           manifest: 3,
@@ -122,7 +123,7 @@ module.exports = (env, argv) => {
         __VUE_I18N_PROD_DEVTOOLS__: false,
         __INTLIFY_PROD_DEVTOOLS__: false,
       }),
-    ],
+    ]),
     optimization: {
       splitChunks: {
         cacheGroups: {

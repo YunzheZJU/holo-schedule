@@ -40,11 +40,7 @@ const createStore = () => {
       port.postMessage({ key, value })
     })
     if (local) {
-      const s = { ...await getStorage('local'), ...obj }
-      console.log('local store length', JSON.stringify(s).length)
-      await storage.local.set({
-        store: s,
-      })
+      await storage.local.set({ store: { ...await getStorage('local'), ...obj } })
     }
     if (sync) {
       Object.assign(dataToSync, obj)

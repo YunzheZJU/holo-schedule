@@ -15,6 +15,13 @@ browser.runtime.onConnect.addListener(port => {
     $port.onConnect($port)
   })
 
+  // eslint-disable-next-line no-param-reassign
+  port.originalPostMessage = port.postMessage
+  // eslint-disable-next-line no-param-reassign
+  port.postMessage = message => {
+    port.originalPostMessage(browser.isChrome ? message : JSON.parse(JSON.stringify(message)))
+  }
+
   port.onMessage.addListener(async ({ isResponse, id, name, message }) => {
     if (isResponse) {
       // Not supported

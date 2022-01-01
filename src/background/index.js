@@ -18,14 +18,13 @@ const {
   clearCachedEndedLives,
 } = workflows
 
-// TODO: Test
-const keepActive = async onLongSilence => {
+const keepActive = async afterLongSilence => {
   const timestamp = getUnix()
   const lastActiveTime = await store.get(LAST_ACTIVE_TIME)
 
   await store.set({ [LAST_ACTIVE_TIME]: timestamp })
   if (timestamp - lastActiveTime > 60 * 5) {
-    await onLongSilence()
+    await afterLongSilence()
   }
 }
 

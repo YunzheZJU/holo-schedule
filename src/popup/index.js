@@ -19,9 +19,11 @@ app.use(Fragment.Plugin)
 app.use(HintPlugin)
 app.use(ToastPlugin)
 
-app.mount('#app')
-
 workflows.downloadSettings()
+
+workflows.ping().finally(() => {
+  app.mount('#app')
+})
 
 document.documentElement.dataset.theme = getComputedStyle(document.documentElement).getPropertyValue('--prefers-color-scheme').trim()
 store.subscribe(({ type, payload }) => {

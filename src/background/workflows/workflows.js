@@ -232,6 +232,8 @@ const setAppearance = appearance => store.set(
   { [APPEARANCE]: appearance },
 )
 
+const ping = () => null
+
 export default {
   filterByTitle,
   filterBySubscription,
@@ -260,4 +262,5 @@ export default {
   updateSubscriptionByMember,
   setIs30HoursEnabled,
   setAppearance,
+  ping,
 }

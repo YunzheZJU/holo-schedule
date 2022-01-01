@@ -1,7 +1,7 @@
 import { noop, uniqueId } from 'lodash'
 import browser from 'shared/browser'
 
-const TIMEOUT_IN_SECOND = 10
+const TIMEOUT_IN_SECOND = 5
 
 const portByName = {}
 

@@ -15,9 +15,7 @@ const init = () => {
     onMessage: async ({ name, args }) => {
       const { [name]: workflow } = allWorkflows
 
-      const response = workflow && await workflow(...args)
-      console.log('[background/workflows]workflows on message', name, response)
-      return response
+      return workflow && workflow(...args)
     },
   })
 }

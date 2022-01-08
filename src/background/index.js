@@ -59,7 +59,6 @@ const initOnce = async () => {
   browser.alarms.onAlarm.addListener(handleAlarm)
   browser.alarms.create(ALARM_NAME, { periodInMinutes: 1 })
 
-  console.log('[background]send message')
   browser.runtime.sendMessage('background alive').catch(err => {
     if (err.message.startsWith('Could not establish connection.')) {
       console.log('[background]on message error. Keep calm, this error is in expect.')

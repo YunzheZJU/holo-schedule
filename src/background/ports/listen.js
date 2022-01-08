@@ -34,7 +34,6 @@ browser.runtime.onConnect.addListener(port => {
     }
 
     const response = await portByName[name].onMessage(message)
-    console.log('[background/ports]respond message', name, id, response)
     port.postMessage({ isResponse: true, id, name, message: response })
   })
 

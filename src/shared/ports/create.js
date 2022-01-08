@@ -8,7 +8,6 @@ const portByName = {}
 const pendingMessageById = {}
 
 const setPendingMessage = (id, { name, message, res, rej }) => {
-  console.log('[shared/ports]setPendingMessage', id)
   pendingMessageById[id] = {
     id,
     name,
@@ -45,7 +44,6 @@ const connectPort = () => {
       if (pendingMessage) {
         clearTimeout(pendingMessage.timer)
         pendingMessage.res(message)
-        console.log(`[shared/ports]clear pendingMessage ${id}`)
         delete pendingMessageById[id]
       } else {
         console.error(`Fail to find pendingMessage ${id}`, pendingMessageById, Object.keys(pendingMessageById))
@@ -53,7 +51,6 @@ const connectPort = () => {
     } else {
       const response = await portByName[name].onMessage(message)
       if (!port) {
-        console.log('[shared/ports]connectPort @4')
         connectPort()
       }
       port.postMessage({ isResponse: true, id, name, message: response })
@@ -61,23 +58,20 @@ const connectPort = () => {
   })
 
   port.onDisconnect.addListener(() => {
-    console.log(`[shared/ports]!!!!!!!!!!shared/ports port ${port} disconnected!`)
+    console.log(`[shared/ports]shared/ports port ${port} disconnected!`)
     port = null
   })
 
   Object.values(pendingMessageById).forEach(({ id, name, message, res, rej, timer }) => {
     clearTimeout(timer)
     setPendingMessage(id, { res, rej, name, message })
-    console.log('[shared/ports]postMessage in migration')
     port.postMessage({ isResponse: false, id, name, message })
   })
 }
 
-console.log('[shared/ports]connectPort on init')
 connectPort()
 
 browser.runtime.onMessage.addListener(message => {
-  console.log('[shared/ports]on message')
   if (message === 'background alive') {
     console.log('[shared/ports]connectPort on background message')
     connectPort()

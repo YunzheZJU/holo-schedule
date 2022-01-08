@@ -2,28 +2,37 @@ import dayjs from 'dayjs'
 import 'dayjs/locale/de'
 import 'dayjs/locale/ja'
 import 'dayjs/locale/zh-cn'
+import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
+import workflows from 'shared/workflows'
 import { createI18n } from 'vue-i18n'
-import browser from 'webextension-polyfill'
+
+const FALLBACK_LOCALE = 'en'
 
 export default (store, messages) => {
-  const locale = browser.extension.getBackgroundPage().workflows.getLocale()
+  const locale = browser.i18n.getUILanguage()
 
   const i18n = createI18n({
     locale,
-    fallbackLocale: 'en',
+    fallbackLocale: FALLBACK_LOCALE,
     silentFallbackWarn: true,
     messages,
   })
 
-  dayjs.locale(locale.toLowerCase())
+  const updateLocale = $locale => {
+    i18n.global.locale = $locale
+    dayjs.locale($locale?.toLowerCase?.() ?? FALLBACK_LOCALE)
+  }
 
-  store.subscribe(({ type, payload: $locale }) => {
+  updateLocale(locale)
+
+  store.subscribe(({ type, payload }) => {
     if (type === LOCALE) {
-      i18n.global.locale = $locale
-      dayjs.locale($locale.toLowerCase())
+      updateLocale(payload)
     }
   })
+
+  workflows.getLocale().then(updateLocale)
 
   return i18n
 }

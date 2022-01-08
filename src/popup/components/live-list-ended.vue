@@ -16,17 +16,18 @@
   import advancedFormat from 'dayjs/plugin/advancedFormat'
   import calendar from 'dayjs/plugin/calendar'
   import { ENDED_LIVES, IS_30_HOURS_ENABLED } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
   dayjs.extend(calendar)
   dayjs.extend(advancedFormat)
 
-  const { workflows: { syncLives } } = browser.extension.getBackgroundPage()
+  const { syncLives } = workflows
 
   export default {
     name: 'LiveListEnded',
     components: { LiveItem },
+    emits: ['ended'],
     data() {
       return {
         parentElement: null,
@@ -43,47 +44,35 @@
     },
     mounted() {
       this.parentElement = this.$parent.$refs.scroll
+      this.parentElement.scrollTop = this.$refs.root?.clientHeight ?? this.parentElement.scrollTop
     },
     beforeUpdate() {
       this.savedScrollHeight = this.parentElement.scrollHeight
       this.savedScrollTop = this.parentElement.scrollTop
     },
     updated() {
-      const isFirstRun = !this.$SKIP_THE_FIRST_RUN
-      this.$SKIP_THE_FIRST_RUN = true
       const scrollHeightDiff = this.parentElement.scrollHeight - this.savedScrollHeight
 
       if (scrollHeightDiff === 0) {
-        setTimeout(() => {
-          this.parentElement.scrollTop = (isFirstRun && this.$refs.root?.clientHeight)
-            || this.parentElement.scrollTop
-        }, 0)
         return
       }
 
       const newScrollTop = this.savedScrollTop + scrollHeightDiff
 
-      if (isFirstRun) {
-        // On the first render of LiveListEnded, the other live lists have not been yet rendered.
-        // 540 - 2 * 40 pre-calculates the space in the scroll container and is added to the diff.
-        setTimeout(() => {
-          this.parentElement.scrollTop = newScrollTop + 540 - 2 * 40
-        }, 0)
-      } else {
-        this.parentElement.scrollTop = newScrollTop
-        setTimeout(() => {
-          this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
-        }, 0)
-      }
+      this.parentElement.scrollTop = newScrollTop
+      setTimeout(() => {
+        this.parentElement.scrollTo({ top: newScrollTop - 50, behavior: 'smooth' })
+      }, 0)
     },
     methods: {
       async load() {
         let hintId
         try {
           hintId = this.$hints.add({ text: `${this.$t('liveList.lives.ended.loading')}...` })
-          const updatedLives = await syncLives('ended')
-          if (updatedLives?.[0]?.['id'] === this.lives?.[0]?.['id']) {
-            return true
+          const savedFirstLiveId = this.lives?.[0]?.['id']
+          await syncLives('ended')
+          if (savedFirstLiveId === this.lives?.[0]?.['id']) {
+            this.$emit('ended')
           }
         } catch (err) {
           console.error(err)

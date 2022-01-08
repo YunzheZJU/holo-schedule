@@ -12,11 +12,12 @@
 </template>
 
 <script>
+  import browser from 'shared/browser'
   import { IS_POPUP_FIRST_RUN } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
-  const { workflows: { setIsPopupFirstRun } } = browser.extension.getBackgroundPage()
+  const { setIsPopupFirstRun } = workflows
 
   export default {
     name: 'OpeningAnim',
@@ -59,7 +60,7 @@
     background: var(--color-bg-base);
     filter: brightness(var(--brightness));
     cursor: pointer;
-    animation: .5s cubic-bezier(0.5, 1, 0.89, 1) 2.5s both fade-out;
+    animation: .5s cubic-bezier(0.5, 1, 0.89, 1) 2s both fade-out;
   }
 
   @keyframes rotate {
@@ -80,7 +81,7 @@
     z-index: -1;
     background: var(--color-theme);
     transform-origin: bottom left;
-    animation: 0.5s cubic-bezier(0.32, 0, 0.67, 0) 1s both rotate;
+    animation: 0.5s cubic-bezier(0.32, 0, 0.67, 0) 0.5s both rotate;
   }
 
   @keyframes scale-easeOutElastic {
@@ -136,9 +137,9 @@
 
   .container {
     overflow: hidden;
-    animation: .5s .5s both scale-easeOutElastic,
-    1s cubic-bezier(0.33, 1, 0.68, 1) 1.5s both expand-width,
-    .5s cubic-bezier(0.5, -0.8, 0.5, 1) 2.5s both zoom-in;
+    animation: .5s 0s both scale-easeOutElastic,
+    1s cubic-bezier(0.33, 1, 0.68, 1) 1s both expand-width,
+    .5s cubic-bezier(0.5, -0.8, 0.5, 1) 2s both zoom-in;
 
     .logo {
       width: 270px;

@@ -43,11 +43,11 @@
   import { compact, find } from 'lodash'
   import HIcon from 'shared/components/h-icon'
   import { MEMBERS, SUBSCRIPTION_BY_MEMBER } from 'shared/store/keys'
+  import workflows from 'shared/workflows'
   import { Fragment } from 'vue-fragment'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
-  const { workflows: { updateSubscriptionByMember } } = browser.extension.getBackgroundPage()
+  const { updateSubscriptionByMember } = workflows
 
   export default {
     name: 'MemberGroup',

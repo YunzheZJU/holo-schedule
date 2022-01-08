@@ -1,6 +1,7 @@
-import { cloneDeep, pull } from 'lodash'
+import { cloneDeep, noop } from 'lodash'
+import listen from 'ports/listen'
+import browser from 'shared/browser'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
-import browser from 'webextension-polyfill'
 
 const { storage } = browser
 
@@ -14,20 +15,12 @@ const createStore = () => {
   const dataToSync = {}
 
   const callbacks = []
-  const ports = []
-
-  const onConnect = port => {
-    if (port.name !== 'store') return
-
-    ports.push(port)
-
-    // Set default values
-    Object.entries(data).map(
-      ([key, value]) => port.postMessage({ key, value }),
-    )
-
-    port.onDisconnect.addListener(() => pull(ports, port))
-  }
+  console.log('[background/store]listening to store')
+  const port = listen('store', {
+    onConnect: $port => Object.entries(data).forEach(([key, value]) => {
+      $port.postMessage({ key, value })
+    }),
+  })
 
   const uploadToSync = async () => {
     if (data[SHOULD_SYNC_SETTINGS]) {
@@ -35,25 +28,21 @@ const createStore = () => {
     }
   }
 
-  const set = async (obj, toStorage = { local: false, sync: false }) => {
+  const set = async (obj, { local = true, sync = false } = { local: true, sync: false }) => {
     Object.entries(obj).forEach(([key, value]) => {
-      console.log(`[store]${key} has been stored/updated successfully.`)
+      console.log(`[background/store]${key} has been stored/updated successfully.`)
 
       const oldValue = data[key]
       data[key] = value
 
       callbacks.forEach(callback => callback(key, value, oldValue))
 
-      ports.forEach(port => {
-        port.postMessage({ key, value })
-      })
+      port.postMessage({ key, value })
     })
-    if (toStorage.local) {
-      await storage.local.set({
-        store: { ...await getStorage('local'), ...obj },
-      })
+    if (local) {
+      await storage.local.set({ store: { ...await getStorage('local'), ...obj } })
     }
-    if (toStorage.sync) {
+    if (sync) {
       Object.assign(dataToSync, obj)
 
       await uploadToSync()
@@ -63,7 +52,7 @@ const createStore = () => {
   const downloadFromSync = async () => {
     Object.assign(dataToSync, await getStorage('sync'))
     if (data[SHOULD_SYNC_SETTINGS]) {
-      await set(dataToSync)
+      await set(dataToSync, { local: false })
     }
   }
 
@@ -71,25 +60,22 @@ const createStore = () => {
     data,
     dataToSync,
     callbacks,
-    ports,
     downloadFromSync,
     uploadToSync,
     set,
     async init() {
-      await set(await getStorage('local'))
+      await set(await getStorage('local'), { local: false })
 
       await downloadFromSync()
 
       this.subscribe(SHOULD_SYNC_SETTINGS, async () => {
         await uploadToSync()
       })
-
-      browser.runtime.onConnect.addListener(onConnect)
     },
     get(key) {
       return cloneDeep(data[key])
     },
-    subscribe(key = '', callback = () => null) {
+    subscribe(key = '', callback = noop) {
       callbacks.push(($key, ...args) => {
         if (key === $key) {
           callback(...args)

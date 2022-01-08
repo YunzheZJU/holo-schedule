@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import { max, min, range, reverse, uniqBy } from 'lodash'
+import { max, min, range, reverse, slice, uniqBy } from 'lodash'
 
 dayjs.extend(isSameOrAfter)
 
@@ -20,6 +20,10 @@ const getMembersMask = subscriptionByMember => (subscriptionByMember ? range(
   1, min([(max(Object.keys(subscriptionByMember).map(Number)) || 0) + 1, 256]),
 ).map(memberId => Number(subscriptionByMember[memberId] || false)).join('') : undefined)
 
+const limitRight = (array, limit) => slice(
+  array, Math.max(array.length - limit, 0), array.length,
+)
+
 export {
   getUnixAfterDays,
   getUnixBeforeDays,
@@ -27,4 +31,5 @@ export {
   isGuerrillaLive,
   uniqRightBy,
   getMembersMask,
+  limitRight,
 }

@@ -1,6 +1,7 @@
 import createStore from 'shared/store/create'
 import {
   APPEARANCE,
+  BG_INIT_ERROR,
   CURRENT_LIVES,
   ENDED_LIVES,
   IS_30_HOURS_ENABLED,
@@ -21,6 +22,7 @@ const store = createStore({
   [SHOULD_SYNC_SETTINGS]: false,
   [IS_30_HOURS_ENABLED]: false,
   [APPEARANCE]: 'device',
+  [BG_INIT_ERROR]: undefined,
 })
 
 export default store

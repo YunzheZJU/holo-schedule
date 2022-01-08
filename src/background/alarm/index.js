@@ -1,16 +1,12 @@
 import i18n from 'i18n'
 import { differenceBy, find, uniqBy } from 'lodash'
 import notification from 'notification'
+import browser from 'shared/browser'
 import { createEnhancedArray } from 'shared/lib/enhancedArray'
-import {
-  CURRENT_LIVES,
-  IS_NTF_ENABLED,
-  SCHEDULED_LIVES,
-} from 'shared/store/keys'
+import { CURRENT_LIVES, IS_NTF_ENABLED, SCHEDULED_LIVES } from 'shared/store/keys'
 import { constructUrl } from 'shared/utils'
 import { isGuerrillaLive } from 'utils'
-import browser from 'webextension-polyfill'
-import workflows from 'workflows'
+import workflows from 'workflows/workflows'
 
 const alarm = {
   $defaultIsNtfEnabled: true,
@@ -47,7 +43,7 @@ const alarm = {
       iconUrl: member['avatar'] ?? browser.runtime.getURL('assets/default_avatar.png'),
       onClick() {
         browser.tabs.create({ url: constructUrl(live) }).then(
-          () => console.log('Successfully created a tab'),
+          () => console.log('[background/alarm]Successfully created a tab'),
         )
       },
     })
@@ -55,7 +51,7 @@ const alarm = {
   async init(store) {
     this.$store = store
 
-    await store.set({ [IS_NTF_ENABLED]: this.getIsNtfEnabled() }, { local: true })
+    await store.set({ [IS_NTF_ENABLED]: this.getIsNtfEnabled() })
 
     store.subscribe(CURRENT_LIVES, (lives, prevLives) => {
       // Skip the first run

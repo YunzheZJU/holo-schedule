@@ -41,7 +41,7 @@
 <script>
   import MemberGroup from 'components/member-group'
   import { range, without } from 'lodash'
-  import browser from 'webextension-polyfill'
+  import browser from 'shared/browser'
 
   export default {
     name: 'App',

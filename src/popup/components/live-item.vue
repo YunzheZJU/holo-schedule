@@ -136,19 +136,20 @@
   import calendar from 'dayjs/plugin/calendar'
   import relativeTime from 'dayjs/plugin/relativeTime'
   import { floor, isNull, max, min } from 'lodash'
+  import browser from 'shared/browser'
   import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
   import { constructUrl } from 'shared/utils'
+  import workflows from 'shared/workflows'
   import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
   import { mapState } from 'vuex'
-  import browser from 'webextension-polyfill'
 
   dayjs.extend(relativeTime)
   dayjs.extend(calendar)
   dayjs.extend(advancedFormat)
 
-  const { alarm, workflows: { getMember } } = browser.extension.getBackgroundPage()
+  const { getMember, isAlarmScheduled, scheduleAlarm, removeAlarm } = workflows
 
   export default {
     name: 'LiveItem',
@@ -168,8 +169,13 @@
     },
     data() {
       return {
-        alarmCacheFlag: Date.now(),
         highlight: null,
+        member: {
+          name: '',
+          avatar: '',
+          color_main: 'transparent',
+        },
+        isScheduled: false,
       }
     },
     computed: {
@@ -178,9 +184,6 @@
       },
       defaultAvatar() {
         return browser.runtime.getURL('assets/default_avatar.png')
-      },
-      member() {
-        return getMember(this.live)
       },
       cover() {
         return this.live['platform'] === 'twitter' ? browser.runtime.getURL('assets/twitter_thumbnail.svg') : this.live['cover']
@@ -234,25 +237,26 @@
       startAtFull() {
         return this.startAt.format(this.$t('liveItem.startAt.full'))
       },
-      isScheduled() {
-        return this.alarmCacheFlag && alarm.isScheduled(this.live)
-      },
       ...mapState({
         isNtfEnabled: IS_NTF_ENABLED,
         is30HoursEnabled: IS_30_HOURS_ENABLED,
       }),
     },
+    async mounted() {
+      this.member = await getMember(this.live)
+      this.isScheduled = await isAlarmScheduled(this.live)
+    },
     methods: {
       scrollIntoView(...args) {
         this.$refs.item.scrollIntoView(...args)
       },
-      handleRemind() {
+      async handleRemind() {
         if (this.isScheduled) {
-          alarm.remove(this.live)
+          await removeAlarm(this.live)
         } else {
-          alarm.schedule(this.live)
+          await scheduleAlarm(this.live)
         }
-        this.alarmCacheFlag = Date.now()
+        this.isScheduled = await isAlarmScheduled(this.live)
       },
       handleMousemove({ offsetX }) {
         this.highlight = offsetX / 160

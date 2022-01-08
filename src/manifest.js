@@ -1,5 +1,5 @@
 module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
-  manifest_version: 2,
+  manifest_version: isChrome ? 3 : 2,
   name: '__MSG_extensionName__',
   description: '__MSG_extensionDescription__',
   version: PACKAGE.version,
@@ -19,9 +19,13 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     'storage',
   ],
   background: {
-    page: 'src/background.html',
+    ...(isChrome ? {
+      service_worker: 'src/background.js',
+    } : {
+      page: 'src/background.html',
+    }),
   },
-  browser_action: {
+  [isChrome ? 'action' : 'browser_action']: {
     [isChrome ? 'chrome_style' : 'browser_style']: false,
     default_title: '__MSG_browserActionTitle__',
     default_icon: {
@@ -31,16 +35,14 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     default_popup: 'src/popup.html',
   },
   options_ui: {
-    [isChrome ? 'chrome_style' : 'browser_style']: false,
     page: 'src/options.html',
     open_in_tab: true,
+    ...(isChrome ? {} : {
+      browser_style: false,
+    }),
   },
-  web_accessible_resources: [
-    'assets/*',
-    'icons/*',
-  ],
   ...(isChrome ? {
-    minimum_chrome_version: '57.0',
+    minimum_chrome_version: '88.0',
   } : {
     browser_specific_settings: {
       gecko: {

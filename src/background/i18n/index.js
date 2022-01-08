@@ -1,7 +1,7 @@
 import { get } from 'lodash'
+import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
-import browser from 'webextension-polyfill'
-import workflows from 'workflows'
+import workflows from 'workflows/workflows'
 import de from './locales/de.json5'
 import en from './locales/en.json5'
 import ja from './locales/ja.json5'
@@ -22,7 +22,7 @@ const i18n = {
     const localeFromStore = workflows.getLocale()
     this.locale = localeFromStore ?? this.locale
 
-    await store.set({ [LOCALE]: this.locale }, { local: true })
+    await store.set({ [LOCALE]: this.locale })
 
     store.subscribe(LOCALE, locale => {
       this.locale = locale

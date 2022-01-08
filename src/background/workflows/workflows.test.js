@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
+import browser from 'shared/browser'
 import {
   APPEARANCE,
   CHANNELS,
@@ -17,8 +18,7 @@ import {
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
-import browser from 'webextension-polyfill'
-import workflows from './index'
+import workflows from './workflows'
 
 dayjs.extend(duration)
 
@@ -30,6 +30,7 @@ beforeEach(() => {
   for (const prop of Object.getOwnPropertyNames(store.data)) {
     delete store.data[prop]
   }
+  browser.action = browser.browserAction
 })
 
 test('should filter lives by title', async () => {
@@ -140,7 +141,7 @@ test('should sync ended lives', async () => {
   expect(getEndedLives).toHaveBeenCalledWith({
     startAfter: getUnixBeforeDays(3),
     startBefore: getUnix(),
-    limit: 18,
+    limit: 25,
   })
   expect(store.data[ENDED_LIVES]).toEqual(returnValueExpectedOne)
   expect(returnValueOne).toEqual(returnValueExpectedOne)
@@ -159,7 +160,7 @@ test('should sync ended lives', async () => {
   expect(getEndedLives).toHaveBeenCalledWith({
     startAfter: getUnixBeforeDays(3),
     startBefore: getUnix(returnValueExpectedOne[0].start_at) + 1,
-    limit: 18,
+    limit: 25,
   })
   expect(store.data[ENDED_LIVES]).toEqual(returnValueExpectedTwo)
   expect(returnValueTwo).toEqual(returnValueExpectedTwo)
@@ -175,7 +176,7 @@ test('should sync ended lives', async () => {
   expect(getEndedLives).toHaveBeenCalledWith({
     startAfter: getUnixBeforeDays(3),
     startBefore: getUnix(returnValueExpectedTwo[0].start_at) + 1,
-    limit: 18,
+    limit: 25,
   })
   expect(store.data[ENDED_LIVES]).toEqual(returnValueExpectedThree)
   expect(returnValueThree).toEqual(returnValueExpectedThree)
@@ -439,9 +440,11 @@ test('should set subscriptionByMember', async () => {
 test('should update subscriptionByMember', async () => {
   expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(undefined)
 
+  await store.set({ [ENDED_LIVES]: [1] })
   await workflows.updateSubscriptionByMember(1, true)
 
   expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual({ 1: true })
+  expect(store.data[ENDED_LIVES]).toEqual([])
 
   await workflows.updateSubscriptionByMember(1, false)
 
@@ -490,14 +493,14 @@ test('should get member info', async () => {
   expect(workflows.getMember(liveThree)).toEqual({})
 })
 
-test('should toggle isNtfEnabled', async () => {
+test('should set isNtfEnabled', async () => {
   await store.set({ [IS_NTF_ENABLED]: false })
 
-  await workflows.toggleIsNtfEnabled()
+  await workflows.setIsNtfEnabled(true)
 
   expect(store.data[IS_NTF_ENABLED]).toEqual(true)
 
-  await workflows.toggleIsNtfEnabled()
+  await workflows.setIsNtfEnabled(false)
 
   expect(store.data[IS_NTF_ENABLED]).toEqual(false)
 })
@@ -534,26 +537,26 @@ test('should set isPopupFirstRun', async () => {
   expect(store.data[IS_POPUP_FIRST_RUN]).toEqual(false)
 })
 
-test('should toggle shouldSyncSettings', async () => {
+test('should set shouldSyncSettings', async () => {
   await store.set({ [SHOULD_SYNC_SETTINGS]: false })
 
-  await workflows.toggleShouldSyncSettings()
+  await workflows.setShouldSyncSettings(true)
 
   expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(true)
 
-  await workflows.toggleShouldSyncSettings()
+  await workflows.setShouldSyncSettings(false)
 
   expect(store.data[SHOULD_SYNC_SETTINGS]).toEqual(false)
 })
 
-test('should toggle is30HoursEnabled', async () => {
+test('should set is30HoursEnabled', async () => {
   await store.set({ [IS_30_HOURS_ENABLED]: false })
 
-  await workflows.toggleIs30HoursEnabled()
+  await workflows.setIs30HoursEnabled(true)
 
   expect(store.data[IS_30_HOURS_ENABLED]).toEqual(true)
 
-  await workflows.toggleIs30HoursEnabled()
+  await workflows.setIs30HoursEnabled(false)
 
   expect(store.data[IS_30_HOURS_ENABLED]).toEqual(false)
 })

@@ -1,16 +1,15 @@
-import browser from 'webextension-polyfill'
-
-let port
+import create from 'shared/ports/create'
 
 const connect = store => {
-  port = browser.runtime.connect({ name: 'store' })
-  port.onMessage.addListener(({ key, value }) => {
-    // Ignore unwanted state changes
-    if (!Object.getOwnPropertyDescriptor(store.state, key)) {
-      return
-    }
+  create('store', {
+    onMessage: (({ key, value }) => {
+      // Ignore unwanted state changes
+      if (!Object.getOwnPropertyDescriptor(store.state, key)) {
+        return
+      }
 
-    store.commit(key, value)
+      store.commit(key, value)
+    }),
   })
 }
 

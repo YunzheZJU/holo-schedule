@@ -3,13 +3,11 @@
 </template>
 
 <script>
-  let observer
-
   const ratioThreshold = 0.01
 
   const transparent = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
-  const onIntersectionChange = entries => {
+  const onIntersectionChange = (entries, observer) => {
     entries.forEach(({ intersectionRatio: ratio, target, target: { style, dataset: { src } } }) => {
       if (ratio >= ratioThreshold) {
         const image = new Image()
@@ -29,6 +27,8 @@
       }
     })
   }
+
+  let observer
 
   export default {
     name: 'LazyImage',
@@ -61,6 +61,9 @@
       )
       observer.observe(this.$refs.image)
       this.$refs.image.style.backgroundImage = `url("${this.fallbackSrc}")`
+    },
+    updated() {
+      observer.observe(this.$refs.image)
     },
   }
 </script>

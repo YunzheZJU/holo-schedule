@@ -1,5 +1,5 @@
+import browser from 'shared/browser'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
-import browser from 'webextension-polyfill'
 import createStore from './store'
 
 const localStorage = browser.storage.local
@@ -13,41 +13,36 @@ test('should init', async () => {
 })
 
 test('should set and get value', async () => {
-  const store = await createStore()
+  const store = createStore()
 
-  await store.set({ a: 'string', b: 1, c: { name: 'object' } })
+  await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { local: false })
   expect(store.get('a')).toEqual('string')
   expect(store.get('b')).toEqual(1)
   expect(store.get('c')).toEqual({ name: 'object' })
 })
 
 test('should use storage', async () => {
-  const store = await createStore()
+  const store = createStore()
 
-  await store.set({ d: 'other value' })
+  await store.set({ d: 'other value' }, { local: false })
   expect(localStorage.set).toHaveBeenCalledTimes(0)
   expect(syncStorage.set).toHaveBeenCalledTimes(0)
-  await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { local: true })
+  await store.set({ a: 'string', b: 1, c: { name: 'object' } })
   expect(localStorage.set).toHaveBeenCalledTimes(1)
   expect(syncStorage.set).toHaveBeenCalledTimes(0)
   await store.set({ a: 'string', b: 1, c: { name: 'object' } }, { sync: true })
-  expect(localStorage.set).toHaveBeenCalledTimes(1)
+  expect(localStorage.set).toHaveBeenCalledTimes(2)
   expect(syncStorage.set).toHaveBeenCalledTimes(0)
   await store.set(
     { a: 'string', b: 1, c: { name: 'object' }, [SHOULD_SYNC_SETTINGS]: true },
     { sync: true },
   )
+  expect(localStorage.set).toHaveBeenCalledTimes(3)
   expect(syncStorage.set).toHaveBeenCalledTimes(1)
-  await store.set(
-    { a: 'string', b: 1, c: { name: 'object' } },
-    { local: true, sync: true },
-  )
-  expect(localStorage.set).toHaveBeenCalledTimes(2)
-  expect(syncStorage.set).toHaveBeenCalledTimes(2)
 })
 
 test('should subscribe live', async () => {
-  const store = await createStore()
+  const store = createStore()
 
   const callbackFn = jest.fn()
   store.subscribe('lives', callbackFn)

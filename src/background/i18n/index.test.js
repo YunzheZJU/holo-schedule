@@ -1,6 +1,6 @@
+import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
 import store from 'store'
-import browser from 'webextension-polyfill'
 import workflows from 'workflows'
 import i18n from './index'
 
@@ -18,6 +18,13 @@ jest.mock('./locales/zh-CN.json5', () => ({
     baz: 'Hi, {name}.',
   },
 }))
+
+beforeEach(() => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const prop of Object.getOwnPropertyNames(store.data)) {
+    delete store.data[prop]
+  }
+})
 
 test('should use default locale', async () => {
   const locale = 'fr'
@@ -56,6 +63,7 @@ test('should use locale from store', async () => {
   const locale = 'fr'
   workflows.getLocale = jest.fn(() => locale)
 
+  await store.set({ [LOCALE]: locale })
   await i18n.init(store)
 
   expect(i18n.locale).toEqual(locale)

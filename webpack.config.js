@@ -1,10 +1,13 @@
+const { readFileSync } = require('fs')
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const ResolveEntryModulesPlugin = require('resolve-entry-modules-webpack-plugin')
 const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin')
+const WebExtension = require('webpack-target-webextension')
 const webpack = require('webpack')
+const { compact } = require('lodash')
 const PACKAGE = require('./package.json')
 
 const ROOT_PATH = __dirname
@@ -75,7 +78,7 @@ module.exports = (env, argv) => {
         'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',
       },
     },
-    plugins: [
+    plugins: compact([
       new CopyPlugin({
         patterns: [
           { from: 'src/icons', to: 'icons' },
@@ -83,19 +86,19 @@ module.exports = (env, argv) => {
           { from: 'src/_locales', to: '_locales' },
         ],
       }),
-      new HtmlWebpackPlugin({
+      isChrome ? undefined : new HtmlWebpackPlugin({
         filename: path.join('src', 'background.html'),
-        template: path.join(ROOT_PATH, 'src', 'background', 'index.template.html'),
+        templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'background', 'index.template.html'), 'utf8'),
         chunks: ['background'],
       }),
       new HtmlWebpackPlugin({
         filename: path.join('src', 'popup.html'),
-        template: path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'),
+        templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'popup', 'index.template.html'), 'utf8'),
         chunks: ['popup'],
       }),
       new HtmlWebpackPlugin({
         filename: path.join('src', 'options.html'),
-        template: path.join(ROOT_PATH, 'src', 'options', 'index.template.html'),
+        templateContent: readFileSync(path.join(ROOT_PATH, 'src', 'options', 'index.template.html'), 'utf8'),
         chunks: ['options'],
       }),
       new VueLoaderPlugin(),
@@ -104,6 +107,12 @@ module.exports = (env, argv) => {
         path: './src/manifest.js',
         filename: 'manifest.json',
         data: { isChrome, PACKAGE },
+      }),
+      isChrome && new WebExtension({
+        background: {
+          entry: 'background',
+          manifest: 3,
+        },
       }),
       new webpack.DefinePlugin({
         VERSION: JSON.stringify(PACKAGE.version),
@@ -114,7 +123,7 @@ module.exports = (env, argv) => {
         __VUE_I18N_PROD_DEVTOOLS__: false,
         __INTLIFY_PROD_DEVTOOLS__: false,
       }),
-    ],
+    ]),
     optimization: {
       splitChunks: {
         cacheGroups: {

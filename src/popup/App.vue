@@ -189,6 +189,13 @@
       },
     },
     mounted() {
+      if (this.bgInitError) {
+        this.$toasts.add({
+          type: 'error',
+          text: this.$t('app.bgInitError', { msg: this.bgInitError }),
+        })
+      }
+
       const intersectionObserver = new IntersectionObserver(
         this.onIntersectionChange, {
           root: this.$refs.main,

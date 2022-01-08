@@ -1,7 +1,7 @@
 import { noop, uniqueId } from 'lodash'
 import browser from 'shared/browser'
 
-const TIMEOUT_IN_SECOND = 5
+const TIMEOUT_IN_SECOND = 10
 
 const portByName = {}
 
@@ -38,12 +38,16 @@ const connectPort = () => {
     port.originalPostMessage(browser.isChrome ? message : JSON.parse(JSON.stringify(message)))
   }
 
-  port.onMessage.addListener(async ({ isResponse, id, name, message }) => {
+  port.onMessage.addListener(async ({ isResponse, id, name, message, error }) => {
     if (isResponse) {
       const pendingMessage = pendingMessageById[id]
       if (pendingMessage) {
         clearTimeout(pendingMessage.timer)
-        pendingMessage.res(message)
+        if (error) {
+          pendingMessage.rej(new Error(error))
+        } else {
+          pendingMessage.res(message)
+        }
         delete pendingMessageById[id]
       } else {
         console.error(`Fail to find pendingMessage ${id}`, pendingMessageById, Object.keys(pendingMessageById))

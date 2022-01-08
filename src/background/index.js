@@ -86,5 +86,5 @@ browser.runtime.onStartup.addListener(async () => {
 init().then(() => console.log('[background]Init OK')).catch(err => {
   console.error(err)
   global.bgInitError = err
-  return store.set({ [BG_INIT_ERROR]: err.message })
+  return store.set({ [BG_INIT_ERROR]: err.message }, { local: false })
 })

@@ -19,7 +19,11 @@ browser.runtime.onConnect.addListener(port => {
   port.originalPostMessage = port.postMessage
   // eslint-disable-next-line no-param-reassign
   port.postMessage = message => {
-    port.originalPostMessage(browser.isChrome ? message : JSON.parse(JSON.stringify(message)))
+    try {
+      port.originalPostMessage(browser.isChrome ? message : JSON.parse(JSON.stringify(message)))
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   port.onMessage.addListener(async ({ isResponse, id, name, message }) => {
@@ -33,8 +37,12 @@ browser.runtime.onConnect.addListener(port => {
       return
     }
 
-    const response = await portByName[name].onMessage(message)
-    port.postMessage({ isResponse: true, id, name, message: response })
+    try {
+      const response = await portByName[name].onMessage(message)
+      port.postMessage({ isResponse: true, id, name, message: response })
+    } catch (error) {
+      port.postMessage({ isResponse: true, id, name, error: error.message })
+    }
   })
 
   port.onDisconnect.addListener(() => pull(ports, port))

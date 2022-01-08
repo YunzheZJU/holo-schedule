@@ -43,7 +43,7 @@ const initOnce = async () => {
     await setIsPopupFirstRun(true)
   }
 
-  let lastSuccessRequestTime = 0
+  let lastSuccessRequestTime = getUnix()
   requests.onSuccessRequest.addEventListener(() => {
     const timestamp = getUnix()
     if (timestamp - lastSuccessRequestTime > 60 * 5) {

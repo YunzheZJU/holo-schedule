@@ -73,9 +73,10 @@ const syncEndedLives = async () => {
     limit: 25,
   }))
 
-  await store.set({
+  await Promise.resolve({
     [ENDED_LIVES]: limitRight(uniqRightBy([...reverse(lives), ...cashedLives], 'id'), MAX_LIVES_LENGTH),
-  })
+  }).then(data => store.set(data))
+    .catch(data => store.set(data, { local: false }))
 
   return getCachedEndedLives()
 }
@@ -119,11 +120,12 @@ const syncOpenLives = async () => {
     })
   }
 
-  await store.set({
+  await Promise.resolve({
     [CURRENT_LIVES]: currentLives,
     [SCHEDULED_LIVES]: scheduledLives,
     [ENDED_LIVES]: limitRight(filterLives(uniqRightBy(endedLives, 'id')), MAX_LIVES_LENGTH),
-  })
+  }).then(data => store.set(data))
+    .catch(data => store.set(data, { local: false }))
 
   return [...currentLives, ...scheduledLives]
 }

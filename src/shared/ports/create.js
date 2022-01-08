@@ -15,7 +15,7 @@ const setPendingMessage = (id, { name, message, res, rej }) => {
     res,
     rej,
     timer: setTimeout(() => {
-      rej(new Error(`Timeout! pendingMessage ${id} ${name}, message: ${JSON.stringify(message)}`))
+      rej(new Error(`Workflow Timeout! pendingMessage ${id} ${name}, message: ${JSON.stringify(message)}`))
       delete pendingMessageById[id]
     }, TIMEOUT_IN_SECOND * 1000),
   }
@@ -29,7 +29,7 @@ const connectPort = () => {
   }
 
   port = browser.runtime.connect({ name: 'port' })
-  console.log('[shared/ports]connect port', port)
+  console.log('[shared/ports]connect port')
 
   // eslint-disable-next-line no-param-reassign
   port.originalPostMessage = port.postMessage
@@ -38,13 +38,13 @@ const connectPort = () => {
     port.originalPostMessage(browser.isChrome ? message : JSON.parse(JSON.stringify(message)))
   }
 
-  port.onMessage.addListener(async ({ isResponse, id, name, message, error }) => {
+  port.onMessage.addListener(async ({ isResponse, id, name, isError, message }) => {
     if (isResponse) {
       const pendingMessage = pendingMessageById[id]
       if (pendingMessage) {
         clearTimeout(pendingMessage.timer)
-        if (error) {
-          pendingMessage.rej(new Error(error))
+        if (isError) {
+          pendingMessage.rej(new Error(message))
         } else {
           pendingMessage.res(message)
         }
@@ -62,7 +62,7 @@ const connectPort = () => {
   })
 
   port.onDisconnect.addListener(() => {
-    console.log(`[shared/ports]shared/ports port ${port} disconnected!`)
+    console.log('[shared/ports]port disconnected!')
     port = null
   })
 
@@ -77,7 +77,6 @@ connectPort()
 
 browser.runtime.onMessage.addListener(message => {
   if (message === 'background alive') {
-    console.log('[shared/ports]connectPort on background message')
     connectPort()
   }
 })
@@ -89,7 +88,6 @@ const create = (name, { onMessage = noop } = {}) => {
       const id = uniqueId()
       setPendingMessage(id, { res, rej, name, message })
       if (!port) {
-        console.log('[shared/ports]connectPort before postMessage')
         connectPort()
       }
       port.postMessage({ isResponse: false, id, name, message })

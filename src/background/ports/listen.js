@@ -41,7 +41,7 @@ browser.runtime.onConnect.addListener(port => {
       const response = await portByName[name].onMessage(message)
       port.postMessage({ isResponse: true, id, name, message: response })
     } catch (error) {
-      port.postMessage({ isResponse: true, id, name, error: error.message })
+      port.postMessage({ isResponse: true, id, name, message: error.message, isError: true })
     }
   })
 

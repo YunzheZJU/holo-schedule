@@ -10,6 +10,31 @@ const getStorage = async storageArea => {
   return store
 }
 
+const taskQueue = []
+let isExecutingTask = false
+
+const execTask = () => {
+  if (taskQueue.length === 0 || isExecutingTask) {
+    return
+  }
+
+  const { task, res, rej } = taskQueue.shift()
+
+  isExecutingTask = true
+  task()
+    .finally(() => {
+      isExecutingTask = false
+    })
+    .then(res)
+    .catch(rej)
+    .then(execTask)
+}
+
+const withLock = task => new Promise((res, rej) => {
+  taskQueue.push({ task, res, rej })
+  execTask()
+})
+
 const createStore = () => {
   const data = {}
   const dataToSync = {}
@@ -40,7 +65,7 @@ const createStore = () => {
       port.postMessage({ key, value })
     })
     if (local) {
-      await storage.local.set({ store: { ...await getStorage('local'), ...obj } })
+      await withLock(async () => storage.local.set({ store: { ...await getStorage('local'), ...obj } }))
     }
     if (sync) {
       Object.assign(dataToSync, obj)

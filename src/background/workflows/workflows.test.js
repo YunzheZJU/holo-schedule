@@ -10,12 +10,12 @@ import {
   IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
+  LAST_SUCCESS_REQUEST_TIME,
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
   SHOULD_SYNC_SETTINGS,
   SUBSCRIPTION_BY_MEMBER,
-  LAST_SUCCESS_REQUEST_TIME,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -441,11 +441,9 @@ test('should set subscriptionByMember', async () => {
 test('should update subscriptionByMember', async () => {
   expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual(undefined)
 
-  await store.set({ [ENDED_LIVES]: [1] })
   await workflows.updateSubscriptionByMember(1, true)
 
   expect(store.data[SUBSCRIPTION_BY_MEMBER]).toEqual({ 1: true })
-  expect(store.data[ENDED_LIVES]).toEqual([])
 
   await workflows.updateSubscriptionByMember(1, false)
 

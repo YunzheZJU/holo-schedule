@@ -18,6 +18,8 @@ const {
   syncMembers,
   setIsPopupFirstRun,
   clearCachedEndedLives,
+  getLastSuccessRequestTime,
+  setLastSuccessRequestTime,
 } = workflows
 
 const handleAlarm = async ({ name }) => {
@@ -43,13 +45,13 @@ const initOnce = async () => {
     await setIsPopupFirstRun(true)
   }
 
-  let lastSuccessRequestTime = getUnix()
   requests.onSuccessRequest.addEventListener(() => {
+    const lastSuccessRequestTime = getLastSuccessRequestTime() ?? getUnix()
     const timestamp = getUnix()
     if (timestamp - lastSuccessRequestTime > 60 * 5) {
       clearCachedEndedLives()
     }
-    lastSuccessRequestTime = timestamp
+    setLastSuccessRequestTime(timestamp)
   })
 
   store.subscribe(ENDED_LIVES, async (lives, prevLives) => workflows.syncHotnesses(

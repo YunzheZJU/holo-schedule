@@ -15,6 +15,7 @@ import {
   SCHEDULED_LIVES,
   SHOULD_SYNC_SETTINGS,
   SUBSCRIPTION_BY_MEMBER,
+  LAST_SUCCESS_REQUEST_TIME,
 } from 'shared/store/keys'
 import store from 'store'
 import { getUnix, getUnixAfterDays, getUnixBeforeDays } from 'utils'
@@ -567,4 +568,24 @@ test('should set appearance', async () => {
   await workflows.setAppearance('light')
 
   expect(store.data[APPEARANCE]).toEqual('light')
+})
+
+test('should get lastSuccessRequestTime', async () => {
+  expect(workflows.getLastSuccessRequestTime()).toEqual(undefined)
+
+  await store.set({ [LAST_SUCCESS_REQUEST_TIME]: 100 })
+
+  expect(workflows.getLastSuccessRequestTime()).toEqual(100)
+})
+
+test('should set lastSuccessRequestTime', async () => {
+  expect(store.data[LAST_SUCCESS_REQUEST_TIME]).toEqual(undefined)
+
+  await workflows.setLastSuccessRequestTime(100)
+
+  expect(store.data[LAST_SUCCESS_REQUEST_TIME]).toEqual(100)
+
+  await workflows.setLastSuccessRequestTime(200)
+
+  expect(store.data[LAST_SUCCESS_REQUEST_TIME]).toEqual(200)
 })

@@ -2,6 +2,7 @@ import { cloneDeep, noop } from 'lodash'
 import listen from 'ports/listen'
 import browser from 'shared/browser'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
+import withLock from './lock'
 
 const { storage } = browser
 
@@ -9,31 +10,6 @@ const getStorage = async storageArea => {
   const { store = {} } = await storage[storageArea].get('store')
   return store
 }
-
-const taskQueue = []
-let isExecutingTask = false
-
-const execTask = () => {
-  if (taskQueue.length === 0 || isExecutingTask) {
-    return
-  }
-
-  const { task, res, rej } = taskQueue.shift()
-
-  isExecutingTask = true
-  task()
-    .finally(() => {
-      isExecutingTask = false
-    })
-    .then(res)
-    .catch(rej)
-    .then(execTask)
-}
-
-const withLock = task => new Promise((res, rej) => {
-  taskQueue.push({ task, res, rej })
-  execTask()
-})
 
 const createStore = () => {
   const data = {}

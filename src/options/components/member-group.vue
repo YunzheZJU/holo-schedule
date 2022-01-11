@@ -47,7 +47,7 @@
   import { Fragment } from 'vue-fragment'
   import { mapState } from 'vuex'
 
-  const { clearCachedEndedLives, updateSubscriptionByMember } = workflows
+  const { updateSubscriptionByMember } = workflows
 
   export default {
     name: 'MemberGroup',
@@ -81,10 +81,9 @@
       }),
     },
     methods: {
-      async setSubscription(memberId, subscribed) {
+      setSubscription(memberId, subscribed) {
         this.record(memberId, subscribed)
-        await updateSubscriptionByMember(memberId, subscribed)
-        return clearCachedEndedLives()
+        return updateSubscriptionByMember(memberId, subscribed)
       },
       record(memberId, subscribed) {
         if (this.lastRecord?.subscribed === subscribed && this.lastRecord?.memberId !== memberId) {
@@ -101,7 +100,6 @@
         this.groupMembers.forEach(({ id }, index) => {
           setTimeout(() => updateSubscriptionByMember(id, operation === 'subscribe'), index * 25)
         })
-        setTimeout(() => clearCachedEndedLives(), this.groupMembers.length * 25 + 500)
 
         this.helperStatus = 'success'
 
@@ -115,12 +113,9 @@
         this.helperStatus = undefined
       },
       onClickUndo() {
-        if (this.savedValues) {
-          this.savedValues.forEach(({ memberId, subscribed }, index) => {
-            setTimeout(() => updateSubscriptionByMember(memberId, subscribed), index * 25)
-          })
-          setTimeout(() => clearCachedEndedLives(), this.savedValues.length * 25 + 500)
-        }
+        (this.savedValues ?? []).forEach(({ memberId, subscribed }, index) => {
+          setTimeout(() => updateSubscriptionByMember(memberId, subscribed), index * 25)
+        })
 
         this.helperStatus = undefined
       },

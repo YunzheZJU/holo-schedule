@@ -89,6 +89,7 @@ const updateSubscriptionByMember = async (memberId, subscribed) => {
     ...getSubscriptionByMember(),
     [memberId]: subscribed,
   })
+  await clearCachedEndedLives()
 }
 
 const getCachedCurrentLives = () => store.get(CURRENT_LIVES)

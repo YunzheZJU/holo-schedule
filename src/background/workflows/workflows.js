@@ -10,6 +10,7 @@ import {
   IS_30_HOURS_ENABLED,
   IS_NTF_ENABLED,
   IS_POPUP_FIRST_RUN,
+  LAST_SUCCESS_REQUEST_TIME,
   LOCALE,
   MEMBERS,
   SCHEDULED_LIVES,
@@ -231,6 +232,12 @@ const setAppearance = appearance => store.set(
 
 const ping = () => null
 
+const getLastSuccessRequestTime = () => store.get(LAST_SUCCESS_REQUEST_TIME)
+
+const setLastSuccessRequestTime = lastSuccessRequestTime => store.set(
+  { [LAST_SUCCESS_REQUEST_TIME]: lastSuccessRequestTime },
+)
+
 export default {
   filterByTitle,
   filterBySubscription,
@@ -260,4 +267,6 @@ export default {
   setIs30HoursEnabled,
   setAppearance,
   ping,
+  getLastSuccessRequestTime,
+  setLastSuccessRequestTime,
 }

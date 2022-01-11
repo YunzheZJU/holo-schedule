@@ -2,6 +2,7 @@ import { cloneDeep, noop } from 'lodash'
 import listen from 'ports/listen'
 import browser from 'shared/browser'
 import { SHOULD_SYNC_SETTINGS } from 'shared/store/keys'
+import withLock from './lock'
 
 const { storage } = browser
 
@@ -40,7 +41,7 @@ const createStore = () => {
       port.postMessage({ key, value })
     })
     if (local) {
-      await storage.local.set({ store: { ...await getStorage('local'), ...obj } })
+      await withLock(async () => storage.local.set({ store: { ...await getStorage('local'), ...obj } }))
     }
     if (sync) {
       Object.assign(dataToSync, obj)

@@ -34,7 +34,7 @@ const alarm = {
 
     this.remove({ id })
 
-    if (find(this.firedAlarms, { id }) || !this.getIsNtfEnabled()) return
+    if ((find(this.firedAlarms, { id }) && isGuerrilla) || !this.getIsNtfEnabled()) return
 
     const member = workflows.getMember(live)
 

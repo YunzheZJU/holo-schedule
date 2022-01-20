@@ -1,9 +1,9 @@
 import i18n from 'i18n'
-import { differenceBy, find, uniqBy } from 'lodash'
+import { differenceBy, find } from 'lodash'
 import notification from 'notification'
 import browser from 'shared/browser'
 import { createEnhancedArray } from 'shared/lib/enhancedArray'
-import { CURRENT_LIVES, IS_NTF_ENABLED, SCHEDULED_LIVES } from 'shared/store/keys'
+import { CURRENT_LIVES, FIRED_ALARMS, IS_NTF_ENABLED, LIVES_TO_ALARM, SCHEDULED_LIVES } from 'shared/store/keys'
 import { constructUrl } from 'shared/utils'
 import { isGuerrillaLive } from 'utils'
 import workflows from 'workflows/workflows'
@@ -11,14 +11,17 @@ import workflows from 'workflows/workflows'
 const alarm = {
   $defaultIsNtfEnabled: true,
   $store: undefined,
-  livesToAlarm: createEnhancedArray(),
+  livesToAlarm: undefined,
+  firedAlarms: undefined,
   savedCurrentLives: [],
   savedScheduledLives: [],
   schedule(live) {
-    return this.livesToAlarm.add(live)
+    this.livesToAlarm.add(live)
+    return this.$store.set({ [LIVES_TO_ALARM]: JSON.parse(JSON.stringify(this.livesToAlarm)) })
   },
   remove(live) {
     this.livesToAlarm.remove(find(this.livesToAlarm, { id: live['id'] }))
+    return this.$store.set({ [LIVES_TO_ALARM]: JSON.parse(JSON.stringify(this.livesToAlarm)) })
   },
   isScheduled(live) {
     return find(this.livesToAlarm, { id: live['id'] })
@@ -31,9 +34,11 @@ const alarm = {
 
     this.remove({ id })
 
-    if (!this.getIsNtfEnabled()) return
+    if ((find(this.firedAlarms, { id }) && isGuerrilla) || !this.getIsNtfEnabled()) return
 
     const member = workflows.getMember(live)
+
+    this.firedAlarms.add({ id })
 
     notification.create(id.toString(), {
       title,
@@ -50,42 +55,41 @@ const alarm = {
   },
   async init(store) {
     this.$store = store
+    this.livesToAlarm = createEnhancedArray(this.$store.get(LIVES_TO_ALARM), 50)
+    this.firedAlarms = createEnhancedArray(this.$store.get(FIRED_ALARMS), 30)
 
     await store.set({ [IS_NTF_ENABLED]: this.getIsNtfEnabled() })
 
     store.subscribe(CURRENT_LIVES, (lives, prevLives) => {
       // Skip the first run
-      if (prevLives !== undefined) {
-        // Scheduled alarms
-        differenceBy(lives, this.savedCurrentLives, 'id').forEach(live => {
-          if (this.isScheduled(live)) {
-            this.fire(live)
-          }
-        })
-
-        // Guerrilla lives
-        differenceBy(lives, this.savedScheduledLives, this.savedCurrentLives, 'id').forEach(live => {
-          if (isGuerrillaLive(live)) {
-            this.fire(live, true)
-          }
-        })
+      if (prevLives === undefined) {
+        return
       }
 
-      this.savedCurrentLives = uniqBy([...this.savedCurrentLives, ...lives], 'id')
+      differenceBy(lives, prevLives, 'id').forEach(live => {
+        // Scheduled alarms
+        if (this.isScheduled(live)) {
+          this.fire(live)
+        }
+        // Guerrilla lives
+        if (isGuerrillaLive(live)) {
+          this.fire(live, true)
+        }
+      })
     })
 
     store.subscribe(SCHEDULED_LIVES, (lives, prevLives) => {
       // Skip the first run
-      if (prevLives !== undefined) {
-        // Guerrilla lives
-        differenceBy(lives, this.savedScheduledLives, 'id').forEach(live => {
-          if (isGuerrillaLive(live)) {
-            this.fire(live, true)
-          }
-        })
+      if (prevLives === undefined) {
+        return
       }
 
-      this.savedScheduledLives = uniqBy([...this.savedScheduledLives, ...lives], 'id')
+      // Guerrilla lives
+      differenceBy(lives, prevLives, 'id').forEach(live => {
+        if (isGuerrillaLive(live)) {
+          this.fire(live, true)
+        }
+      })
     })
   },
 }

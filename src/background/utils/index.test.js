@@ -42,12 +42,17 @@ test('should be guerrila live', () => {
 })
 
 test('should not be guerrila live', () => {
-  const live = {
+  const liveOne = {
     start_at: dayjs().add(10, 'minute').add(1, 'second').toISOString(),
     created_at: dayjs().toISOString(),
   }
+  const liveTwo = {
+    start_at: dayjs().subtract(2, 'minute').toISOString(),
+    created_at: dayjs().toISOString(),
+  }
 
-  expect(isGuerrillaLive(live)).toBeFalsy()
+  expect(isGuerrillaLive(liveOne)).toBeFalsy()
+  expect(isGuerrillaLive(liveTwo)).toBeFalsy()
 })
 
 test('should uniq from right by id', () => {

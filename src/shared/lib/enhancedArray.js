@@ -1,8 +1,8 @@
 import { uniqueId } from 'lodash'
 import { reactive } from 'vue'
 
-const createEnhancedArray = () => {
-  const enhancedArray = reactive([])
+const createEnhancedArray = (target = [], limit = Infinity) => {
+  const enhancedArray = reactive(target)
 
   Object.defineProperty(enhancedArray, 'any', {
     get() {
@@ -19,6 +19,11 @@ const createEnhancedArray = () => {
   enhancedArray.add = (item = {}) => {
     const indexedItem = { $id: uniqueId(), ...item }
     enhancedArray.push(indexedItem)
+
+    if (enhancedArray.length > limit) {
+      enhancedArray.shift()
+    }
+
     return indexedItem
   }
 

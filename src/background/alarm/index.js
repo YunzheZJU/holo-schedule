@@ -39,6 +39,7 @@ const alarm = {
     const member = workflows.getMember(live)
 
     this.firedAlarms.add({ id })
+    this.$store.set({ [FIRED_ALARMS]: JSON.parse(JSON.stringify(this.firedAlarms)) })
 
     notification.create(id.toString(), {
       title,

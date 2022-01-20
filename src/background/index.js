@@ -48,7 +48,7 @@ const initOnce = async () => {
   requests.onSuccessRequest.addEventListener(() => {
     const lastSuccessRequestTime = getLastSuccessRequestTime() ?? getUnix()
     const timestamp = getUnix()
-    if (timestamp - lastSuccessRequestTime > 60 * 20) {
+    if (timestamp - lastSuccessRequestTime > 60 * 5) {
       clearCachedEndedLives()
     }
     setLastSuccessRequestTime(timestamp)

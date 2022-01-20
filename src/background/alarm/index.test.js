@@ -1,4 +1,3 @@
-// TODO: Split tests
 import dayjs from 'dayjs'
 import i18n from 'i18n'
 import notification from 'notification'
@@ -7,6 +6,24 @@ import store from 'store'
 import alarm from './index'
 
 jest.mock('notification')
+
+beforeEach(async () => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const prop of Object.getOwnPropertyNames(store.data)) {
+    delete store.data[prop]
+  }
+  store.callbacks.length = 0
+
+  await store.set({
+    currentLives: [],
+    scheduledLives: [],
+  })
+  await alarm.init(store)
+})
+
+afterEach(() => {
+  notification.create.mockClear()
+})
 
 test('should schedule and remove alarms', async () => {
   const live = { id: 0 }
@@ -20,18 +37,14 @@ test('should schedule and remove alarms', async () => {
   expect(alarm.isScheduled(live)).toBeFalsy()
 })
 
-test('should subscribe to store', async () => {
-  await alarm.init(store)
-
-  alarm.fire = jest.fn(alarm.fire)
-
+test('Add one guerrilla scheduled live and one normal scheduled live and Go ahead 5 minutes', async () => {
   // Initialize
   await store.set({
     currentLives: [],
     scheduledLives: [],
   })
+  notification.create.mockClear()
 
-  // Add one guerrilla scheduled live and one normal scheduled live
   await store.set({
     currentLives: [],
     scheduledLives: [
@@ -49,10 +62,9 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(1)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(1)
+  notification.create.mockClear()
 
-  // Go ahead 5 minutes
   await store.set({
     currentLives: [
       {
@@ -71,9 +83,58 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(0)
+})
 
+test('Add one guerrilla current live', async () => {
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  expect(notification.create).toHaveBeenCalledTimes(1)
+})
+
+test('End one current live and Ended current live re-appear', async () => {
   // Add one guerrilla current live
   await store.set({
     currentLives: [
@@ -99,11 +160,8 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(1)
-  alarm.fire.mockClear()
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
+  notification.create.mockClear()
 
-  // End one current live
   await store.set({
     currentLives: [
       {
@@ -122,38 +180,9 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(0)
+  notification.create.mockClear()
 
-  // Ended current live re-appear
-  await store.set({
-    currentLives: [
-      {
-        id: 1,
-        title: 'Title 1',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().toISOString(),
-      },
-      {
-        id: 3,
-        title: 'Title 3',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().toISOString(),
-      },
-    ],
-    scheduledLives: [
-      {
-        id: 2,
-        title: 'Title 2',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().add(5, 'minute').toISOString(),
-      },
-    ],
-  })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
-
-  // ABNORMAL: One current live becomes a guerrilla scheduled live
   await store.set({
     currentLives: [
       {
@@ -178,10 +207,10 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(0)
+})
 
-  // ABNORMAL: One current live becomes a guerrilla scheduled live and then starts
+test('ABNORMAL: One current live becomes a guerrilla scheduled live and then starts', async () => {
   await store.set({
     currentLives: [
       {
@@ -193,44 +222,124 @@ test('should subscribe to store', async () => {
       {
         id: 3,
         title: 'Title 3',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().toISOString(),
-      },
-      {
-        id: 2,
-        title: 'Title 2',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().toISOString(),
-      },
-    ],
-    scheduledLives: [],
-  })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
-
-  // Add one scheduled live
-  await store.set({
-    currentLives: [
-      {
-        id: 1,
-        title: 'Title 1',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().toISOString(),
-      },
-      {
-        id: 3,
-        title: 'Title 3',
-        created_at: dayjs().toISOString(),
-        start_at: dayjs().toISOString(),
-      },
-      {
-        id: 2,
-        title: 'Title 2',
         created_at: dayjs().toISOString(),
         start_at: dayjs().toISOString(),
       },
     ],
     scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  expect(notification.create).toHaveBeenCalledTimes(0)
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  expect(notification.create).toHaveBeenCalledTimes(0)
+})
+
+test('Add one scheduled live', async () => {
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
       {
         id: 4,
         title: 'Title 4',
@@ -239,10 +348,10 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(0)
+})
 
-  // Cancel one scheduled live
+test('Cancelled scheduled live re-appear as a guerrilla, twice', async () => {
   await store.set({
     currentLives: [
       {
@@ -257,19 +366,145 @@ test('should subscribe to store', async () => {
         created_at: dayjs().toISOString(),
         start_at: dayjs().toISOString(),
       },
+    ],
+    scheduledLives: [
       {
         id: 2,
         title: 'Title 2',
         created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+      {
+        id: 4,
+        title: 'Title 4',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(15, 'minute').toISOString(),
+      },
+    ],
+  })
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
         start_at: dayjs().toISOString(),
       },
     ],
-    scheduledLives: [],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(0)
+  notification.create.mockClear()
 
-  // Cancelled scheduled live re-appear as a guerrilla
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+      {
+        id: 4,
+        title: 'Title 4',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  expect(notification.create).toHaveBeenCalledTimes(1)
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  expect(notification.create).toHaveBeenCalledTimes(0)
+  notification.create.mockClear()
+
+  await store.set({
+    currentLives: [
+      {
+        id: 1,
+        title: 'Title 1',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+      {
+        id: 3,
+        title: 'Title 3',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().toISOString(),
+      },
+    ],
+    scheduledLives: [
+      {
+        id: 2,
+        title: 'Title 2',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+      {
+        id: 4,
+        title: 'Title 4',
+        created_at: dayjs().toISOString(),
+        start_at: dayjs().add(5, 'minute').toISOString(),
+      },
+    ],
+  })
+  expect(notification.create).toHaveBeenCalledTimes(0)
+})
+
+test('Three current lives including a guerrilla exist during the system\'s sleep', async () => {
   await store.set({
     currentLives: [
       {
@@ -300,10 +535,8 @@ test('should subscribe to store', async () => {
       },
     ],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(0)
-  alarm.fire.mockClear()
+  notification.create.mockClear()
 
-  // Two current lives including a guerrilla exist during the system's sleep
   await store.set({
     currentLives: [
       {
@@ -342,17 +575,22 @@ test('should subscribe to store', async () => {
         created_at: dayjs().toISOString(),
         start_at: dayjs().add(15, 'minute').toISOString(),
       },
+      {
+        id: 7,
+        title: 'Title 7',
+        created_at: dayjs().subtract(5, 'minute').toISOString(),
+        start_at: dayjs().subtract(2, 'minute').toISOString(),
+      },
     ],
     scheduledLives: [],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(1)
-  alarm.fire.mockClear()
+  expect(notification.create).toHaveBeenCalledTimes(1)
 })
 
 test('should fire scheduled alarms', async () => {
   await alarm.init(store)
 
-  alarm.fire = jest.fn(alarm.fire)
+  notification.create = jest.fn(notification.create)
 
   // Initialize
   await store.set({
@@ -379,7 +617,7 @@ test('should fire scheduled alarms', async () => {
     currentLives: [live],
     scheduledLives: [],
   })
-  expect(alarm.fire).toHaveBeenCalledTimes(1)
+  expect(notification.create).toHaveBeenCalledTimes(1)
 
   expect(alarm.isScheduled(live)).toBeFalsy()
 })

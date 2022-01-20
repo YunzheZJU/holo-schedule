@@ -30,3 +30,18 @@ test('should allow duplicated removing', () => {
   enhancedArray.remove(itemOne)
   expect(enhancedArray.length).toEqual(1)
 })
+
+test('should use target', () => {
+  const enhancedArray = createEnhancedArray([1])
+  expect(enhancedArray.any).toBeTruthy()
+})
+
+test('should limit length', () => {
+  const enhancedArray = createEnhancedArray([], 2)
+  enhancedArray.add({ text: 'New item' })
+  expect(enhancedArray.length).toEqual(1)
+  enhancedArray.add({ text: 'New item 2' })
+  expect(enhancedArray.length).toEqual(2)
+  enhancedArray.add({ text: 'New item 3' })
+  expect(enhancedArray.length).toEqual(2)
+})

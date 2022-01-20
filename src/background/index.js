@@ -34,9 +34,9 @@ const initOnce = async () => {
   global.alarm = alarm
 
   await store.init()
-  await workflows.init()
   await alarm.init(store)
   await i18n.init(store)
+  await workflows.init()
 
   if (shouldCleanState) {
     console.log('[background]Clean state on start up')
@@ -48,7 +48,7 @@ const initOnce = async () => {
   requests.onSuccessRequest.addEventListener(() => {
     const lastSuccessRequestTime = getLastSuccessRequestTime() ?? getUnix()
     const timestamp = getUnix()
-    if (timestamp - lastSuccessRequestTime > 60 * 5) {
+    if (timestamp - lastSuccessRequestTime > 60 * 20) {
       clearCachedEndedLives()
     }
     setLastSuccessRequestTime(timestamp)

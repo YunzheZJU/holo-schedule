@@ -44,4 +44,6 @@ test('should limit length', () => {
   expect(enhancedArray.length).toEqual(2)
   enhancedArray.add({ text: 'New item 3' })
   expect(enhancedArray.length).toEqual(2)
+  expect(enhancedArray[0].text).toEqual('New item 2')
+  expect(enhancedArray[1].text).toEqual('New item 3')
 })

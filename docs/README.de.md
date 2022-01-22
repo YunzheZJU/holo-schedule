@@ -23,13 +23,10 @@ oder
 ## Unterstützte Browser
 
 | Browser                   | Support Level                                                                                       |
-| ------------------------- | --------------------------------------------------------------------------------------------------- |
-| Firefox (>=57.0)          | *Offiziell
-Unterstützt* v57 ist die mindeste Version von Firefox um moderne Erweiterungen zu nutzen |
-| Chrome (>=88.0)           | *Offiziell
-Unterstützt* v88 ist die mindeste Version von Chrome um Manifest V3 zu nutzen            |
-| Opera / Edge (>=79.0.309) | *Unoffiziell
-Unterstützt* als ein Chrome kompatibles Ziel.                                          |
+|---------------------------|-----------------------------------------------------------------------------------------------------|
+| Firefox (>=57.0)          | *Offiziell Unterstützt* v57 ist die mindeste Version von Firefox um moderne Erweiterungen zu nutzen |
+| Chrome (>=88.0)           | *Offiziell Unterstützt* v88 ist die mindeste Version von Chrome um Manifest V3 zu nutzen            |
+| Opera / Edge (>=79.0.309) | *Unoffiziell Unterstützt* als ein Chrome kompatibles Ziel.                                          |
 
 **Die letzten 3 Firefox und Chrome Versionen** sind zu empfehlen, um alle Funktionen von holo-schedule zu geniessen.
 

@@ -22,7 +22,7 @@
 ## インストール
 
 このアドオンは
-[Mozilla AMO](https://addons.mozilla.org/firefox/addon/holo-schedule/) 
+[Mozilla AMO](https://addons.mozilla.org/firefox/addon/holo-schedule/)
 または
 [Chrome Web Store](https://chrome.google.com/webstore/detail/holoschedule/fjicegllhddldnnkgfefblholeegpcad)
 からダウンロードすることが出来ます。
@@ -32,11 +32,11 @@
 
 ## 対応ブラウザ
 
-| ブラウザ                    | サポート                                                                              |
-| ------------------------- | -------------------------------------------------------------------------------------|
-| Firefox (>=57.0)          | *サポートされています。* バージョン57がFirefoxの新しいアドオン形式に対応している最低バージョンです。    |
-| Chrome (>=88.0)           | *サポートされています。* バージョン57がManifest V3に対応している最低バージョンです。               |
-| Opera / Edge (>=79.0.309) | *正式なサポートはありません。* Chrome互換の拡張として利用できます。                              |
+| ブラウザ                      | サポート                                                     |
+|---------------------------|----------------------------------------------------------|
+| Firefox (>=57.0)          | *サポートされています。* バージョン57がFirefoxの新しいアドオン形式に対応している最低バージョンです。 |
+| Chrome (>=88.0)           | *サポートされています。* バージョン57がManifest V3に対応している最低バージョンです。       |
+| Opera / Edge (>=79.0.309) | *正式なサポートはありません。* Chrome互換の拡張として利用できます。                   |
 
 このアドオンの全ての機能を利用するには**最新および3つ前までのバージョンのFirefoxまたはChrome**を推奨します。
 
@@ -54,6 +54,7 @@ Holo-scheduleは、Operaや新しいEdgeを含む、Chromiumベースのブラ�
 *Note: Windowsを使用している場合、'ls'の代わりに'dir'を使用してください。*
 
 以下のスクリプトを実行してください。
+
 ```bash
 # クローン
 git clone https://github.com/YunzheZJU/holo-schedule.git && cd holo-schedule
@@ -75,9 +76,10 @@ ls dist
 
 Holo-scheduleは、[JEST](https://jestjs.io/)をテストフレームワークとして使用しています。
 
- [ビルド手順](#ビルド)を確認して、依存関係が正しくインストールされていることを確認してください。
+[ビルド手順](#ビルド)を確認して、依存関係が正しくインストールされていることを確認してください。
 
 そして、以下を実行してください。
+
 ```bash
 yarn run test
 ```
@@ -86,15 +88,16 @@ yarn run test
 
 ローカルでholo-scheduleを開発する方法。
 
-
- [ビルド手順](#ビルド)を確認して、依存関係が正しくインストールされていることを確認してください。
+[ビルド手順](#ビルド)を確認して、依存関係が正しくインストールされていることを確認してください。
 
 そして、以下を実行してください。
+
 ```bash
 yarn run dev
 ```
 
 その後に、新しくコマンドラインを開いて、以下を実行してください。
+
 ```bash
 # Firefoxで開発を始める
 yarn run start

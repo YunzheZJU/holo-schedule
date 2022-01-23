@@ -8,7 +8,7 @@ import store from 'store'
 import { getUnix } from 'utils'
 import workflows from 'workflows'
 
-let shouldCleanState = false
+let isStartUp = false
 
 const ALARM_NAME = 'fetch-data-alarm'
 
@@ -38,7 +38,7 @@ const initOnce = async () => {
   await i18n.init(store)
   await workflows.init()
 
-  if (shouldCleanState) {
+  if (isStartUp) {
     console.log('[background]Clean state on start up')
     // Use new state
     await clearCachedEndedLives()
@@ -70,7 +70,9 @@ const initOnce = async () => {
   })
 }
 
-const initRetryable = () => Promise.all([syncOpenLives(), syncChannels(), syncMembers()])
+const initRetryable = () => (
+  isStartUp ? Promise.all([syncOpenLives(), syncChannels(), syncMembers()]) : syncOpenLives()
+)
 
 const init = async () => {
   await initOnce()
@@ -82,7 +84,7 @@ const init = async () => {
 
 browser.runtime.onStartup.addListener(async () => {
   console.log('[background]on start up')
-  shouldCleanState = true
+  isStartUp = true
 })
 
 init().then(() => console.log('[background]Init OK')).catch(err => {

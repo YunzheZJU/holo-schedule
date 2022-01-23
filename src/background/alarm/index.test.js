@@ -579,7 +579,7 @@ test('Three current lives including a guerrilla exist during the system\'s sleep
         id: 7,
         title: 'Title 7',
         created_at: dayjs().subtract(5, 'minute').toISOString(),
-        start_at: dayjs().subtract(2, 'minute').toISOString(),
+        start_at: dayjs().subtract(4, 'minute').toISOString(),
       },
     ],
     scheduledLives: [],

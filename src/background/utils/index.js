@@ -11,7 +11,7 @@ const getUnixBeforeDays = days => getUnixAfterDays(-days)
 const getUnix = input => dayjs(input).unix()
 
 const isGuerrillaLive = live => dayjs(live['created_at']).add(10, 'minute').isSameOrAfter(dayjs(live['start_at']))
-  && dayjs(live['start_at']).add(1, 'minute').isSameOrAfter(dayjs())
+  && dayjs(live['start_at']).add(3, 'minute').isSameOrAfter(dayjs())
 
 const uniqRightBy = (array, ...args) => reverse(uniqBy(reverse([...array]), ...args))
 

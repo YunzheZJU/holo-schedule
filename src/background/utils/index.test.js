@@ -47,7 +47,7 @@ test('should not be guerrila live', () => {
     created_at: dayjs().toISOString(),
   }
   const liveTwo = {
-    start_at: dayjs().subtract(2, 'minute').toISOString(),
+    start_at: dayjs().subtract(4, 'minute').toISOString(),
     created_at: dayjs().toISOString(),
   }
 

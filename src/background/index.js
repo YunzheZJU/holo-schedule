@@ -42,7 +42,7 @@ const initOnce = async () => {
     // Use new state
     await clearCachedEndedLives()
     await setIsPopupFirstRun(true)
-    console.log('[background]States have been cleaned.')
+    console.log('[background]States have been cleared.')
   }
 
   requests.onSuccessRequest.addEventListener(() => {

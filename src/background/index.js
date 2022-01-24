@@ -39,10 +39,10 @@ const initOnce = async () => {
   await workflows.init()
 
   if (isStartUp) {
-    console.log('[background]Clean state on start up')
     // Use new state
     await clearCachedEndedLives()
     await setIsPopupFirstRun(true)
+    console.log('[background]States have been cleaned.')
   }
 
   requests.onSuccessRequest.addEventListener(() => {
@@ -82,8 +82,13 @@ const init = async () => {
   })
 }
 
+browser.runtime.onInstalled.addListener(async () => {
+  console.log('[background]on installed.')
+  isStartUp = true
+})
+
 browser.runtime.onStartup.addListener(async () => {
-  console.log('[background]on start up')
+  console.log('[background]on start up.')
   isStartUp = true
 })
 

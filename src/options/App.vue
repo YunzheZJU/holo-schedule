@@ -40,7 +40,7 @@
 
 <script>
   import MemberGroup from 'components/member-group'
-  import { range, without } from 'lodash'
+  import { range } from 'lodash'
   import browser from 'shared/browser'
 
   export default {
@@ -52,19 +52,15 @@
           {
             name: this.$t('app.groups.newDebuts'),
             // Dummy ids are specified here to be compatible to new members
-            memberIds: range(77, 87),
+            memberIds: range(84, 94),
           },
           {
             name: this.$t('app.groups.hololive'),
-            memberIds: [62, ...without(range(1, 34), 2), ...range(72, 77)],
+            memberIds: [62, ...range(1, 34), ...range(72, 77)],
           },
           {
             name: this.$t('app.groups.holostars'),
-            memberIds: [63, ...range(34, 45)],
-          },
-          {
-            name: this.$t('app.groups.inonakaMusic'),
-            memberIds: [2],
+            memberIds: [63, ...range(34, 45), ...range(77, 81)],
           },
           {
             name: this.$t('app.groups.hololiveChina'),
@@ -72,7 +68,7 @@
           },
           {
             name: this.$t('app.groups.hololiveIndonesia'),
-            memberIds: [64, ...range(51, 54), ...range(59, 62)],
+            memberIds: [64, ...range(51, 54), ...range(59, 62), ...range(81, 84)],
           },
           {
             name: this.$t('app.groups.hololiveEnglish'),

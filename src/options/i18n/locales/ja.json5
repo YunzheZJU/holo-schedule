@@ -18,10 +18,11 @@
       // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
       newDebuts: "新メンバー！",
       hololive: "ホロライブ",
-      holostars: "ホロスターズ",
+      holostars: "HOLOSTARS",
       hololiveChina: "ホロライブ中国",
       hololiveIndonesia: "ホロライブインドネシア",
-      hololiveEnglish: "ホロライブEnglish"
+      hololiveEnglish: "ホロライブEnglish",
+      holostarsEnglish: "HOLOSTARS English"
     }
   },
   // Component MemberGroup

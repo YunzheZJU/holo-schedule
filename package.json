@@ -53,7 +53,7 @@
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "resolve-entry-modules-webpack-plugin": "npm:@yunzhe35p/resolve-entry-modules-webpack-plugin",
-    "stylelint": "^13.13.1",
+    "stylelint": "^15.10.1",
     "stylelint-order": "^4.1.0",
     "vue-loader": "^16.8.3",
     "vue-style-loader": "^4.1.3",

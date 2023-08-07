@@ -52,7 +52,7 @@
           {
             name: this.$t('app.groups.newDebuts'),
             // Dummy ids are specified here to be compatible to new members
-            memberIds: range(92, 102),
+            memberIds: range(96, 106),
           },
           {
             name: this.$t('app.groups.hololive'),
@@ -72,7 +72,7 @@
           },
           {
             name: this.$t('app.groups.hololiveEnglish'),
-            memberIds: [65, ...range(54, 59), ...range(66, 72)],
+            memberIds: [65, ...range(54, 59), ...range(66, 72), ...range(92, 96)],
           },
           {
             name: this.$t('app.groups.holostarsEnglish'),

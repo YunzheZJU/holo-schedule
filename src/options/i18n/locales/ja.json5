@@ -18,6 +18,7 @@
       // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
       newDebuts: "新メンバー！",
       hololive: "ホロライブ",
+      hololiveDEVIS: "Hololive DEV_IS",
       holostars: "HOLOSTARS",
       hololiveChina: "ホロライブ中国",
       hololiveIndonesia: "ホロライブインドネシア",

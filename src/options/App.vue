@@ -225,6 +225,8 @@
         }
 
         .content {
+          position: relative;
+
           .group {
             margin: 8px;
           }

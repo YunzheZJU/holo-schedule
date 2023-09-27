@@ -13,4 +13,7 @@ module.exports = {
     '^.+\\.json5?$': 'json5-jest',
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
+  globals: {
+    IS_CHROME: false,
+  },
 }

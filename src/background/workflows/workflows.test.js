@@ -244,6 +244,7 @@ test('should sync open lives', async () => {
   const returnValueOne = await workflows.syncOpenLives()
 
   expect(getOpenLives).toHaveBeenCalledWith({
+    limit: 100,
     membersMask: undefined,
     startBefore: getUnixAfterDays(7),
   })

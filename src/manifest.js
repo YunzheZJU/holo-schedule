@@ -47,7 +47,7 @@ module.exports = ({ isChrome, PACKAGE = {} } = {}) => ({
     browser_specific_settings: {
       gecko: {
         id: 'holo-schedule@holo.dev',
-        strict_min_version: '57.0',
+        strict_min_version: '58.0',
       },
     },
   }),

@@ -24,7 +24,7 @@ oder
 
 | Browser                   | Support Level                                                                                       |
 |---------------------------|-----------------------------------------------------------------------------------------------------|
-| Firefox (>=57.0)          | *Offiziell Unterstützt* v57 ist die mindeste Version von Firefox um moderne Erweiterungen zu nutzen |
+| Firefox (>=58.0)          | *Offiziell Unterstützt* v58 ist die mindeste Version von Firefox um moderne Erweiterungen zu nutzen |
 | Chrome (>=88.0)           | *Offiziell Unterstützt* v88 ist die mindeste Version von Chrome um Manifest V3 zu nutzen            |
 | Opera / Edge (>=79.0.309) | *Unoffiziell Unterstützt* als ein Chrome kompatibles Ziel.                                          |
 

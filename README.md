@@ -33,7 +33,7 @@ or
 
 | Browser                   | Support Level                                                                                  |
 |---------------------------|------------------------------------------------------------------------------------------------|
-| Firefox (>=57.0)          | *Officially Supported* v57 is the minimum version required to support Firefox's modern add-on. |
+| Firefox (>=58.0)          | *Officially Supported* v58 is the minimum version required to support Firefox's modern add-on. |
 | Chrome (>=88.0)           | *Officially Supported* v88 is the minimum version required to support Manifest V3.             |
 | Opera / Edge (>=79.0.309) | *Unofficially Supported* as a Chrome-compatible target.                                        |
 

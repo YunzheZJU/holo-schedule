@@ -100,6 +100,7 @@ const syncOpenLives = async () => {
   const [currentLives, scheduledLives] = partition(filterLives(await getOpenLives({
     membersMask: getMembersMask(getSubscriptionByMember()),
     startBefore: getUnixAfterDays(7),
+    limit: 100,
   })), ({ start_at: startAt }) => dayjs().isAfter(startAt))
 
   await browser.action.setBadgeText({ text: currentLives.length.toString() })

@@ -52,7 +52,7 @@
           {
             name: this.$t('app.groups.newDebuts'),
             // Dummy ids are specified here to be compatible to new members
-            memberIds: range(106, 116),
+            memberIds: range(110, 120),
           },
           {
             name: this.$t('app.groups.hololive'),
@@ -76,7 +76,8 @@
           },
           {
             name: this.$t('app.groups.hololiveEnglish'),
-            memberIds: [65, ...range(54, 59), ...range(66, 72), ...range(92, 96)],
+            // eslint-disable-next-line max-len
+            memberIds: [65, ...range(54, 59), ...range(66, 72), ...range(92, 96), ...range(106, 110)],
           },
           {
             name: this.$t('app.groups.holostarsEnglish'),

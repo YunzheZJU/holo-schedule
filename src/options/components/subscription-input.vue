@@ -72,6 +72,7 @@
       font-weight: 700;
       font-size: 16px;
       text-align: center;
+      text-wrap: pretty;
     }
 
     &.unsubscribed {

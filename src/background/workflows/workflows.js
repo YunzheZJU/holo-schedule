@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { differenceBy, filter, findLastIndex, groupBy, partition, range, reverse } from 'lodash'
+import _, { differenceBy, filter, findLastIndex, groupBy, orderBy, partition, range, reverse, uniqBy } from 'lodash'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
 import browser from 'shared/browser'
 import {
@@ -18,7 +18,7 @@ import {
   SUBSCRIPTION_BY_MEMBER,
 } from 'shared/store/keys'
 import store from 'store'
-import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, limitRight, uniqRightBy } from 'utils'
+import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, limitRight } from 'utils'
 
 const MAX_LIVES_LENGTH = 250
 
@@ -27,7 +27,7 @@ const filterByTitle = lives => filter(
   live => {
     // Ensure lives of Hololive China members at Bilibili are kept
     // eslint-disable-next-line no-use-before-define
-    if (range(45, 51).includes(getMember(live)['id'])) {
+    if (range(45, 51).includes(getMemberId(live))) {
       return true
     }
 
@@ -43,7 +43,7 @@ const filterBySubscription = lives => {
   return filter(
     lives,
     // eslint-disable-next-line no-use-before-define
-    live => subscriptionByMember[getMember(live)['id']] ?? true,
+    live => subscriptionByMember[getMemberId(live)] ?? true,
   )
 }
 
@@ -51,6 +51,23 @@ const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
   (prev, next) => next(prev),
   lives,
 )
+
+const extractTopic = ({ title }) => (title.match(/[≪《【\[「](.*?)[≫》】\]」]/)?.[1] || '').trim()
+
+// 1. Live with smaller start_at exists earlier
+// 2. Lives with the same topic are placed together and ordered by member_id and id
+// 3. Order of different topics are decided by their first element
+const sortLives = lives => _(lives)
+  .groupBy('start_at')
+  .map(livesGroup => _(livesGroup)
+    .groupBy(extractTopic)
+    .map(group => orderBy(group, [(live) => getMemberId(live), ({ id }) => id]))
+    .orderBy([([live]) => getMemberId(live), ([{ id }]) => id])
+    .flatten()
+    .value())
+  .sortBy(([live]) => live['start_at'])
+  .flatten()
+  .value()
 
 const getSubscriptionByMember = () => store.get(SUBSCRIPTION_BY_MEMBER)
 
@@ -75,7 +92,7 @@ const syncEndedLives = async () => {
   }))
 
   await Promise.resolve({
-    [ENDED_LIVES]: limitRight(uniqRightBy([...reverse(lives), ...cashedLives], 'id'), MAX_LIVES_LENGTH),
+    [ENDED_LIVES]: limitRight(sortLives(uniqBy([...reverse(lives), ...cashedLives], 'id')), MAX_LIVES_LENGTH),
   }).then(data => store.set(data))
     .catch(data => store.set(data, { local: false }))
 
@@ -123,9 +140,9 @@ const syncOpenLives = async () => {
   }
 
   await Promise.resolve({
-    [CURRENT_LIVES]: currentLives,
-    [SCHEDULED_LIVES]: scheduledLives,
-    [ENDED_LIVES]: limitRight(filterLives(uniqRightBy(endedLives, 'id')), MAX_LIVES_LENGTH),
+    [CURRENT_LIVES]: sortLives(currentLives),
+    [SCHEDULED_LIVES]: sortLives(scheduledLives),
+    [ENDED_LIVES]: limitRight(sortLives(filterLives(uniqBy(endedLives, 'id'))), MAX_LIVES_LENGTH),
   }).then(data => store.set(data))
     .catch(data => store.set(data, { local: false }))
 
@@ -200,6 +217,8 @@ const getMember = live => {
   return members.find(({ id }) => id === channel['member_id']) ?? {}
 }
 
+const getMemberId = live => getMember(live).id
+
 const setIsNtfEnabled = boolean => store.set(
   { [IS_NTF_ENABLED]: boolean },
   { sync: true },
@@ -242,6 +261,8 @@ const setLastSuccessRequestTime = lastSuccessRequestTime => store.set(
 export default {
   filterByTitle,
   filterBySubscription,
+  extractTopic,
+  sortLives,
   getCachedCurrentLives,
   getCachedEndedLives,
   syncEndedLives,

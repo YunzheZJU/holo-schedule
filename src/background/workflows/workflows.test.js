@@ -107,6 +107,69 @@ test('should filter lives by subscription', async () => {
   expect(filteredLives).toEqual(livesExpected)
 })
 
+test('should extract title', async () => {
+  expect(workflows.extractTopic({ title: '' })).toEqual('')
+  expect(workflows.extractTopic({ title: 'Title' })).toEqual('')
+  expect(workflows.extractTopic({ title: '[Topic]Title' })).toEqual('Topic')
+  expect(workflows.extractTopic({ title: '【Topic】Title' })).toEqual('Topic')
+  expect(workflows.extractTopic({ title: '「Topic」Title' })).toEqual('Topic')
+  expect(workflows.extractTopic({ title: '《Topic》Title' })).toEqual('Topic')
+  expect(workflows.extractTopic({ title: '≪Topic≫Title' })).toEqual('Topic')
+  expect(workflows.extractTopic({ title: '【Topic】【Title】' })).toEqual('Topic')
+  expect(workflows.extractTopic({ title: '【Top]ic】Title' })).toEqual('Top')
+})
+
+test('should sort lives', async () => {
+  const members = [{ id: 1 }, { id: 2 }]
+  const channels = [
+    { id: 1, member_id: 1 },
+    { id: 2, member_id: 2 },
+  ]
+  const liveOne = {
+    id: 1,
+    title: '【主题】标题',
+    start_at: dayjs().subtract(2, 'hour').toISOString(),
+    channel_id: 2,
+  }
+  const liveTwo = {
+    ...liveOne,
+    id: 2,
+    start_at: dayjs().subtract(3, 'hour').toISOString(),
+  }
+  const liveThree = {
+    ...liveOne,
+    id: 3,
+    title: '【游戏】标题',
+  }
+  const liveFour = {
+    ...liveOne,
+    id: 4,
+    title: '标题',
+  }
+  const liveFive = {
+    ...liveOne,
+    id: 5,
+    channel_id: 1,
+  }
+  const liveSix = {
+    ...liveOne,
+    id: 6,
+    channel_id: 2,
+  }
+
+  await store.set({
+    [MEMBERS]: members,
+    [CHANNELS]: channels,
+  })
+
+  const livesToSort = [liveFour, liveThree, liveSix, liveOne, liveTwo, liveFive]
+  const livesExpected = [liveTwo, liveFive, liveOne, liveSix, liveThree, liveFour ]
+
+  const sortedLives = workflows.sortLives(livesToSort)
+
+  expect(sortedLives).toEqual(livesExpected)
+})
+
 test('should get cached ended lives', async () => {
   const endedLives = [{ id: 1 }, { id: 2 }]
 
@@ -127,11 +190,21 @@ test('should clear cached ended lives', async () => {
 })
 
 test('should sync ended lives', async () => {
+  const members = [{ id: 1 }]
+  const channels = [
+    { id: 1, member_id: 1 },
+  ]
+
+  await store.set({
+    [MEMBERS]: members,
+    [CHANNELS]: channels,
+  })
+
   Date.now = jest.fn(() => unixTime * 1000)
   // First run
   const endedLivesOne = [
-    { id: 10, start_at: dayjs().subtract(3, 'hour').toISOString() },
-    { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString() },
+    { id: 10, start_at: dayjs().subtract(3, 'hour').toISOString(), title: '', channel_id: 1 },
+    { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString(), title: '', channel_id: 1 },
   ]
   const returnValueExpectedOne = [endedLivesOne[1], endedLivesOne[0]]
 
@@ -149,8 +222,8 @@ test('should sync ended lives', async () => {
   // Second run
   getEndedLives.mockClear()
   const endedLivesTwo = [
-    { id: 9, start_at: dayjs().subtract(4, 'hour').toISOString() },
-    { id: 8, start_at: dayjs().subtract(5, 'hour').toISOString() },
+    endedLivesOne[1],
+    { id: 8, start_at: dayjs().subtract(5, 'hour').toISOString(), title: '', channel_id: 1 },
   ]
   const returnValueExpectedTwo = [endedLivesTwo[1], ...returnValueExpectedOne]
 
@@ -210,16 +283,19 @@ test('should sync open lives', async () => {
   const currentLivesOne = [
     {
       id: 1,
+      title: '1',
       start_at: dayjs().subtract(3, 'hour').toISOString(),
       duration: null,
     },
     {
       id: 2,
+      title: '2',
       start_at: dayjs().subtract(3, 'hour').toISOString(),
       duration: null,
     },
     {
       id: 3,
+      title: '3',
       start_at: dayjs().subtract(2, 'hour').toISOString(),
       duration: null,
     },
@@ -227,11 +303,13 @@ test('should sync open lives', async () => {
   const scheduledLivesOne = [
     {
       id: 4,
+      title: '4',
       start_at: dayjs().add(1, 'hour').toISOString(),
       duration: null,
     },
     {
       id: 5,
+      title: '5',
       start_at: dayjs().add(2, 'hour').toISOString(),
       duration: null,
     },

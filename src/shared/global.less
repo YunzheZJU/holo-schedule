@@ -34,8 +34,7 @@ button {
   cursor: pointer;
   font-family: var(--font-sans);
 
-  // TODO: All buttons should blur from self after click callback
-  &:focus {
+  &:focus:not(:focus-visible) {
     outline: none;
   }
 }
@@ -64,12 +63,12 @@ ul, ol {
 
   @media (prefers-color-scheme: dark) {
     --prefers-color-scheme: dark;
-    &[data-theme="device"] {
+    &[data-theme='device'] {
       .vars-in-dark();
     }
   }
 
-  &[data-theme="dark"] {
+  &[data-theme='dark'] {
     .vars-in-dark();
   }
 

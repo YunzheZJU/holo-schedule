@@ -13,7 +13,7 @@
         description: "登録するメンバーを設定してください"
       }
     },
-    // Each key in 'groups' is a group defined at https://www.hololive.tv/member and the according value is the localized name of it
+    // Each key in 'groups' is a group defined at https://hololivepro.com/#top_talent and the according value is the localized name of it
     groups: {
       // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
       newDebuts: "新メンバー！",
@@ -23,7 +23,8 @@
       hololiveChina: "ホロライブ中国",
       hololiveIndonesia: "ホロライブインドネシア",
       hololiveEnglish: "ホロライブEnglish",
-      holostarsEnglish: "HOLOSTARS English"
+      holostarsEnglish: "HOLOSTARS English",
+      holoAN: "holoAN"
     }
   },
   // Component MemberGroup

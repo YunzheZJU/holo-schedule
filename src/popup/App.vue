@@ -20,7 +20,7 @@
       </template>
     </div>
     <div class="body">
-      <div ref="main" class="main">
+      <div ref="main" class="main" :inert="route === 'settings'">
         <button ref="loading" class="loading" @click="onClickLoading">
           <HIcon class="icon" :name="loadingConfig.icon" />
           <span>{{ loadingConfig.text }}</span>
@@ -320,10 +320,12 @@
       height: 32px;
 
       .back {
-        display: grid;
+        display: inline-grid;
         grid-auto-flow: column;
         align-items: center;
         justify-content: start;
+        width: max-content;
+        padding-right: 8px;
         cursor: pointer;
 
         &:hover, &:focus {
@@ -336,6 +338,7 @@
 
         .text {
           font-size: 14px;
+          text-box-trim: trim-both;
         }
       }
 
@@ -420,6 +423,7 @@
       align-content: start;
       padding: 16px;
       background: hsla(var(--color-bg-base-expand), var(--background-opacity));
+      overflow: auto;
 
       .option {
         .label {

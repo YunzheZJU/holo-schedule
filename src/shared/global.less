@@ -1,11 +1,15 @@
 html {
   scroll-behavior: smooth;
+
+  // Remove space when punctuation marks are adjacent, and also remove leading spaces in a line
+  text-spacing-trim: trim-start;
 }
 
 body {
   margin: 0;
   font-size: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-family: var(--font-sans);
   line-height: 1.5;
 }
 
@@ -28,9 +32,9 @@ button {
   line-height: 1.5;
   text-align: left;
   cursor: pointer;
+  font-family: var(--font-sans);
 
-  // TODO: All buttons should blur from self after click callback
-  &:focus {
+  &:focus:not(:focus-visible) {
     outline: none;
   }
 }
@@ -59,12 +63,12 @@ ul, ol {
 
   @media (prefers-color-scheme: dark) {
     --prefers-color-scheme: dark;
-    &[data-theme="device"] {
+    &[data-theme='device'] {
       .vars-in-dark();
     }
   }
 
-  &[data-theme="dark"] {
+  &[data-theme='dark'] {
     .vars-in-dark();
   }
 

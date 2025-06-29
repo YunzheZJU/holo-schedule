@@ -72,7 +72,7 @@
         }
       },
       handleClickAnchor() {
-        return this.$refs.items?.[0]?.scrollIntoView({ behavior: 'smooth' })
+        return this.$refs.items?.[0]?.scrollIntoView?.({ behavior: 'smooth' })
       },
     },
   }

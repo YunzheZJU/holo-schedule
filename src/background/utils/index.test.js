@@ -12,7 +12,7 @@ import {
 const getUnixTime = () => Math.floor(Date.now() / 1000)
 
 test('should get current unix time', () => {
-  expect(getUnix()).toBe(getUnixTime())
+  expect(Math.abs(getUnix() - getUnixTime())).toBeLessThanOrEqual(1)
 })
 
 test('should get unix time after days', () => {

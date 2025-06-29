@@ -4,19 +4,19 @@
     // Advanced settings
     advancedSettings: {
       // Label for advancedSettings
-      label: "Advanced Settings",
+      label: "Расширенные настройки",
       // Prompt users to configure the list of members to subscribe
       members: {
         // Label for members
-        label: "Members",
+        label: "Участники",
         // Description for members
-        description: "Configure the list of members to subscribe"
+        description: "Настройте список участников для подписки"
       }
     },
     // Each key in 'groups' is a group defined at https://hololivepro.com/#top_talent and the according value is the localized name of it
     groups: {
       // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
-      newDebuts: "New Debuts!",
+      newDebuts: "Новые дебюты!",
       hololive: "Hololive",
       hololiveDEVIS: "Hololive DEV_IS",
       holostars: "HOLOSTARS",
@@ -32,17 +32,17 @@
     // Help users to perform group operations when detected
     selectHelper: {
       // Prompt users to unsubscribe to all members in a group or not, with the question mark
-      mute: "Mute this group?",
+      mute: "Выключить звук этой группы?",
       // Prompt users to subscribe to all members in a group or not, with the question mark
-      subscribe: "Subscribe to this group?",
+      subscribe: "Подписаться на эту группу?",
       // Indicate that the requested group operation has succeeded, with the period
-      success: "Operations performed.",
+      success: "Операция выполнена.",
       // Confirm the operation
-      yes: "Yes",
+      yes: "Да",
       // Cancel the operation
-      no: "No",
+      no: "Нет",
       // Undo the operation
-      undo: "Undo"
+      undo: "Отменить"
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" :lang="$i18n.locale">
     <div class="head">
       <template v-if="route === 'main'">
         <div class="main">
@@ -425,6 +425,7 @@
       padding: 16px;
       background: hsla(var(--color-bg-base-expand), var(--background-opacity));
       overflow: auto;
+      scrollbar-width: none;
 
       .option {
         .label {

@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "Ett kritiskt fel inträffade vid initiering: \"{msg}\". Om detta meddelande fortfarande visas efter att du startat om webbläsaren, vänligen kontakta @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "Tillbaka",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "Inställningar",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "Aktivera skrivbordsaviseringar",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
+        description: "Meddela dig via skrivbordsaviseringar om överraskande livesändningar (sändningar planerade att börja inom 10 minuter) och påminnelser du har ställt in"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Enable 30-hour clock",
+        label: "Aktivera 30-timmarsklocka",
         // Description for enable30Hours
-        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+        description: "En dag börjar kl. 06:00 och sträcker sig från 24:00 till 29:59 för att representera 00:00–05:59 nästa dag"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings",
+        label: "Synkronisera inställningar",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in"
+        description: "Dela inställningar mellan olika enheter med samma inloggade webbläsarkonto"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "Språk",
         // Description for language
-        description: "Switch the UI language",
+        description: "Byt användargränssnittets språk",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -60,27 +60,27 @@
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "Appearance",
+        label: "Utseende",
         // Description for appearance
-        description: "Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "Ändra utseendet till ditt föredragna tema. Ändringar gäller endast för den aktuella webbläsaren",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Follow device",
+          device: "Följ enhet",
           // Default light theme which is designed for daily use
-          light: "Default light",
+          light: "Standard ljust tema",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "Dimmed dark"
+          dark: "Dämpat mörkt tema"
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "Avancerade inställningar",
       // Display the current version
       version: "Version: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "Powered by {link}",
+        label: "Drivs av {link}",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "Om du har några frågor, kontakta gärna {link}",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,13 +99,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "Dra ner för att ladda mer",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "Laddar",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "Klar",
       // Indicate that all available data has been loaded
-      finished: "That's all"
+      finished: "Det var allt"
     }
   },
   // Component LiveList
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives"
+        label: "Avslutade sändningar",
+        loading: "Laddar avslutade sändningar"
       },
       // Lives that are undergoing
       current: {
-        label: "Live",
-        loading: "Loading current lives"
+        label: "Pågående sändning",
+        loading: "Laddar pågående sändningar"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives"
+        label: "Planerade sändningar",
+        loading: "Laddar planerade sändningar"
       }
     }
   },
@@ -135,41 +135,41 @@
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
-      lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do"
+      sameDay: "[Idag]",
+      lastDay: "D MMM, [Igår]",
+      lastWeek: "D MMM, dddd",
+      sameElse: "D MMM"
     }
   },
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "Pågår",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
+      set: "Påminn mig",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder"
+      cancel: "Avbryt påminnelse"
     },
     // Used to customize dayjs#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at] H:mm A",
-      nextDay: "[Tomorrow] H:mm A",
-      nextWeek: "dddd [at] H:mm A",
-      lastDay: "[Yesterday] H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "MMM Do [at] H:mm A"
+      sameDay: "[Idag kl.] H:mm A",
+      nextDay: "[Imorgon kl.] H:mm A",
+      nextWeek: "dddd [kl.] H:mm A",
+      lastDay: "[Igår kl.] H:mm A",
+      lastWeek: "[Förra] dddd H:mm A",
+      sameElse: "D MMM [kl.] H:mm A"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A"
+      full: "D MMMM YYYY H:mm A"
     }
   }
 }

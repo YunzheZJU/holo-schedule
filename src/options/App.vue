@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" :lang="$i18n.locale">
     <div class="frame-left" />
     <div class="frame-right" />
     <div class="container">

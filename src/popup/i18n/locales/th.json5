@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "เกิดข้อผิดพลาดร้ายแรงระหว่างเริ่มต้น: \"{msg}\" หากยังคงเห็นข้อความนี้หลังจากรีสตาร์ทเบราว์เซอร์ กรุณาติดต่อ @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "ย้อนกลับ",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "การตั้งค่า",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "เปิดการแจ้งเตือนบนเดสก์ท็อป",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
+        description: "แจ้งเตือนคุณเกี่ยวกับไลฟ์กองโจร (จะเริ่มใน 10 นาที) และไลฟ์ที่คุณตั้งเตือนไว้"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Enable 30-hour clock",
+        label: "ใช้ระบบเวลา 30 ชั่วโมง",
         // Description for enable30Hours
-        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+        description: "วันหนึ่งเริ่มที่ 6:00 น. และขยายจาก 24:00 ถึง 29:59 เพื่อแสดงช่วง 0:00–5:59 ของวันถัดไป"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings",
+        label: "ซิงค์การตั้งค่า",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in"
+        description: "แชร์การตั้งค่าระหว่างอุปกรณ์ต่างๆ ที่เข้าสู่ระบบด้วยบัญชีเบราว์เซอร์เดียวกัน"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "ภาษา",
         // Description for language
-        description: "Switch the UI language",
+        description: "เปลี่ยนภาษาของอินเทอร์เฟซ",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -60,27 +60,27 @@
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "Appearance",
+        label: "ลักษณะ",
         // Description for appearance
-        description: "Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "เปลี่ยนธีมตามที่คุณชอบ ใช้ได้เฉพาะในเบราว์เซอร์นี้",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Follow device",
+          device: "ตามอุปกรณ์",
           // Default light theme which is designed for daily use
-          light: "Default light",
+          light: "ธีมสว่าง",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "Dimmed dark"
+          dark: "ธีมมืด"
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "การตั้งค่าขั้นสูง",
       // Display the current version
-      version: "Version: v{version}",
+      version: "เวอร์ชัน: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "Powered by {link}",
+        label: "ขับเคลื่อนโดย {link}",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "หากคุณมีคำถาม กรุณาติดต่อ {link}",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,13 +99,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "เลื่อนลงเพื่อโหลดเพิ่มเติม",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "กำลังโหลด",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "โหลดสำเร็จ",
       // Indicate that all available data has been loaded
-      finished: "That's all"
+      finished: "ไม่มีข้อมูลเพิ่มเติมแล้ว"
     }
   },
   // Component LiveList
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives"
+        label: "ไลฟ์ที่จบแล้ว",
+        loading: "กำลังโหลดไลฟ์ที่จบแล้ว"
       },
       // Lives that are undergoing
       current: {
-        label: "Live",
-        loading: "Loading current lives"
+        label: "กำลังถ่ายทอด",
+        loading: "กำลังโหลดไลฟ์สด"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives"
+        label: "ไลฟ์ที่กำหนดไว้",
+        loading: "กำลังโหลดไลฟ์ที่กำหนดไว้"
       }
     }
   },
@@ -135,8 +135,8 @@
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
+      sameDay: "[วันนี้]",
+      lastDay: "MMM Do, [เมื่อวาน]",
       lastWeek: "MMM Do, dddd",
       sameElse: "MMM Do"
     }
@@ -144,32 +144,32 @@
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "กำลังถ่ายทอดสด",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
+      set: "แจ้งเตือนฉัน",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder"
+      cancel: "ยกเลิกแจ้งเตือน"
     },
     // Used to customize dayjs#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at] H:mm A",
-      nextDay: "[Tomorrow] H:mm A",
-      nextWeek: "dddd [at] H:mm A",
-      lastDay: "[Yesterday] H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "MMM Do [at] H:mm A"
+      sameDay: "[วันนี้ เวลา] H:mm A",
+      nextDay: "[พรุ่งนี้ เวลา] H:mm A",
+      nextWeek: "dddd [เวลา] H:mm A",
+      lastDay: "[เมื่อวาน เวลา] H:mm A",
+      lastWeek: "[เมื่อ] dddd H:mm A",
+      sameElse: "MMM Do [เวลา] H:mm A"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A"
+      full: "D MMMM YYYY เวลา H:mm A"
     }
   }
 }

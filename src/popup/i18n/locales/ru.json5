@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "Произошла критическая ошибка при инициализации: \"{msg}\". Если это сообщение продолжает появляться после перезапуска браузера, пожалуйста, свяжитесь с @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "Назад",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "Настройки",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "Включить уведомления на рабочем столе",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
+        description: "Уведомлять вас о внезапных трансляциях (запланированных на ближайшие 10 минут) и установленных вами напоминаниях"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Enable 30-hour clock",
+        label: "Использовать 30-часовой формат",
         // Description for enable30Hours
-        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+        description: "День начинается в 6:00 и продолжается до 29:59, чтобы отобразить время с 0:00 до 5:59 следующего дня"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings",
+        label: "Синхронизация настроек",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in"
+        description: "Обмен настройками между разными устройствами с одной учетной записью браузера"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "Язык",
         // Description for language
-        description: "Switch the UI language",
+        description: "Сменить язык интерфейса",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -60,27 +60,27 @@
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "Appearance",
+        label: "Внешний вид",
         // Description for appearance
-        description: "Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "Изменить тему интерфейса. Изменения применяются только к текущему браузеру",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Follow device",
+          device: "Следовать устройству",
           // Default light theme which is designed for daily use
-          light: "Default light",
+          light: "Светлая тема",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "Dimmed dark"
+          dark: "Тёмная тема"
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "Расширенные настройки",
       // Display the current version
-      version: "Version: v{version}",
+      version: "Версия: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "Powered by {link}",
+        label: "Работает на {link}",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "Если у вас есть вопросы, пожалуйста, свяжитесь с {link}",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,13 +99,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "Потяните вниз, чтобы загрузить ещё",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "Загрузка",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "Успешно",
       // Indicate that all available data has been loaded
-      finished: "That's all"
+      finished: "Больше данных нет"
     }
   },
   // Component LiveList
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives"
+        label: "Завершённые трансляции",
+        loading: "Загрузка завершённых трансляций"
       },
       // Lives that are undergoing
       current: {
-        label: "Live",
-        loading: "Loading current lives"
+        label: "Прямой эфир",
+        loading: "Загрузка текущих трансляций"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives"
+        label: "Запланированные трансляции",
+        loading: "Загрузка запланированных трансляций"
       }
     }
   },
@@ -135,41 +135,41 @@
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
-      lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do"
+      sameDay: "[Сегодня]",
+      lastDay: "D MMM, [Вчера]",
+      lastWeek: "D MMM, dddd",
+      sameElse: "D MMM"
     }
   },
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "Прямой эфир",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
+      set: "Напомнить",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder"
+      cancel: "Отменить напоминание"
     },
     // Used to customize dayjs#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at] H:mm A",
-      nextDay: "[Tomorrow] H:mm A",
-      nextWeek: "dddd [at] H:mm A",
-      lastDay: "[Yesterday] H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "MMM Do [at] H:mm A"
+      sameDay: "[Сегодня в] H:mm A",
+      nextDay: "[Завтра в] H:mm A",
+      nextWeek: "dddd [в] H:mm A",
+      lastDay: "[Вчера в] H:mm A",
+      lastWeek: "[Прошлая] dddd H:mm A",
+      sameElse: "D MMM [в] H:mm A"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A"
+      full: "D MMMM YYYY H:mm A"
     }
   }
 }

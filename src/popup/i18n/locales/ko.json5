@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "초기화 중 치명적인 오류 발생: \"{msg}\". 브라우저를 다시 시작한 후에도 계속 나타난다면 @:app.settings.contact.value 로 문의해 주세요.",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "뒤로",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "설정",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "데스크탑 알림 사용",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
+        description: "게릴라 방송(10분 이내 예정)과 설정한 알림에 대해 데스크탑 알림을 받습니다"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Enable 30-hour clock",
+        label: "30시간제 사용",
         // Description for enable30Hours
-        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+        description: "하루는 오전 6시에 시작하며, 다음 날 0:00~5:59를 24:00~29:59로 표시합니다"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings",
+        label: "설정 동기화",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in"
+        description: "같은 브라우저 계정으로 로그인된 장치 간 설정 공유"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "언어",
         // Description for language
-        description: "Switch the UI language",
+        description: "UI 언어 변경",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -60,27 +60,27 @@
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "Appearance",
+        label: "테마",
         // Description for appearance
-        description: "Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "원하는 테마로 변경합니다. 이 설정은 현재 브라우저에만 적용됩니다",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Follow device",
+          device: "시스템 설정 따르기",
           // Default light theme which is designed for daily use
-          light: "Default light",
+          light: "기본 밝은 테마",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "Dimmed dark"
+          dark: "어두운 테마"
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "고급 설정",
       // Display the current version
-      version: "Version: v{version}",
+      version: "버전: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "Powered by {link}",
+        label: "{link}에서 제공하는 서비스예요",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "문의사항은 {link}(으)로 연락해 주세요",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,13 +99,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "아래로 당겨 더 보기",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "불러오는 중",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "성공",
       // Indicate that all available data has been loaded
-      finished: "That's all"
+      finished: "모두 불러왔습니다"
     }
   },
   // Component LiveList
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives"
+        label: "종료됨",
+        loading: "종료된 방송 불러오는 중"
       },
       // Lives that are undergoing
       current: {
-        label: "Live",
-        loading: "Loading current lives"
+        label: "방송 중",
+        loading: "현재 방송 불러오는 중"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives"
+        label: "예정됨",
+        loading: "예정된 방송 불러오는 중"
       }
     }
   },
@@ -135,41 +135,41 @@
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
-      lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do"
+      sameDay: "[오늘]",
+      lastDay: "MMM D일, [어제]",
+      lastWeek: "MMM D일 dddd",
+      sameElse: "MMM D일"
     }
   },
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "방송 중",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
+      set: "알림 설정",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder"
+      cancel: "알림 취소"
     },
     // Used to customize dayjs#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at] H:mm A",
-      nextDay: "[Tomorrow] H:mm A",
-      nextWeek: "dddd [at] H:mm A",
-      lastDay: "[Yesterday] H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "MMM Do [at] H:mm A"
+      sameDay: "[오늘] A H:mm",
+      nextDay: "[내일] A H:mm",
+      nextWeek: "dddd A H:mm",
+      lastDay: "[어제] A H:mm",
+      lastWeek: "[지난] dddd A H:mm",
+      sameElse: "MMM D일 A H:mm"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
-      simple: "H:mm A",
+      simple: "A H:mm",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A"
+      full: "YYYY년 MMMM D일 A H:mm"
     }
   }
 }

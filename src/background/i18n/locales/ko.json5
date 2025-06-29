@@ -2,8 +2,8 @@
   // Desktop notification
   notification: {
     // Inform users that a guerrilla live has started
-    guerrilla: 'A guerrilla live has started! {name} is waiting for your watching!',
+    guerrilla: '게릴라 방송이 시작됐어요! {name}님이 기다리고 있어요!',
     // Inform users that a scheduled live has started
-    reminder: 'A scheduled live has started! {name} is waiting for your watching!',
+    reminder: '예약된 방송이 시작됐어요! {name}님이 기다리고 있어요!',
   },
 }

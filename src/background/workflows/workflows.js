@@ -22,6 +22,19 @@ import { getMembersMask, getUnix, getUnixAfterDays, getUnixBeforeDays, limitRigh
 
 const MAX_LIVES_LENGTH = 250
 
+const getCachedChannels = () => store.get(CHANNELS)
+
+const getCachedMembers = () => store.get(MEMBERS)
+
+const getMember = live => {
+  const channels = getCachedChannels() ?? []
+  const members = getCachedMembers() ?? []
+  const channel = channels.find(({ id }) => id === live['channel_id']) ?? {}
+  return members.find(({ id }) => id === channel['member_id']) ?? {}
+}
+
+const getMemberId = live => getMember(live).id
+
 const filterByTitle = lives => filter(
   lives,
   live => {
@@ -52,7 +65,7 @@ const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
   lives,
 )
 
-const extractTopic = ({ title }) => (title.match(/[≪《【\[「](.*?)[≫》】\]」]/)?.[1] || '').trim()
+const extractTopic = ({ title }) => (title.match(/[≪《【[「](.*?)[≫》】\]」]/)?.[1] || '').trim()
 
 // 1. Live with smaller start_at exists earlier
 // 2. Lives with the same topic are placed together and ordered by member_id and id
@@ -167,8 +180,6 @@ const syncHotnesses = async (lives = []) => {
   })
 }
 
-const getCachedChannels = () => store.get(CHANNELS)
-
 const syncChannels = async () => {
   const channels = await getChannels()
 
@@ -176,8 +187,6 @@ const syncChannels = async () => {
 
   return getCachedChannels()
 }
-
-const getCachedMembers = () => store.get(MEMBERS)
 
 const syncMembers = async () => {
   const members = await getMembers()
@@ -209,15 +218,6 @@ const syncLives = type => {
   }
   return syncOpenLives()
 }
-
-const getMember = live => {
-  const channels = getCachedChannels() ?? []
-  const members = getCachedMembers() ?? []
-  const channel = channels.find(({ id }) => id === live['channel_id']) ?? {}
-  return members.find(({ id }) => id === channel['member_id']) ?? {}
-}
-
-const getMemberId = live => getMember(live).id
 
 const setIsNtfEnabled = boolean => store.set(
   { [IS_NTF_ENABLED]: boolean },
@@ -259,6 +259,9 @@ const setLastSuccessRequestTime = lastSuccessRequestTime => store.set(
 )
 
 export default {
+  getCachedChannels,
+  getCachedMembers,
+  getMember,
   filterByTitle,
   filterBySubscription,
   extractTopic,
@@ -270,13 +273,10 @@ export default {
   getCachedScheduledLives,
   syncOpenLives,
   syncHotnesses,
-  getCachedChannels,
   syncChannels,
-  getCachedMembers,
   syncMembers,
   getCachedLives,
   syncLives,
-  getMember,
   setIsNtfEnabled,
   getLocale,
   setLocale,

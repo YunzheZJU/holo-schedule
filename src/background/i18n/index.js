@@ -25,7 +25,7 @@ const supportedLocales = Object.keys(messages)
 
 const i18n = {
   messages,
-  locale: supportedLocales[0],
+  locale: 'en',
   async init(store) {
     const localeFromBrowser = browser.i18n.getUILanguage()
     if (supportedLocales.find(locale => locale.startsWith(localeFromBrowser))) {

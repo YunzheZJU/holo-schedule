@@ -27,7 +27,7 @@ beforeEach(() => {
 })
 
 test('should use default locale', async () => {
-  const locale = 'fr'
+  const locale = 'fa'
   browser.i18n = {
     getUILanguage: jest.fn(() => locale),
   }

@@ -153,7 +153,7 @@
         return VERSION
       },
       locales() {
-        return sortBy(Object.keys(this.$root.$i18n.messages), (locale) => this.$t(`app.settings.language.locales.${locale}`))
+        return sortBy(Object.keys(this.$root.$i18n.messages), locale => this.$t(`app.settings.language.locales.${locale}`))
       },
       appearances() {
         return ['device', 'light', 'dark']

@@ -1,6 +1,6 @@
 import { keyBy, range } from 'lodash'
 
-export const memberIdsByGroup = keyBy([
+const memberIdsByGroup = keyBy([
   {
     group: 'newDebuts',
     // Dummy ids are specified here to be compatible to new members
@@ -81,3 +81,5 @@ export const memberIdsByGroup = keyBy([
     lang: 'ja',
   },
 ], 'group')
+
+export default memberIdsByGroup

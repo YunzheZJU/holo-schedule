@@ -42,7 +42,7 @@
   import MemberGroup from 'components/member-group'
   import { values } from 'lodash'
   import browser from 'shared/browser'
-  import { memberIdsByGroup } from 'shared/constants/memberIdsByGroup'
+  import memberIdsByGroup from 'shared/constants/memberIdsByGroup'
 
   export default {
     name: 'App',

@@ -106,14 +106,18 @@
                    :fallback-src="defaultAvatar"
                    :style="{color: member['color_main']}"
         />
-        <div class="member" :title="member['name']" :lang="guessLangFromMember(member)">{{ member['name'] }}</div>
+        <div class="member"
+             :title="member['name']"
+             :lang="guessLangFromMember(member)"
+        >
+          {{ member['name'] }}
+        </div>
         <div class="separator" />
         <div class="platform" lang="en">{{ live['platform'] }}</div>
       </div>
-      <div
-        class="content"
-        :title="live['title']"
-        :lang="guessLangFromPlatform(live['platform']) || guessLangFromMember(member)"
+      <div class="content"
+           :title="live['title']"
+           :lang="guessLangFromPlatform(live['platform']) || guessLangFromMember(member)"
       >
         {{ live['title'] }}
       </div>

@@ -13,14 +13,18 @@ const guessLangFromMember = ({ id }) => {
     return 'zh-CN'
   }
 
-  if (inRange(id, 1, 45) || inRange(id, 62, 64) || inRange(id, 72, 81) || inRange(id, 96, 101) || inRange(id, 110, 119)) {
+  if (inRange(id, 1, 45)
+    || inRange(id, 62, 64)
+    || inRange(id, 72, 81)
+    || inRange(id, 96, 101)
+    || inRange(id, 110, 119)) {
     return 'ja'
   }
 
   return 'en'
 }
 
-const guessLangFromPlatform = (name) => {
+const guessLangFromPlatform = name => {
   if (name === 'bilibili') {
     return 'zh-CN'
   }

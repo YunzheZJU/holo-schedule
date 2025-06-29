@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import _, { differenceBy, filter, findLastIndex, groupBy, orderBy, partition, range, reverse, uniqBy } from 'lodash'
+import _, { differenceBy, filter, groupBy, orderBy, partition, range, reverse, uniqBy } from 'lodash'
 import { getChannels, getEndedLives, getHotnessesOfLives, getMembers, getOpenLives } from 'requests'
 import browser from 'shared/browser'
 import {
@@ -74,7 +74,7 @@ const sortLives = lives => _(lives)
   .groupBy('start_at')
   .map(livesGroup => _(livesGroup)
     .groupBy(extractTopic)
-    .map(group => orderBy(group, [(live) => getMemberId(live), ({ id }) => id]))
+    .map(group => orderBy(group, [live => getMemberId(live), ({ id }) => id]))
     .orderBy([([live]) => getMemberId(live), ([{ id }]) => id])
     .flatten()
     .value())

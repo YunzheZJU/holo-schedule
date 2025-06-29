@@ -1,0 +1,48 @@
+{
+  // Component App
+  app: {
+    // Advanced settings
+    advancedSettings: {
+      // Label for advancedSettings
+      label: "Advanced Settings",
+      // Prompt users to configure the list of members to subscribe
+      members: {
+        // Label for members
+        label: "Members",
+        // Description for members
+        description: "Configure the list of members to subscribe"
+      }
+    },
+    // Each key in 'groups' is a group defined at https://hololivepro.com/#top_talent and the according value is the localized name of it
+    groups: {
+      // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
+      newDebuts: "New Debuts!",
+      hololive: "Hololive",
+      hololiveDEVIS: "Hololive DEV_IS",
+      holostars: "HOLOSTARS",
+      hololiveChina: "Hololive China",
+      hololiveIndonesia: "Hololive Indonesia",
+      hololiveEnglish: "Hololive English",
+      holostarsEnglish: "HOLOSTARS English",
+      holoAN: "holoAN"
+    }
+  },
+  // Component MemberGroup
+  memberGroup: {
+    // Help users to perform group operations when detected
+    selectHelper: {
+      // Prompt users to unsubscribe to all members in a group or not, with the question mark
+      mute: "Mute this group?",
+      // Prompt users to subscribe to all members in a group or not, with the question mark
+      subscribe: "Subscribe to this group?",
+      // Indicate that the requested group operation has succeeded, with the period
+      success: "Operations performed.",
+      // Confirm the operation
+      yes: "Yes",
+      // Cancel the operation
+      no: "No",
+      // Undo the operation
+      undo: "Undo"
+    }
+  }
+}

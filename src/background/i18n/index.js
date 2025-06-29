@@ -3,11 +3,12 @@ import browser from 'shared/browser'
 import { LOCALE } from 'shared/store/keys'
 import workflows from 'workflows/workflows'
 import de from './locales/de.json5'
+import id from './locales/id.json5'
 import en from './locales/en.json5'
 import ja from './locales/ja.json5'
 import zhCN from './locales/zh-CN.json5'
 
-const messages = { en, ja, 'zh-CN': zhCN, de }
+const messages = { en, ja, 'zh-CN': zhCN, de, id }
 const supportedLocales = Object.keys(messages)
 
 const i18n = {

@@ -163,7 +163,7 @@ test('should sort lives', async () => {
   })
 
   const livesToSort = [liveFour, liveThree, liveSix, liveOne, liveTwo, liveFive]
-  const livesExpected = [liveTwo, liveFive, liveOne, liveSix, liveThree, liveFour ]
+  const livesExpected = [liveTwo, liveFive, liveOne, liveSix, liveThree, liveFour]
 
   const sortedLives = workflows.sortLives(livesToSort)
 

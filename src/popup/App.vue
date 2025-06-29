@@ -423,6 +423,7 @@
       align-content: start;
       padding: 16px;
       background: hsla(var(--color-bg-base-expand), var(--background-opacity));
+      overflow: auto;
 
       .option {
         .label {

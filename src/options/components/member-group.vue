@@ -27,7 +27,7 @@
       </div>
     </div>
     <ol class="content">
-      <li v-for="member in groupMembers" :key="member['id']" class="member-container">
+      <li v-for="member in groupMembers" :key="member['id']" class="member-container" :lang="lang">
         <SubscriptionInput :member="member"
                            :subscribed="subscriptionByMember[member['id']]"
                            class="member"
@@ -62,6 +62,10 @@
         default() {
           return []
         },
+      },
+      lang: {
+        type: String,
+        required: true,
       },
     },
     data: () => ({

@@ -106,11 +106,17 @@
                    :fallback-src="defaultAvatar"
                    :style="{color: member['color_main']}"
         />
-        <div class="member" :title="member['name']">{{ member['name'] }}</div>
+        <div class="member" :title="member['name']" :lang="guessLangFromMember(member)">{{ member['name'] }}</div>
         <div class="separator" />
-        <div class="platform">{{ live['platform'] }}</div>
+        <div class="platform" lang="en">{{ live['platform'] }}</div>
       </div>
-      <div class="content" :title="live['title']">{{ live['title'] }}</div>
+      <div
+        class="content"
+        :title="live['title']"
+        :lang="guessLangFromPlatform(live['platform']) || guessLangFromMember(member)"
+      >
+        {{ live['title'] }}
+      </div>
       <div class="accessory">
         <div v-if="type === 'current'" class="badge">{{ $t('liveItem.liveNow') }}</div>
         <div class="start-at" :title="startAtFull">
@@ -139,7 +145,7 @@
   import browser from 'shared/browser'
   import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
-  import { constructUrl } from 'shared/utils'
+  import { constructUrl, guessLangFromMember, guessLangFromPlatform } from 'shared/utils'
   import workflows from 'shared/workflows'
   import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
@@ -247,6 +253,8 @@
       this.isScheduled = await isAlarmScheduled(this.live)
     },
     methods: {
+      guessLangFromPlatform,
+      guessLangFromMember,
       scrollIntoView(...args) {
         this.$refs.item.scrollIntoView(...args)
       },

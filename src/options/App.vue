@@ -40,54 +40,20 @@
 
 <script>
   import MemberGroup from 'components/member-group'
-  import { range } from 'lodash'
+  import { values } from 'lodash'
   import browser from 'shared/browser'
+  import { memberIdsByGroup } from 'shared/constants/memberIdsByGroup'
 
   export default {
     name: 'App',
     components: { MemberGroup },
     computed: {
       groups() {
-        return [
-          {
-            name: this.$t('app.groups.newDebuts'),
-            // Dummy ids are specified here to be compatible to new members
-            memberIds: range(120, 130),
-          },
-          {
-            name: this.$t('app.groups.hololive'),
-            memberIds: [62, ...range(1, 34), ...range(72, 77)],
-          },
-          {
-            name: this.$t('app.groups.hololiveDEVIS'),
-            memberIds: [101, ...range(96, 101), 115, ...range(110, 115)],
-          },
-          {
-            name: this.$t('app.groups.holostars'),
-            memberIds: [63, ...range(34, 45), ...range(77, 81)],
-          },
-          {
-            name: this.$t('app.groups.hololiveChina'),
-            memberIds: range(45, 51),
-          },
-          {
-            name: this.$t('app.groups.hololiveIndonesia'),
-            memberIds: [64, ...range(51, 54), ...range(59, 62), ...range(81, 84)],
-          },
-          {
-            name: this.$t('app.groups.hololiveEnglish'),
-            // eslint-disable-next-line max-len
-            memberIds: [65, ...range(54, 59), ...range(66, 72), ...range(92, 96), ...range(106, 110)],
-          },
-          {
-            name: this.$t('app.groups.holostarsEnglish'),
-            memberIds: [119, ...range(84, 92), ...range(102, 106)],
-          },
-          {
-            name: this.$t('app.groups.holoAN'),
-            memberIds: [118, 116, 117],
-          },
-        ]
+        return values(memberIdsByGroup).map(({ group, memberIds, lang }) => ({
+          name: this.$t(`app.groups.${group}`),
+          memberIds,
+          lang,
+        }))
       },
     },
     methods: {

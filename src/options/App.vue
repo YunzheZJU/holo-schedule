@@ -40,16 +40,15 @@
 
 <script>
   import MemberGroup from 'components/member-group'
-  import { values } from 'lodash'
   import browser from 'shared/browser'
-  import memberIdsByGroup from 'shared/constants/memberIdsByGroup'
+  import memberGroups from 'shared/constants/memberGroups'
 
   export default {
     name: 'App',
     components: { MemberGroup },
     computed: {
       groups() {
-        return values(memberIdsByGroup).map(({ group, memberIds, lang }) => ({
+        return memberGroups.map(({ group, memberIds, lang }) => ({
           name: this.$t(`app.groups.${group}`),
           memberIds,
           lang,

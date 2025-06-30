@@ -108,7 +108,7 @@
         />
         <div class="member"
              :title="member['name']"
-             :lang="guessLangFromMember(member)"
+             :lang="getLangFromMemberId(member['id'])"
         >
           {{ member['name'] }}
         </div>
@@ -117,7 +117,7 @@
       </div>
       <div class="content"
            :title="live['title']"
-           :lang="guessLangFromPlatform(live['platform']) || guessLangFromMember(member)"
+           :lang="guessLangFromPlatform(live['platform']) || getLangFromMemberId(member['id'])"
       >
         {{ live['title'] }}
       </div>
@@ -149,7 +149,7 @@
   import browser from 'shared/browser'
   import HIcon from 'shared/components/h-icon'
   import { IS_30_HOURS_ENABLED, IS_NTF_ENABLED } from 'shared/store/keys'
-  import { constructUrl, guessLangFromMember, guessLangFromPlatform } from 'shared/utils'
+  import { constructUrl, getLangFromMemberId, guessLangFromPlatform } from 'shared/utils'
   import workflows from 'shared/workflows'
   import { formatDurationFromSeconds, sampleHotnesses } from 'utils'
   import { liveTypeValidator } from 'validators'
@@ -258,7 +258,7 @@
     },
     methods: {
       guessLangFromPlatform,
-      guessLangFromMember,
+      getLangFromMemberId,
       scrollIntoView(...args) {
         this.$refs.item.scrollIntoView(...args)
       },

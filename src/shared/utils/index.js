@@ -1,4 +1,5 @@
-import { inRange } from 'lodash'
+import { fromPairs } from 'lodash'
+import memberGroups from 'shared/constants/memberGroups'
 
 const constructUrl = ({ platform, room, video, time }) => ({
   youtube: `https://www.youtube.com/watch?v=${room}${time ? `&t=${time}` : ''}`,
@@ -8,20 +9,15 @@ const constructUrl = ({ platform, room, video, time }) => ({
   twitter: `https://twitter.com/i/spaces/${room}`,
 }[platform])
 
-const guessLangFromMember = ({ id }) => {
-  if (inRange(id, 45, 51)) {
-    return 'zh-CN'
-  }
+const langByMemberId = fromPairs(
+  memberGroups.flatMap(({ memberIds, lang }) => memberIds.map(id => [
+    id,
+    lang,
+  ])),
+)
 
-  if (inRange(id, 1, 45)
-    || inRange(id, 62, 64)
-    || inRange(id, 72, 81)
-    || inRange(id, 96, 101)
-    || inRange(id, 110, 119)) {
-    return 'ja'
-  }
-
-  return 'en'
+const getLangFromMemberId = (id) => {
+  return langByMemberId[id] || 'en'
 }
 
 const guessLangFromPlatform = name => {
@@ -37,4 +33,4 @@ const guessLangFromPlatform = name => {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export { constructUrl, guessLangFromMember, guessLangFromPlatform }
+export { constructUrl, getLangFromMemberId, guessLangFromPlatform }

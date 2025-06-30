@@ -1,4 +1,4 @@
-import { keyBy, range } from 'lodash'
+import { range } from 'lodash'
 
 const memberGroups = [
   {

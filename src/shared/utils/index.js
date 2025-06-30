@@ -16,9 +16,7 @@ const langByMemberId = fromPairs(
   ])),
 )
 
-const getLangFromMemberId = (id) => {
-  return langByMemberId[id] || 'en'
-}
+const getLangFromMemberId = id => langByMemberId[id] || 'en'
 
 const guessLangFromPlatform = name => {
   if (name === 'bilibili') {

@@ -47,7 +47,7 @@
           ja: "日本語",
           ko: "한국어",
           pl: "Polski",
-          pt: "Português",
+          'pt-PT': "Português (Portugal)",
           'pt-BR': "Português (Brasil)",
           ru: "Русский",
           sv: "Svenska",

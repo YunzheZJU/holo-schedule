@@ -47,13 +47,13 @@
           ja: "日本語",
           ko: "한국어",
           pl: "Polski",
-          pt: "Português",
+          'pt-PT': "Português (Portugal)",
           'pt-BR': "Português (Brasil)",
           ru: "Русский",
           sv: "Svenska",
           th: "ไทย",
           vi: "Tiếng Việt",
-          'zh-CN': "簡體中文",
+          'zh-CN': "简体中文",
           'zh-TW': "繁體中文"
         }
       },

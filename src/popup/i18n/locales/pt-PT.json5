@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "Erro crítico durante a inicialização: \"{msg}\". Se esta mensagem continuar aparecendo após reiniciar o navegador, por favor contate @:app.settings.contact.value",
+    bgInitError: "Ocorreu um erro crítico durante a inicialização: \"{msg}\". Se a mensagem continuar após reiniciar o navegador, contacte @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
       back: "Voltar",
       // Name of page where users can change settings
-      label: "Configurações",
+      label: "Definições",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Ativar notificações de desktop",
+        label: "Ativar notificações na área de trabalho",
         // Description for enableNtf
-        description: "Notifique você sobre lives surpresa (programadas para começar em 10 minutos) e lembretes configurados"
+        description: "Notificar-te por notificações de desktop sobre lives surpresa (agendadas para começar em 10 minutos) e lembretes definidos"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Relógio de 30 horas",
+        label: "Ativar relógio de 30 horas",
         // Description for enable30Hours
-        description: "O dia começa às 6h e vai até 29:59 para representar 0:00–5:59 do dia seguinte"
+        description: "Um dia começa às 6:00, e prolonga-se de 24:00 até 29:59 para representar 0:00 - 5:59 do dia seguinte"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sincronizar configurações",
+        label: "Sincronizar definições",
         // Description for shouldSyncSettings
-        description: "Compartilhe configurações entre dispositivos com a mesma conta do navegador"
+        description: "Partilhar definições entre dispositivos com a mesma conta do navegador"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
         label: "Idioma",
         // Description for language
-        description: "Mude o idioma da interface",
+        description: "Alterar o idioma da interface",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -47,7 +47,7 @@
           ja: "日本語",
           ko: "한국어",
           pl: "Polski",
-          pt: "Português",
+          'pt-PT': "Português (Portugal)",
           'pt-BR': "Português (Brasil)",
           ru: "Русский",
           sv: "Svenska",
@@ -62,11 +62,11 @@
         // Label for appearance
         label: "Aparência",
         // Description for appearance
-        description: "Altere o tema da interface. Essa configuração só afeta o navegador atual",
+        description: "Mudar o tema conforme a tua preferência. Aplicado apenas neste navegador",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Seguir dispositivo",
+          device: "Seguir sistema",
           // Default light theme which is designed for daily use
           light: "Tema claro",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
@@ -74,7 +74,7 @@
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Configurações avançadas",
+      advanced: "Definições Avançadas",
       // Display the current version
       version: "Versão: v{version}",
       // Describe the backend engine of this project
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "Se tiver dúvidas, contate {link}",
+        label: "Se tiveres dúvidas, contacta {link}",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,11 +99,11 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Puxe para carregar mais",
+      hint: "Puxa para carregar mais",
       // Indicate that the loading is being performed
-      loading: "Carregando",
+      loading: "A carregar",
       // Indicate that the loading is done successfully
-      success: "Sucesso",
+      success: "Concluído",
       // Indicate that all available data has been loaded
       finished: "Tudo carregado"
     }
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Encerradas",
-        loading: "Carregando lives encerradas"
+        label: "Lives terminadas",
+        loading: "A carregar lives terminadas"
       },
       // Lives that are undergoing
       current: {
         label: "Ao vivo",
-        loading: "Carregando lives ao vivo"
+        loading: "A carregar lives em andamento"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Agendadas",
-        loading: "Carregando lives agendadas"
+        label: "Lives agendadas",
+        loading: "A carregar lives agendadas"
       }
     }
   },
@@ -144,7 +144,7 @@
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Ao vivo",
+    liveNow: "Ao vivo agora",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
@@ -158,10 +158,10 @@
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
       sameDay: "[Hoje às] H:mm A",
-      nextDay: "[Amanhã às] H:mm A",
+      nextDay: "[Amanhã] H:mm A",
       nextWeek: "dddd [às] H:mm A",
       lastDay: "[Ontem às] H:mm A",
-      lastWeek: "[Última] dddd H:mm A",
+      lastWeek: "[Último] dddd H:mm A",
       sameElse: "D MMM [às] H:mm A"
     },
     // Display the start time of this live
@@ -169,7 +169,7 @@
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "D MMMM YYYY H:mm A"
+      full: "D [de] MMMM [de] YYYY H:mm A"
     }
   }
 }

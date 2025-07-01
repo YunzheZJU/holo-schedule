@@ -1,14 +1,14 @@
 {
   "extensionName": {
-    "message": "ホロスケジュール",
+    "message": "HoloPlaner Transmisji",
     "description": "Name of this extension which will be list in the store like AMO and Chrome Web Store"
   },
   "extensionDescription": {
-    "message": "ホロライブの配信情報をリアルタイムに表示＆通知",
+    "message": "Jedno rozszerzenie, wszystkie transmisje Hololive.",
     "description": "Description of this extension"
   },
   "browserActionTitle": {
-    "message": "ホロライブと、つながり続けよう",
+    "message": "Pozostań w kontakcie z Hololive",
     "description": "Title to show when user hover on the browser action button"
   }
 }

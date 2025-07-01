@@ -34,7 +34,9 @@ export default (store, messages) => {
 
   const updateLocale = $locale => {
     i18n.global.locale = $locale
-    dayjs.locale($locale?.toLowerCase?.() ?? FALLBACK_LOCALE)
+    dayjs.locale(FALLBACK_LOCALE)
+    dayjs.locale($locale?.toLowerCase?.()?.split('-')?.[0])
+    dayjs.locale($locale?.toLowerCase?.())
   }
 
   updateLocale(locale)

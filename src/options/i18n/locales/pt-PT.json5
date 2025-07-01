@@ -4,19 +4,19 @@
     // Advanced settings
     advancedSettings: {
       // Label for advancedSettings
-      label: "Configurações avançadas",
+      label: "Definições Avançadas",
       // Prompt users to configure the list of members to subscribe
       members: {
         // Label for members
         label: "Membros",
         // Description for members
-        description: "Configure a lista de membros para seguir"
+        description: "Configurar a lista de membros a subscrever"
       }
     },
     // Each key in 'groups' is a group defined at https://hololivepro.com/#top_talent and the according value is the localized name of it
     groups: {
       // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
-      newDebuts: "Novos Debuts!",
+      newDebuts: "Novas Estreias!",
       hololive: "Hololive",
       hololiveDEVIS: "Hololive DEV_IS",
       holostars: "HOLOSTARS",
@@ -34,9 +34,9 @@
       // Prompt users to unsubscribe to all members in a group or not, with the question mark
       mute: "Silenciar este grupo?",
       // Prompt users to subscribe to all members in a group or not, with the question mark
-      subscribe: "Assinar todo o grupo?",
+      subscribe: "Subscrever este grupo?",
       // Indicate that the requested group operation has succeeded, with the period
-      success: "Operação concluída.",
+      success: "Ações realizadas.",
       // Confirm the operation
       yes: "Sim",
       // Cancel the operation

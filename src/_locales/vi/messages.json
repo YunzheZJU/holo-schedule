@@ -1,14 +1,14 @@
 {
   "extensionName": {
-    "message": "ホロスケジュール",
+    "message": "HoloLịch Trực Tiếp",
     "description": "Name of this extension which will be list in the store like AMO and Chrome Web Store"
   },
   "extensionDescription": {
-    "message": "ホロライブの配信情報をリアルタイムに表示＆通知",
+    "message": "Tất cả buổi livestream của Hololive chỉ trong một tiện ích.",
     "description": "Description of this extension"
   },
   "browserActionTitle": {
-    "message": "ホロライブと、つながり続けよう",
+    "message": "Luôn cập nhật với Hololive",
     "description": "Title to show when user hover on the browser action button"
   }
 }

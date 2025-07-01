@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "初始化時發生嚴重錯誤：「{msg}」。若重新啟動瀏覽器後仍出現此訊息，請聯絡 @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "返回",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "設定",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "啟用桌面通知",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
+        description: "當突襲直播（預計10分鐘內開播）或你設定的提醒開始時，透過桌面通知提醒你"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Enable 30-hour clock",
+        label: "啟用30小時制",
         // Description for enable30Hours
-        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+        description: "以早上6:00作為一天的開始，將隔天凌晨0:00到5:59表示為24:00至29:59"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings",
+        label: "同步設定",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in"
+        description: "在登入相同瀏覽器帳號的裝置間同步設定"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "語言",
         // Description for language
-        description: "Switch the UI language",
+        description: "切換介面語言",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -53,34 +53,34 @@
           sv: "Svenska",
           th: "ไทย",
           vi: "Tiếng Việt",
-          'zh-CN': "简体中文",
+          'zh-CN': "簡體中文",
           'zh-TW': "繁體中文"
         }
       },
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "Appearance",
+        label: "外觀",
         // Description for appearance
-        description: "Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "變更主題外觀。此設定僅套用於目前瀏覽器",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Follow device",
+          device: "跟隨系統",
           // Default light theme which is designed for daily use
-          light: "Default light",
+          light: "預設淺色",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "Dimmed dark"
+          dark: "柔和深色"
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "進階設定",
       // Display the current version
-      version: "Version: v{version}",
+      version: "版本：v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "Powered by {link}",
+        label: "由 {link} 提供技術支援",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "若有任何問題，請聯絡 {link}",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,13 +99,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "下拉以載入更多",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "載入中",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "載入成功",
       // Indicate that all available data has been loaded
-      finished: "That's all"
+      finished: "已載入全部內容"
     }
   },
   // Component LiveList
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives"
+        label: "已結束",
+        loading: "正在載入已結束的直播"
       },
       // Lives that are undergoing
       current: {
-        label: "Live",
-        loading: "Loading current lives"
+        label: "直播中",
+        loading: "正在載入直播中內容"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives"
+        label: "預定直播",
+        loading: "正在載入預定直播"
       }
     }
   },
@@ -132,44 +132,34 @@
   liveListEnded: {
     // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with dayjs.
-      // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
-      lastWeek: "MMM Do, dddd",
-      sameElse: "MMM Do"
+      sameDay: "[今天]",
+      lastDay: "MMMDo [昨天]",
+      lastWeek: "MMMDo dddd",
+      sameElse: "MMMDo"
     }
   },
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "直播中",
     // A reminder can notify the user about the starting of a live
     reminder: {
-      // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
-      // Prompt users to cancel the reminder
-      cancel: "Cancel reminder"
+      set: "提醒我",
+      cancel: "取消提醒"
     },
     // Used to customize dayjs#calendar output
     calendar: {
-      // A token string representing the format when displaying datetime with dayjs.
-      // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
-      // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at] H:mm A",
-      nextDay: "[Tomorrow] H:mm A",
-      nextWeek: "dddd [at] H:mm A",
-      lastDay: "[Yesterday] H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "MMM Do [at] H:mm A"
+      sameDay: "[今天] A H:mm",
+      nextDay: "[明天] A H:mm",
+      nextWeek: "dddd A H:mm",
+      lastDay: "[昨天] A H:mm",
+      lastWeek: "[上週] dddd A H:mm",
+      sameElse: "MMMDo A H:mm"
     },
     // Display the start time of this live
     startAt: {
-      // LT in 24 hours. Use the same format as liveItem.calendar
-      simple: "H:mm A",
-      // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A"
+      simple: "A H:mm",
+      full: "MMMM D, YYYY A H:mm"
     }
   }
 }

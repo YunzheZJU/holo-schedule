@@ -1,0 +1,9 @@
+{
+  // Desktop notification
+  notification: {
+    // Inform users that a guerrilla live has started
+    guerrilla: 'ไลฟ์กองโจรเริ่มแล้ว! {name} กำลังรอคุณอยู่!',
+    // Inform users that a scheduled live has started
+    reminder: 'ไลฟ์ตามกำหนดการเริ่มแล้ว! {name} กำลังรอคุณอยู่!',
+  },
+}

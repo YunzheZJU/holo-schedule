@@ -1,0 +1,9 @@
+{
+  // Desktop notification
+  notification: {
+    // Inform users that a guerrilla live has started
+    guerrilla: '突襲直播開始囉！{name} 正在等你觀看！',
+    // Inform users that a scheduled live has started
+    reminder: '預定直播已開始！{name} 正在等你觀看！',
+  },
+}

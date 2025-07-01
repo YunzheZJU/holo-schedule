@@ -2,40 +2,40 @@
   // Component App
   app: {
     // Error message used if an error is raised during initialization of background scripts. Prompt users to contact the feedback.
-    bgInitError: "A critical error has occurred during initialization: \"{msg}\". If this message still appears after you've restarted the browser, please contact @:app.settings.contact.value",
+    bgInitError: "Đã xảy ra lỗi nghiêm trọng khi khởi tạo: \"{msg}\". Nếu thông báo vẫn hiển thị sau khi khởi động lại trình duyệt, vui lòng liên hệ @:app.settings.contact.value",
     // Page Settings
     settings: {
       // Prompt users to go to the previous page
-      back: "Back",
+      back: "Quay lại",
       // Name of page where users can change settings
-      label: "Settings",
+      label: "Cài đặt",
       // Prompt users to enable desktop notification
       enableNtf: {
         // Label for enableNtf
-        label: "Enable desktop notification",
+        label: "Bật thông báo trên máy tính",
         // Description for enableNtf
-        description: "Notify you by desktop notifications about the guerrilla lives (lives scheduled to start in 10 minutes) and reminders you’ve set"
+        description: "Nhận thông báo về livestream bất ngờ (trong 10 phút tới) và các nhắc nhở bạn đã thiết lập"
       },
       // Prompt users to enable 30-hour clock
       enable30Hours: {
         // Label for enable30Hours
-        label: "Enable 30-hour clock",
+        label: "Dùng đồng hồ 30 giờ",
         // Description for enable30Hours
-        description: "A day starts at 6:00 AM, extending 24:00 til 29:59 to represent 0:00 AM - 5:59 AM of the next day"
+        description: "Một ngày bắt đầu lúc 6:00 và kéo dài đến 29:59 để biểu thị 0:00–5:59 của ngày tiếp theo"
       },
       // Prompt users to sync settings between different devices with the same browser account logged in
       shouldSyncSettings: {
         // Label for shouldSyncSettings
-        label: "Sync settings",
+        label: "Đồng bộ cài đặt",
         // Description for shouldSyncSettings
-        description: "Share settings between different devices with the same browser account logged in"
+        description: "Chia sẻ cài đặt giữa các thiết bị dùng cùng tài khoản trình duyệt"
       },
       // Prompt users to switch the UI language
       language: {
         // Label for language
-        label: "Language",
+        label: "Ngôn ngữ",
         // Description for language
-        description: "Switch the UI language",
+        description: "Thay đổi ngôn ngữ giao diện",
         // Supported locales, where keys are type of i18n.LanguageCode and values are translated into the according locale
         locales: {
           de: "Deutsch",
@@ -60,27 +60,27 @@
       // Prompt users to switch the appearance
       appearance: {
         // Label for appearance
-        label: "Appearance",
+        label: "Giao diện",
         // Description for appearance
-        description: "Change the appearance to your preferred theme. Changes are only applied to the current browser",
+        description: "Thay đổi chủ đề theo sở thích. Chỉ áp dụng cho trình duyệt hiện tại",
         // Supported appearances
         appearances: {
           // The theme follows the current OS setting. This is the default selection
-          device: "Follow device",
+          device: "Theo thiết bị",
           // Default light theme which is designed for daily use
-          light: "Default light",
+          light: "Chủ đề sáng",
           // A theme which comes with a contrast not so strong as black-on-white and which best fits to night use
-          dark: "Dimmed dark"
+          dark: "Chủ đề tối"
         }
       },
       // Prompt users to change advanced settings
-      advanced: "Advanced Settings",
+      advanced: "Cài đặt nâng cao",
       // Display the current version
-      version: "Version: v{version}",
+      version: "Phiên bản: v{version}",
       // Describe the backend engine of this project
       engine: {
         // Template used to construct the description for the engine
-        label: "Powered by {link}",
+        label: "Hỗ trợ bởi {link}",
         // Name of the engine. There is no need to translate this key
         value: "Non-stop-story",
         // Link to the engine's homepage. There is no need to translate this key
@@ -89,7 +89,7 @@
       // Description prepended to the contact email
       contact: {
         // Template used to construct the description for the engine
-        label: "If you have any question, please contact {link}",
+        label: "Nếu có thắc mắc, vui lòng liên hệ {link}",
         // Name of the engine. There is no need to translate this key
         value: "help{'@'}holo.dev",
         // Link to the engine's homepage. There is no need to translate this key
@@ -99,13 +99,13 @@
     // Pull-to-load
     pullToLoad: {
       // Prompt users to pull down the list to load new data
-      hint: "Pull to load more",
+      hint: "Kéo xuống để tải thêm",
       // Indicate that the loading is being performed
-      loading: "Loading",
+      loading: "Đang tải",
       // Indicate that the loading is done successfully
-      success: "Success",
+      success: "Tải xong",
       // Indicate that all available data has been loaded
-      finished: "That's all"
+      finished: "Đã tải hết"
     }
   },
   // Component LiveList
@@ -113,18 +113,18 @@
     lives: {
       // Lives that has ended
       ended: {
-        label: "Ended lives",
-        loading: "Loading ended lives"
+        label: "Livestream đã kết thúc",
+        loading: "Đang tải các livestream đã kết thúc"
       },
       // Lives that are undergoing
       current: {
-        label: "Live",
-        loading: "Loading current lives"
+        label: "Đang phát",
+        loading: "Đang tải livestream đang phát"
       },
       // Lives that are scheduled to perform
       scheduled: {
-        label: "Scheduled lives",
-        loading: "Loading scheduled lives"
+        label: "Livestream sắp tới",
+        loading: "Đang tải livestream sắp tới"
       }
     }
   },
@@ -135,8 +135,8 @@
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today]",
-      lastDay: "MMM Do, [Yesterday]",
+      sameDay: "[Hôm nay]",
+      lastDay: "MMM Do, [Hôm qua]",
       lastWeek: "MMM Do, dddd",
       sameElse: "MMM Do"
     }
@@ -144,32 +144,32 @@
   // Component LiveItem
   liveItem: {
     // Indicate that this live is undergoing
-    liveNow: "Live now",
+    liveNow: "Đang phát",
     // A reminder can notify the user about the starting of a live
     reminder: {
       // Prompt users to set the reminder for a scheduled live
-      set: "Remind me",
+      set: "Nhắc tôi",
       // Prompt users to cancel the reminder
-      cancel: "Cancel reminder"
+      cancel: "Hủy nhắc"
     },
     // Used to customize dayjs#calendar output
     calendar: {
       // A token string representing the format when displaying datetime with dayjs.
       // You are encouraged to adjust the text wrapped in '[' and ']' or its position.
       // See also: https://day.js.org/docs/display/format
-      sameDay: "[Today at] H:mm A",
-      nextDay: "[Tomorrow] H:mm A",
-      nextWeek: "dddd [at] H:mm A",
-      lastDay: "[Yesterday] H:mm A",
-      lastWeek: "[Last] dddd H:mm A",
-      sameElse: "MMM Do [at] H:mm A"
+      sameDay: "[Hôm nay lúc] H:mm A",
+      nextDay: "[Ngày mai lúc] H:mm A",
+      nextWeek: "dddd [lúc] H:mm A",
+      lastDay: "[Hôm qua lúc] H:mm A",
+      lastWeek: "[Thứ] dddd H:mm A",
+      sameElse: "MMM Do [lúc] H:mm A"
     },
     // Display the start time of this live
     startAt: {
       // LT in 24 hours. Use the same format as liveItem.calendar
       simple: "H:mm A",
       // LLL in 24 hours. Use the same format as liveItem.calendar
-      full: "MMMM D, YYYY H:mm A"
+      full: "D MMMM YYYY lúc H:mm A"
     }
   }
 }

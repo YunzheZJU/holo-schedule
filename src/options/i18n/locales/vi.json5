@@ -1,0 +1,48 @@
+{
+  // Component App
+  app: {
+    // Advanced settings
+    advancedSettings: {
+      // Label for advancedSettings
+      label: "Cài đặt nâng cao",
+      // Prompt users to configure the list of members to subscribe
+      members: {
+        // Label for members
+        label: "Thành viên",
+        // Description for members
+        description: "Cấu hình danh sách thành viên để theo dõi"
+      }
+    },
+    // Each key in 'groups' is a group defined at https://hololivepro.com/#top_talent and the according value is the localized name of it
+    groups: {
+      // This group collects the members who are newly tracked by the backend but have not been updated yet in this extension
+      newDebuts: "Debut mới!",
+      hololive: "Hololive",
+      hololiveDEVIS: "Hololive DEV_IS",
+      holostars: "HOLOSTARS",
+      hololiveChina: "Hololive China",
+      hololiveIndonesia: "Hololive Indonesia",
+      hololiveEnglish: "Hololive English",
+      holostarsEnglish: "HOLOSTARS English",
+      holoAN: "holoAN"
+    }
+  },
+  // Component MemberGroup
+  memberGroup: {
+    // Help users to perform group operations when detected
+    selectHelper: {
+      // Prompt users to unsubscribe to all members in a group or not, with the question mark
+      mute: "Tắt thông báo nhóm này?",
+      // Prompt users to subscribe to all members in a group or not, with the question mark
+      subscribe: "Theo dõi nhóm này?",
+      // Indicate that the requested group operation has succeeded, with the period
+      success: "Thao tác thành công.",
+      // Confirm the operation
+      yes: "Có",
+      // Cancel the operation
+      no: "Không",
+      // Undo the operation
+      undo: "Hoàn tác"
+    }
+  }
+}

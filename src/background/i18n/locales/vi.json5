@@ -1,0 +1,9 @@
+{
+  // Desktop notification
+  notification: {
+    // Inform users that a guerrilla live has started
+    guerrilla: 'Buổi phát sóng bất ngờ đã bắt đầu! {name} đang chờ bạn!',
+    // Inform users that a scheduled live has started
+    reminder: 'Buổi phát sóng đã lên lịch đã bắt đầu! {name} đang chờ bạn!',
+  },
+}

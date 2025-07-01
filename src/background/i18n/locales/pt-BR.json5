@@ -1,0 +1,9 @@
+{
+  // Desktop notification
+  notification: {
+    // Inform users that a guerrilla live has started
+    guerrilla: 'Uma live surpresa começou! {name} está te esperando!',
+    // Inform users that a scheduled live has started
+    reminder: 'Uma live programada começou! {name} está te esperando!',
+  },
+}

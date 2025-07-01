@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app" :lang="$i18n.locale">
     <div class="head">
       <template v-if="route === 'main'">
         <div class="main">
@@ -117,6 +117,7 @@
   import OpeningAnim from 'components/opening-anim'
   import VHint from 'components/v-hint'
   import VToast from 'components/v-toast'
+  import { sortBy } from 'lodash'
   import browser from 'shared/browser'
   import HIcon from 'shared/components/h-icon'
   import {
@@ -152,7 +153,7 @@
         return VERSION
       },
       locales() {
-        return Object.keys(this.$root.$i18n.messages)
+        return sortBy(Object.keys(this.$root.$i18n.messages), locale => this.$t(`app.settings.language.locales.${locale}`))
       },
       appearances() {
         return ['device', 'light', 'dark']
@@ -424,6 +425,7 @@
       padding: 16px;
       background: hsla(var(--color-bg-base-expand), var(--background-opacity));
       overflow: auto;
+      scrollbar-width: none;
 
       .option {
         .label {

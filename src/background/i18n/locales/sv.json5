@@ -1,0 +1,9 @@
+{
+  // Desktop notification
+  notification: {
+    // Inform users that a guerrilla live has started
+    guerrilla: 'En överraskande sändning har startat! {name} väntar på dig!',
+    // Inform users that a scheduled live has started
+    reminder: 'En schemalagd sändning har startat! {name} väntar på dig!',
+  },
+}

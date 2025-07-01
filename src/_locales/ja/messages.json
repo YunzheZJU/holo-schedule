@@ -8,7 +8,7 @@
     "description": "Description of this extension"
   },
   "browserActionTitle": {
-    "message": "ホロライブ配信情報",
+    "message": "ホロライブと、つながり続けよう",
     "description": "Title to show when user hover on the browser action button"
   }
 }

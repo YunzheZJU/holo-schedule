@@ -65,7 +65,7 @@ const filterLives = lives => [filterByTitle, filterBySubscription].reduce(
   lives,
 )
 
-const extractTopic = ({ title }) => (title.match(/[≪《【[「](.*?)[≫》】\]」]/)?.[1] || '').trim()
+const extractTopic = ({ title }) => (title.replace(/[\s\d#＃]/g, '').match(/[≪《【[「]([^≪《【[「]+?)[≫》】\]」]/)?.[1] || '').toLowerCase()
 
 // 1. Live with smaller start_at exists earlier
 // 2. Lives with the same topic are placed together and ordered by member_id and id

@@ -4,7 +4,7 @@ const memberGroups = [
   {
     group: 'newDebuts',
     // Dummy ids are specified here to be compatible to new members
-    memberIds: range(120, 130),
+    memberIds: range(123, 133),
     lang: 'en',
   },
   {
@@ -77,6 +77,7 @@ const memberGroups = [
       118,
       116,
       117,
+      ...range(120, 123),
     ],
     lang: 'ja',
   },

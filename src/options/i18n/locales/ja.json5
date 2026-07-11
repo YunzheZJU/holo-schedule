@@ -24,7 +24,8 @@
       hololiveIndonesia: "ホロライブインドネシア",
       hololiveEnglish: "ホロライブEnglish",
       holostarsEnglish: "HOLOSTARS English",
-      holoAN: "holoAN"
+      holoAN: "holoAN",
+      mekPark: "mekPark"
     }
   },
   // Component MemberGroup
